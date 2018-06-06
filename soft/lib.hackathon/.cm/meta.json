@@ -9,7 +9,7 @@
       "win": 5
     }, 
     "soft_file": {
-      "linux": "hackathon/lib/__init__.py"
+      "linux": "hackathon/lib/hackathon.py"
     }
   }, 
   "soft_name": "CK-Quantum Hackathon Module", 
