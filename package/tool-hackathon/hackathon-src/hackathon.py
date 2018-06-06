@@ -1,5 +1,28 @@
+import inspect
+from scipy.optimize import minimize
 
-def hello(): # this is the wrapper to scipy minimizer
+
+def my_nelder_mead( func, x0, my_args=(), my_options=None ):    # a non-stochastic minimizer for comparison
+
+    return minimize( func, x0, method='Nelder-Mead', options=my_options, args=my_args )
+
+
+def my_cobyla( func, x0, my_args=(), my_options=None ):         # another non-stochastic minimizer for comparison
+
+    return minimize( func, x0, method='COBYLA', options=my_options, args=my_args )
+
+
+def my_minimizer( func, x0, my_args=(), my_options=None ):      # your own take!
+
+    # Currently it does not optimize anything, just returns the input
+
+    minimizer_output = { 'fun' : func(x0), 'nfev' : 1 }
     
-    return "Have a good hackathon"
+    return minimizer_output
+
+
+def get_min_func_src_code():    # Utility function
+
+    lines = inspect.getsource(my_minimizer)
+    return lines
 
