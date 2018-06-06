@@ -14,8 +14,8 @@
   }, 
   "soft_name": "CK-Quantum Hackathon Module", 
   "tags": [
-    "lib", 
-    "python-package", 
+    "tool",
+    "ck-quantum",
     "hackathon"
   ]
 }
