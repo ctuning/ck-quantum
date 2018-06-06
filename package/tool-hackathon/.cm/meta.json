@@ -17,6 +17,14 @@
     ],
     "version": "1.0" 
   }, 
+  "deps": {
+    "lib-python-scipy": {
+      "local": "yes",
+      "name": "SciPy Python library",
+      "sort": 10,
+      "tags": "lib,scipy,python-package"
+    }
+  },
   "end_full_path_universal": "lib$#sep#$hackathon.py",
   "need_cpu_info": "yes", 
   "only_for_host_os_tags": [
