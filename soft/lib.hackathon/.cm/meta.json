@@ -1,0 +1,21 @@
+{
+  "auto_detect": "yes", 
+  "customize": {
+    "check_that_exists": "yes", 
+    "ck_version": 10, 
+    "env_prefix": "CK_ENV_LIB_HACKATHON", 
+    "limit_recursion_dir_search": {
+      "linux": 5, 
+      "win": 5
+    }, 
+    "soft_file": {
+      "linux": "hackathon/lib/__init__.py"
+    }
+  }, 
+  "soft_name": "CK-Quantum Hackathon Module", 
+  "tags": [
+    "lib", 
+    "python-package", 
+    "hackathon"
+  ]
+}

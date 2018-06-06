@@ -1,0 +1,39 @@
+{
+  "customize": {
+    "extra_dir": "", 
+    "install_env": {
+      "PACKAGE_SUB_DIR1": "lib"
+    }, 
+    "supported_python_ver2_on_linux": [
+      4, 
+      5
+    ], 
+    "supported_python_ver2_on_mac": [
+      4, 
+      5
+    ], 
+    "supported_python_ver2_on_win": [
+      5
+    ],
+    "version": "1.0" 
+  }, 
+  "end_full_path_universal": "lib$#sep#$__init__.py", 
+  "need_cpu_info": "yes", 
+  "only_for_host_os_tags": [
+    "linux", 
+    "windows"
+  ], 
+  "only_for_target_os_tags": [
+    "linux", 
+    "windows"
+  ], 
+  "process_script": "install", 
+  "soft_uoa": "f0a25d64c3891b4f", 
+  "suggested_path": "hackathon", 
+  "tags": [
+    "tool", 
+    "hackathon", 
+    "ck-quantum", 
+    "v1" 
+  ]
+}
