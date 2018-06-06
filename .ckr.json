@@ -1,0 +1,10 @@
+{
+  "data_uoa": "ck-quantum",
+  "data_uid": "de640faafc01c0a0",
+  "data_alias": "ck-quantum",
+  "data_name": "ck-quantum",
+  "dict": {
+    "shared": "git",
+    "url": "https://github.com/ctuning/ck-quantum"
+  }
+}
