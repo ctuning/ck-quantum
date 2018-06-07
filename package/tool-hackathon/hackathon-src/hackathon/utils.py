@@ -19,7 +19,8 @@ def total_time(ts, n_succ, n_tot, p):
     s_err = (s*(1-s)/float(n_tot))**0.5   # Standard error for s (using binomial dist)
     Tave = ttot(t_ave,s,p)
     T_serr = ttot(t_ave,s+s_err,p)
-    Terr = (( T_serr - Tave)**2 + (t_err*Tave/float(t_ave)) ** 2 ) ** 0.5  # Error in total error assuming t and s independent
+    T_serr2 = ttot(t_ave,s-s_err,p)
+    Terr = (( (T_serr2 - T_serr)/2.)**2 + (t_err*Tave/float(t_ave)) ** 2 ) ** 0.5  # Error in total error assuming t and s independent
     return Tave, Terr, t_ave, t_err, s, s_err
 
 def benchmark_code(vqe_entry, N = 100, solution = 0., delta = 1e-1, p=0.95):
