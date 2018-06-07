@@ -25,7 +25,7 @@
       "tags": "lib,scipy,python-package"
     }
   },
-  "end_full_path_universal": "lib$#sep#$hackathon.py",
+  "end_full_path_universal": "lib$#sep#$__init__.py",
   "need_cpu_info": "yes", 
   "only_for_host_os_tags": [
     "linux", 

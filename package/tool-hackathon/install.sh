@@ -19,7 +19,7 @@ if [ ! -d "${INSTALL_DIR}/lib" ]; then
   mkdir -p ${INSTALL_DIR}/lib
 fi
 
-cp ${PACKAGE_DIR}/hackathon-src/*  ${INSTALL_DIR}/lib/
+cp -r ${PACKAGE_DIR}/hackathon-src/*  ${INSTALL_DIR}/lib/
 
 
 if [ "${?}" != "0" ] ; then
