@@ -1,4 +1,3 @@
-import inspect
 from scipy.optimize import minimize
 
 
@@ -21,8 +20,4 @@ def my_minimizer( func, x0, my_args=(), my_options=None ):      # your own take!
     return minimizer_output
 
 
-def get_min_func_src_code():    # Utility function
-
-    lines = inspect.getsource(my_minimizer)
-    return lines
 

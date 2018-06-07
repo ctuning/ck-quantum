@@ -1,4 +1,7 @@
 import numpy as np
+from hackathon import optimizers as optimizers
+import inspect
+
 
 def ttot(t,s,p):
     R = np.ceil(np.log(1-p)/np.log(1-s))
@@ -32,3 +35,10 @@ def benchmark_code(vqe_entry, N = 100, solution = 0., delta = 1e-1, p=0.95):
     Tave, Terr, t_ave, t_err, s, s_err = total_time(n_samples_list, n_succ, N, p)
     # The key metric is is Tave (which has error +/- Terr to 1 stdev), but we'll return everything to be stored anyway
     return Tave, Terr, t_ave, t_err, s, s_err, out_list, n_samples_list
+
+
+def get_min_func_src_code():    # Utility function
+
+    lines = inspect.getsource(optimizers.my_minimizer)
+    return lines
+
