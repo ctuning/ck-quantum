@@ -14,12 +14,12 @@ def my_cobyla( func, x0, my_args=(), my_options=None ):         # another non-st
     return minimize( func, x0, method='COBYLA', options=my_options, args=my_args )
 
 
-def my_minimizer( func, x0, my_args=(), my_options=None ):      # your own take!
+def my_random_sampler( func, x0, my_args=(), my_options=None ):
     "Simple optimiser: samples randomly and returns the minimum - used here as an example"
 
     my_options      = my_options or {}
-    points          = my_options.get('maxfev') or my_options.get('maxiter') or 30
-    num_parameters  = len(x0)                                        # get number of parameters needed for objective function
+    points          = my_options.get('maxfev', 30)              # by default perform 30 function evaluations
+    num_parameters  = len(x0)                                   # get number of parameters needed for objective function
 
     flist = []
     xlist = []
@@ -34,6 +34,16 @@ def my_minimizer( func, x0, my_args=(), my_options=None ):      # your own take!
     fmin    = flist[min_idx]
 
     minimizer_output = { 'fun' : fmin, 'nfev' : points, 'nit' : points, 'x' : best_x }
+
+    return minimizer_output
+
+
+def my_minimizer( func, x0, my_args=(), my_options=None ):
+    "Your own attempt at writing a stochastic minimizer"
+
+    current_func_value = func(x0, my_args)
+
+    minimizer_output = { 'fun' : current_func_value, 'nfev' : 1, 'nit' : 1, 'x' : x0 }
 
     return minimizer_output
 

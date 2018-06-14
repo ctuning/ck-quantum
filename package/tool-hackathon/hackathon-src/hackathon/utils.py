@@ -45,7 +45,8 @@ def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_he
         minimizer_options_update = {
             'my_nelder_mead':   {'maxfev':  max_func_evaluations},
             'my_cobyla':        {'maxiter': max_func_evaluations},
-            'my_minimizer':     {'maxfev':  max_func_evaluations, 'maxiter': max_func_evaluations},
+            'my_random_sampler':{'maxfev':  max_func_evaluations},
+            'my_minimizer':     {'maxfev':  max_func_evaluations},
             }.get(minimizer_method, {})
 
         minimizer_options.update( minimizer_options_update )
