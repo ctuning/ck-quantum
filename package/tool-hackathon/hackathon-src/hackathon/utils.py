@@ -100,6 +100,47 @@ def benchmark_code(vqe_entry, N = 100, solution = 0., delta = 1e-1, p=0.95):
     return Tave, Terr, t_ave, t_err, s, s_err, out_list, n_samples_list
 
 
+def benchmark_list_of_runs(list_of_runs, delta, prob, which_fun_key, which_time_key):
+    "Perform benchmarking on the already collected JSON file from an experiment: CK entry"
+
+    print("benchmark_list_of_runs:  delta={}, prob={}, which_fun_key={}, which_time_key={}\n".format(delta, prob, which_fun_key, which_time_key))
+
+    num_repetitions = len(list_of_runs)
+    if num_repetitions:
+        first_run_input     = list_of_runs[0]['vqe_input']
+        classical_energy    = first_run_input['classical_energy']
+        minimizer_src       = first_run_input['minimizer_src']
+        minimizer_method    = first_run_input['minimizer_method']
+
+        n_succ              = 0
+        list_selected_times = []
+
+        print("experiment_file: Goal={}, Minimizer={}, Source:\n{}\n\n{}\n{}\n".format(classical_energy, minimizer_method, '-'*100, minimizer_src, '='*100))
+
+        for run in list_of_runs:
+            vqe_output      = run['vqe_output']
+            report          = run['report']
+
+            fun             = vqe_output['fun']
+            fun_validated   = vqe_output['fun_validated']
+            fun_exact       = vqe_output['fun_exact']
+            fun_selected    = vqe_output[which_fun_key]
+
+            q_seconds       = report['total_q_seconds']
+            q_shots         = report['total_q_shots']
+            time_selected   = report[which_time_key]
+
+            print("fun_participant={:.4f}, fun_validated={:.4f}, fun_exact={:.4f}, Qtime={:.2f}sec, Qshots={}".format(fun, fun_validated, fun_exact, q_seconds, q_shots))
+
+            if abs( fun_selected - classical_energy )<delta:
+                n_succ += 1
+
+            list_selected_times.append(time_selected)
+
+        Tave, Terr, t_ave, t_err, s, s_err = total_time(list_selected_times, n_succ, num_repetitions, prob)
+        print("\nn_succ={}, Tave={:.4f}, Terr={:.4f}, t_ave={:.4f}, t_err={:.4f}, s={:.4f}, s_err={:.4f}\n\n".format(n_succ, Tave, Terr, t_ave, t_err, s, s_err))
+
+
 def get_min_func_src_code():
     import inspect
 
