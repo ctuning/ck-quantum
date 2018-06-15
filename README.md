@@ -47,8 +47,8 @@ $ ck version
 ### Pull CK repositories
 
 ```
-$ ck pull repo:ck-env
 $ ck pull repo:ck-quantum
+$ ck pull repo:ck-env
 $ ck pull repo:ck-rigetti
 $ ck pull repo:ck-qiskit
 ```
