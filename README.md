@@ -58,12 +58,28 @@ $ ck pull repo:ck-quantum
 $ ck install package:tool-hackathon
 ```
 
-[TODO]: Add how to check your installation
-
-
 ### Install pyQuil
 
 ```
 $ ck pull repo:ck-rigetti
 $ ck install package:lib-pyquil-1.9.0
+```
+
+### Run a demo program (press Enter if prompted)
+
+```
+$ ck run program:pyquil-demo
+...
+
+    * tmp-stdout.tmp
+
+      Number of games: 10
+      Q's winning average: 1.0
+      Picard's flip-decision average: 0.5
+```
+
+### Run VQE
+
+```
+$ ck run program:rigetti-vqe
 ```
