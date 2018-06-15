@@ -89,3 +89,21 @@ $ ck run program:pyquil-demo
 ```
 $ ck run program:rigetti-vqe
 ```
+
+### Benchmark VQE
+
+```
+$ ck benchmark program:rigetti-vqe --repetitions=3 \
+  --record --record_repo=local --record_uoa=<email>[-<plaform>] \
+  --tags=qck,hackathon-2018_06_15,<email>,<platform>,<minimizer_method> \
+  --env.RIGETTI_QUANTUM_DEVICE=<platform> \
+  --env.VQE_MINIMIZER_METHOD=<minimizer_method> \
+  --env.VQE_SAMPLE_SIZE=<sample_number> \
+  --env.VQE_MAX_ITERATIONS=<max_iterations>
+```
+where:
+- `email`: a valid email address;
+- `platform`: `8Q-Agave` or `QVM`;
+- `minimizer_method`: `my_melder_nead` or `my_cobyla` or `my_minimizer` (as defined in [optimizers.py](https://github.com/ctuning/ck-quantum/blob/master/package/tool-hackathon/hackathon-src/hackathon/optimizers.py) installed under e.g. `$CK_TOOLS/hackathon-1.0-linux-64/lib/hackathon`);
+- `sample_size`: e.g. `100` (but no more than 200 please);
+- `max_iterations`: e.g. `80` (or another cut-off point);
