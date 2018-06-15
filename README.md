@@ -45,6 +45,14 @@ $ sudo pip install ck
 
 ## Common part of the installation
 
+### Pull CK repositories
+
+```
+$ ck pull repo:ck-quantum
+$ ck pull repo:ck-rigetti
+$ ck pull repo:ck-env
+```
+
 ### Detect a Python interpreter (interactively choose one if there are several options)
 ```
 $ ck detect soft:compiler.python
@@ -54,14 +62,12 @@ $ ck detect soft:compiler.python
 ### Install this CK repository with all its dependencies (other CK repos to reuse artifacts)
 
 ```
-$ ck pull repo:ck-quantum
 $ ck install package:tool-hackathon
 ```
 
 ### Install pyQuil
 
 ```
-$ ck pull repo:ck-rigetti
 $ ck install package:lib-pyquil-1.9.0
 ```
 
