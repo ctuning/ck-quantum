@@ -100,7 +100,7 @@ def benchmark_code(vqe_entry, N = 100, solution = 0., delta = 1e-1, p=0.95):
     return Tave, Terr, t_ave, t_err, s, s_err, out_list, n_samples_list
 
 
-def benchmark_list_of_runs(list_of_runs, delta, prob, which_fun_key, which_time_key):
+def benchmark_list_of_runs(list_of_runs, delta, prob, which_fun_key, which_time_key, show_more=False):
     "Perform benchmarking on the already collected JSON file from an experiment: CK entry"
 
     print("benchmark_list_of_runs:  delta={}, prob={}, which_fun_key={}, which_time_key={}\n".format(delta, prob, which_fun_key, which_time_key))
@@ -138,7 +138,10 @@ def benchmark_list_of_runs(list_of_runs, delta, prob, which_fun_key, which_time_
             list_selected_times.append(time_selected)
 
         Tave, Terr, t_ave, t_err, s, s_err = total_time(list_selected_times, n_succ, num_repetitions, prob)
-        print("\nn_succ={}, Tave={:.4f}, Terr={:.4f}, t_ave={:.4f}, t_err={:.4f}, s={:.4f}, s_err={:.4f}\n\n".format(n_succ, Tave, Terr, t_ave, t_err, s, s_err))
+        if show_more:
+            print("\nn_succ={}, Tave={:.4f}, Terr={:.4f}, t_ave={:.4f}, t_err={:.4f}, s={:.4f}, s_err={:.4f}\n\n".format(n_succ, Tave, Terr, t_ave, t_err, s, s_err))
+        else:
+            print("\nn_succ={}, Tave={:.4f}\n\n".format(n_succ, Tave))
 
 
 def get_min_func_src_code():
