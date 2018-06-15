@@ -50,6 +50,7 @@ $ ck version
 $ ck pull repo:ck-env
 $ ck pull repo:ck-quantum
 $ ck pull repo:ck-rigetti
+$ ck pull repo:ck-qiskit
 ```
 
 ### Detect a Python interpreter (interactively choose one if there are several options)
