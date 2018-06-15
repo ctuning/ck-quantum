@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# CK installation script for TensorFlow package
+# CK installation script
 #
 # Developer(s):
 #  * Grigori Fursin, dividiti/cTuning foundation
