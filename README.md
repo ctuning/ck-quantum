@@ -22,12 +22,11 @@ $ brew update
 $ brew reinstall python
 ```
 
-### Minimal CK installation
+```
+$ pip install ck
+```
 
-The minimal installation requires:
-
-* Python 2.7 or 3.3+ (the limitation is mainly due to unit tests)
-* Git command line client
+## Non-root CK installation
 
 You can install CK in your local user space as follows:
 
@@ -37,20 +36,20 @@ $ export PATH=$PWD/ck/bin:$PATH
 $ export PYTHONPATH=$PWD/ck:$PYTHONPATH
 ```
 
-You can also install CK via `pip` with `sudo` to avoid setting up environment variables yourself:
+## Test CK installation
 
 ```
-$ sudo pip install ck
+$ ck version
 ```
 
-## Common part of the installation
+## Common part of the workflow installation
 
 ### Pull CK repositories
 
 ```
+$ ck pull repo:ck-env
 $ ck pull repo:ck-quantum
 $ ck pull repo:ck-rigetti
-$ ck pull repo:ck-env
 ```
 
 ### Detect a Python interpreter (interactively choose one if there are several options)
