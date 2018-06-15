@@ -104,6 +104,6 @@ $ ck benchmark program:rigetti-vqe --repetitions=3 \
 where:
 - `email`: a valid email address;
 - `platform`: `8Q-Agave` or `QVM`;
-- `minimizer_method`: `my_melder_nead` or `my_cobyla` or `my_minimizer` (as defined in [optimizers.py](https://github.com/ctuning/ck-quantum/blob/master/package/tool-hackathon/hackathon-src/hackathon/optimizers.py) installed under e.g. `$CK_TOOLS/hackathon-1.0-linux-64/lib/hackathon`);
+- `minimizer_method`: `my_nelder_mead` or `my_cobyla` or `my_minimizer` (as defined in [optimizers.py](https://github.com/ctuning/ck-quantum/blob/master/package/tool-hackathon/hackathon-src/hackathon/optimizers.py) installed under e.g. `$CK_TOOLS/hackathon-1.0-linux-64/lib/hackathon`);
 - `sample_size`: e.g. `100` (but no more than 200 please);
 - `max_iterations`: e.g. `80` (or another cut-off point);
