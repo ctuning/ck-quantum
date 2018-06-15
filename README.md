@@ -112,7 +112,8 @@ where:
 
 ```
 $ ck list local:experiment:*
-id@cam.ac.uk
-$ ck find local:experiment:id@cam.ac.uk
-$ ck list_points local:experiment:id@cam.ac.uk
+<email>
+$ ck find local:experiment:<email>
+$ ck list_points local:experiment:<email>
+$ ck zip local:experiment:* --archive_name=$HOME/<email>.zip
 ```
