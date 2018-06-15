@@ -13,7 +13,7 @@ $ sudo pip3 install ck
 ```
 
 
-## Installation (on MacOSX)
+## Installation (on MacOS)
 
 ### Install Python3 and its pip (Python2 is also supported)
 
@@ -26,8 +26,8 @@ $ brew reinstall python
 
 The minimal installation requires:
 
-* Python 2.7 or 3.3+ (limitation is mainly due to unitests)
-* Git command line client.
+* Python 2.7 or 3.3+ (the limitation is mainly due to unit tests)
+* Git command line client
 
 You can install CK in your local user space as follows:
 
@@ -37,7 +37,7 @@ $ export PATH=$PWD/ck/bin:$PATH
 $ export PYTHONPATH=$PWD/ck:$PYTHONPATH
 ```
 
-You can also install CK via PIP with sudo to avoid setting up environment variables yourself:
+You can also install CK via `pip` with `sudo` to avoid setting up environment variables yourself:
 
 ```
 $ sudo pip install ck
