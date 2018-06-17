@@ -98,8 +98,10 @@ def setup(i):
 
     # FIXME: Fix for Windows.
     # FIXME: Should have no explicit exports.
+    # FGG (20180617 - I checked this code and substituted pl to ppath in below code for Windows
+    #                 it now works, so now sure about above comment)
     if winh=='yes':
-        shell_setup_script_contents += '\nset PYTHONPATH='+pl+';%PYTHONPATH%\n'
+        shell_setup_script_contents += '\nset PYTHONPATH='+ppath+';%PYTHONPATH%\n'
     else:
         shell_setup_script_contents += '\nexport PYTHONPATH='+ppath+':${PYTHONPATH}\n'
 
