@@ -1,6 +1,6 @@
 import json
 import numpy as np
-from hackathon import optimizers as optimizers
+import optimizers as h_optimizers
 
 
 def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_help, minimizer_options_default='{}'):
@@ -58,7 +58,7 @@ def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_he
     print("Using max_func_evaluations = %d"     % max_func_evaluations)         # this parameter may influence the next one
     print("Using minimizer_options = '%s'"      % str(minimizer_options) )
 
-    minimizer_function = getattr(optimizers, minimizer_method)   # minimizer_method is a string/name, minimizer_function is an imported callable
+    minimizer_function = getattr(h_optimizers, minimizer_method)   # minimizer_method is a string/name, minimizer_function is an imported callable
 
     return start_params, sample_number, q_device_name, minimizer_method, minimizer_options, minimizer_function
 
@@ -71,7 +71,7 @@ def ttot(t,s,p):
 # Total time to solution (as defined in ttot(t,s,p)), calculated from data and returning errors
 def total_time(ts, n_succ, n_tot, p):
     if n_succ == 0:
-        return tuple([*[np.nan]*4,0,0])
+        return np.nan, np.nan, np.nan, np.nan, 0, 0
     t_ave = np.mean(ts)
     t_err = np.std(ts)/len(ts)**0.5       # Standard error for t
     if n_succ == n_tot:
@@ -153,6 +153,6 @@ def benchmark_list_of_runs(list_of_runs, delta, prob, which_fun_key, which_time_
 def get_min_func_src_code():
     import inspect
 
-    lines = inspect.getsource(optimizers.my_minimizer)
+    lines = inspect.getsource(h_optimizers.my_minimizer)
     return lines
 
