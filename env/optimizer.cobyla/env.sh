@@ -1,7 +1,5 @@
 #!/bin/bash
 
-env | grep FOO
-
 # Finding the path to the directory that contains THIS bash script,
 # the solution borrowed from here:
 #       https://stackoverflow.com/questions/4774054/reliable-way-for-a-bash-script-to-get-the-full-path-to-itself
