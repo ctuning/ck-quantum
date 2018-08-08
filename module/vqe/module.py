@@ -38,25 +38,29 @@ def run(i):
     repetitions = i.get('repetitions', 3)
     q_device    = i.get('q_device', 'QVM')
     max_iter    = i.get('max_iter', 80)
-    record_repo = 'local'
+    record_repo = i.get('record_repo', 'local')
+    remote_repo = 'ck-quantum-hackathons' if record_repo!='local' else ''
 
     record_uoa  = '{}_{}_{}_{}samples_{}'.format(timestamp_s, username, opti_method, sample_size, q_device)
 
     print('Will be recording into {}:experiment:{}\n'.format(record_repo, record_uoa))
 
-    r=ck.access({'action':                      'benchmark',
+    benchmark_adict = {'action':                'benchmark',
                 'module_uoa':                   'program',
                 'data_uoa':                     'rigetti-vqe',
                 'repetitions':                  repetitions,
                 'record':                       'yes',
-                'record_repo':                  'local',
+                'record_repo':                  record_repo,
                 'record_uoa':                   record_uoa,
+                'record_experiment_repo':       remote_repo,    # 'upload' for remote
                 'tags':                         'post-hackathon,{},{},{}'.format(q_device, username, opti_method),
                 'env.RIGETTI_QUANTUM_DEVICE':   q_device,
                 'env.VQE_MINIMIZER_METHOD':     opti_method,
                 'env.VQE_SAMPLE_SIZE':          sample_size,
                 'env.VQE_MAX_ITERATIONS':       max_iter,
                 'skip_freq':                    'yes',
-    })
+    }
+
+    r=ck.access( benchmark_adict )
 
     return r
