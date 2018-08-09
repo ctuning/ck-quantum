@@ -56,6 +56,9 @@ metrics_dimensions=[
     {"key":"_point", "name":"Point", "view_key":"_point"},
     {"key":"__energies", "name":"Energy", "view_key":"__energies"},
     {"key":"T_ave", "name":"T_ave", "view_key":"T_ave"},
+    {"key":"_sample_number", "name":"Sample number", "view_key":"_sample_number"},
+    {"key":"__times", "name":"Time", "view_key":"__times"},
+    {"key":"t_ave", "name":"t_ave", "view_key":"t_ave"},
 ]
 
 view_cache=[
