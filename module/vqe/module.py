@@ -39,17 +39,21 @@ def run(i):
     q_device    = i.get('q_device', 'QVM')
     max_iter    = i.get('max_iter', 80)
 
-    remote_bool = i.get('remote', '') == 'yes'
+    record_uoa  = '{}_{}_{}_{}samples_{}'.format(timestamp_s, username, opti_method, sample_size, q_device)
 
+
+    remote_bool = i.get('remote', '') == 'yes'
     (record_repo, remote_repo) = ('remote-ck', 'ck-quantum-hackathons') if remote_bool else ('local', '')
 
-    record_uoa  = '{}_{}_{}_{}samples_{}'.format(timestamp_s, username, opti_method, sample_size, q_device)
+    dev_bool    = i.get('dev', '') == 'yes'
+    program     = 'rigetti-vqe2' if dev_bool else 'rigetti-vqe'
+
 
     print('Will be recording into {}:experiment:{}\n'.format(record_repo, record_uoa))
 
     benchmark_adict = {'action':                'benchmark',
                 'module_uoa':                   'program',
-                'data_uoa':                     'rigetti-vqe',
+                'data_uoa':                     program,
                 'repetitions':                  repetitions,
                 'record':                       'yes',
                 'record_repo':                  record_repo,
