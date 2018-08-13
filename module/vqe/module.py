@@ -26,11 +26,12 @@ def run(i):
 
     print('run() was called with the following arguments: {}\n'.format(i))
 
-    # Get current timestamp
-    r=ck.get_current_date_time({})
-    if r['return']>0: return r
-    timestamp   = r['iso_datetime']
-    timestamp_s = timestamp.split('.')[0]   # cut to the seconds' resolution
+    timestamp   = i.get('timestamp')
+
+    if not timestamp:       # Get current timestamp:
+        r=ck.get_current_date_time({})
+        if r['return']>0: return r
+        timestamp   = r['iso_datetime'].split('.')[0].replace(':', '_')     # cut to seconds' resolution
 
     username    = os.getlogin()
     opti_method = i.get('opti_method', 'my_cobyla')
@@ -39,7 +40,7 @@ def run(i):
     q_device    = i.get('q_device', 'QVM')
     max_iter    = i.get('max_iter', 80)
 
-    record_uoa  = '{}_{}_{}_{}samples_{}'.format(timestamp_s, username, opti_method, sample_size, q_device)
+    record_uoa  = '{}__{}_{}_{}samples_{}'.format(timestamp, username, opti_method, sample_size, q_device)
 
 
     remote_bool = i.get('remote', '') == 'yes'
@@ -49,7 +50,7 @@ def run(i):
     program     = 'rigetti-vqe2' if dev_bool else 'rigetti-vqe'
 
 
-    print('Will be recording into {}:experiment:{}\n'.format(record_repo, record_uoa))
+    print('Will be recording into {}{}:experiment:{}\n'.format(record_repo, '/{}'.format(remote_repo) if remote_repo else '', record_uoa))
 
     benchmark_adict = {'action':                'benchmark',
                 'module_uoa':                   'program',
