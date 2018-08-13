@@ -38,8 +38,10 @@ def run(i):
     repetitions = i.get('repetitions', 3)
     q_device    = i.get('q_device', 'QVM')
     max_iter    = i.get('max_iter', 80)
-    record_repo = i.get('record_repo', 'local')
-    remote_repo = 'ck-quantum-hackathons' if record_repo!='local' else ''
+
+    remote_bool = i.get('remote', '') == 'yes'
+
+    (record_repo, remote_repo) = ('remote-ck', 'ck-quantum-hackathons') if remote_bool else ('local', '')
 
     record_uoa  = '{}_{}_{}_{}samples_{}'.format(timestamp_s, username, opti_method, sample_size, q_device)
 
@@ -52,7 +54,7 @@ def run(i):
                 'record':                       'yes',
                 'record_repo':                  record_repo,
                 'record_uoa':                   record_uoa,
-                'record_experiment_repo':       remote_repo,    # 'upload' for remote
+                'record_experiment_repo':       remote_repo,
                 'tags':                         'post-hackathon,{},{},{}'.format(q_device, username, opti_method),
                 'env.RIGETTI_QUANTUM_DEVICE':   q_device,
                 'env.VQE_MINIMIZER_METHOD':     opti_method,
