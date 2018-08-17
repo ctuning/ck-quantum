@@ -37,18 +37,38 @@ def run(i):
     opti_method = i.get('opti_method', 'my_cobyla')
     sample_size = i.get('sample_size', 1)
     repetitions = i.get('repetitions', 3)
-    q_device    = i.get('q_device', 'QVM')
     max_iter    = i.get('max_iter', 80)
 
-    record_uoa  = '{}__{}_{}_{}samples_{}'.format(timestamp, username, opti_method, sample_size, q_device)
-
-
-    remote_bool = i.get('remote', '') == 'yes'
+    remote_bool = i.get('remote', '') == 'yes'      # whether to record the experiment remotely or locally
     (record_repo, remote_repo) = ('remote-ck', 'ck-quantum-hackathons') if remote_bool else ('local', '')
 
+    provider    = i.get('provider', 'rigetti').lower()              # 'rigetti' or 'ibm'
+    hw_bool     = i.get('hardware', '') == 'yes'
     dev_bool    = i.get('dev', '') == 'yes'
-    program     = 'rigetti-vqe2' if dev_bool else 'rigetti-vqe'
 
+    q_device    = {
+        'rigetti' : {
+            False : 'QVM',
+            True :  '8Q-Agave',
+        },
+        'ibm' : {
+            False : 'local_qasm_simulator',
+            True :  'ibmq_qasm_simulator',
+        },
+    }[provider][hw_bool]
+
+    program     = {
+        'rigetti' : {
+            False : 'rigetti-vqe',
+            True : 'rigetti-vqe2',
+        },
+        'ibm' : {
+            False : 'qiskit-vqe',
+            True : 'qiskit-vqe',
+        },
+    }[provider][dev_bool]
+
+    record_uoa  = '{}__{}_{}_{}samples_{}'.format(timestamp, username, opti_method, sample_size, q_device)
 
     print('Will be recording into {}{}:experiment:{}\n'.format(record_repo, '/{}'.format(remote_repo) if remote_repo else '', record_uoa))
 
@@ -61,10 +81,11 @@ def run(i):
                 'record_uoa':                   record_uoa,
                 'record_experiment_repo':       remote_repo,
                 'tags':                         'post-hackathon,{},{},{}'.format(q_device, username, opti_method),
-                'env.RIGETTI_QUANTUM_DEVICE':   q_device,
                 'env.VQE_MINIMIZER_METHOD':     opti_method,
                 'env.VQE_SAMPLE_SIZE':          sample_size,
                 'env.VQE_MAX_ITERATIONS':       max_iter,
+                'env.RIGETTI_QUANTUM_DEVICE':   q_device,
+                'env.CK_IBM_BACKEND':           q_device,
                 'skip_freq':                    'yes',
     }
 
