@@ -84,8 +84,7 @@ def run(i):
                 'env.VQE_MINIMIZER_METHOD':     opti_method,
                 'env.VQE_SAMPLE_SIZE':          sample_size,
                 'env.VQE_MAX_ITERATIONS':       max_iter,
-                'env.RIGETTI_QUANTUM_DEVICE':   q_device,
-                'env.CK_IBM_BACKEND':           q_device,
+                'env.VQE_QUANTUM_BACKEND':      q_device,
                 'skip_freq':                    'yes',
     }
 
