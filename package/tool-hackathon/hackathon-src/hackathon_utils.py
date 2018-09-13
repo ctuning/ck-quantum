@@ -3,11 +3,11 @@ import numpy as np
 import hackathon_optimizers
 
 
-def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_help, minimizer_options_default='{}'):
+def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_help, minimizer_options_default='{}', start_params_zeros_default=True):
 
     import argparse
 
-    start_params_default = np.random.randn( num_params )  # Initial guess of ansatz
+    start_params_default = [ 0.0 ] * num_params if start_params_zeros_default else np.random.randn( num_params )  # Initial guess of ansatz
 
     arg_parser = argparse.ArgumentParser()
 
