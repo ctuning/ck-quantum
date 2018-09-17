@@ -53,9 +53,10 @@ def deploy(i):
 
     optimizer_name  = i.get('optimizer')
 
+    dir_names = list_deployables({ 'data_uoa': 'template.optimizer' })['dir_names']
+
     if not optimizer_name:
-        available_optimizers = list_deployables({ 'data_uoa': 'template.optimizer' })['dir_names']
-        return {'return': 1, 'error': "--optimizer is an obligatory parameter.\nPlease try again with one of the following values: {}".format(available_optimizers)}
+        return {'return': 1, 'error': "--optimizer is an obligatory parameter.\nPlease try again with one of the following values: {}".format(dir_names)}
 
     soft_data_uoa   = 'deployed.' + optimizer_name
 
@@ -84,6 +85,12 @@ def deploy(i):
     }
     r=ck.access( update_adict )
     if r['return']>0: return r
+
+    ck.out("Removing all the 'inactive' alternaitves")
+    for dir_name in dir_names:
+        if dir_name!=optimizer_name:
+            dir_path = os.path.join(deployed_soft_entry_path, 'python_code', dir_name)
+            os.system("rm -rf {}".format(dir_path))     # FIXME: dangerous, look at other options
 
     ck.out("Creating an environment entry that sets up the paths for the soft:{} CK entry".format(soft_data_uoa))
     ## ck detect soft --tags=vqe,optimizer,lib,deployed --extra_tags=optimizer.custom --full_path=/Users/lg4/CK/local/soft/deployed.optimizer/python_code/optimizer.custom/custom_optimizer.py
