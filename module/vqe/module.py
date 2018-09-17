@@ -15,11 +15,117 @@ ck=None # Will be updated by CK (initialized CK kernel)
 
 
 import os
+from pprint import pprint
 
 
 def init(i):
 
     return {'return':0}
+
+
+def list_deployables(i):
+
+    print('list_deployables() was called with the following arguments: {}\n'.format(i))
+
+    data_uoa = i.get('data_uoa', 'template_optimizer')
+
+    load_adict = {  'action':           'load',
+                    'module_uoa':       'soft',
+                    'data_uoa':         data_uoa,
+    }
+    r=ck.access( load_adict )
+    if r['return']>0: return r
+
+    template_soft_entry_path = r['path']
+    python_code_common_path = os.path.join(template_soft_entry_path, 'python_code')
+
+    dir_names = [dir_name for dir_name in (os.listdir( python_code_common_path )) if os.path.isdir( os.path.join( python_code_common_path, dir_name ) ) ]
+
+    if i.get('out')=='con':
+        ck.out("{}".format(dir_names))
+
+    return {'return': 0, 'dir_names': dir_names}
+
+
+def deploy(i):
+
+    print('deploy() was called with the following arguments: {}\n'.format(i))
+
+    optimizer_name  = i.get('optimizer')
+
+    if not optimizer_name:
+        available_optimizers = list_deployables({ 'data_uoa': 'template.optimizer' })['dir_names']
+        return {'return': 1, 'error': "--optimizer is an obligatory parameter.\nPlease try again with one of the following values: {}".format(available_optimizers)}
+
+    soft_data_uoa   = 'deployed.' + optimizer_name
+
+    ck.out("Creating soft:{} code-containing CK entry from a template".format(soft_data_uoa))
+    ## ck cp soft:template.optimizer soft:deployed.optimizer
+    #
+    cp_adict = {    'action':           'cp',
+                    'module_uoa':       'soft',
+                    'data_uoa':         'template.optimizer',
+                    'new_module_uoa':   'soft',
+                    'new_data_uoa':     soft_data_uoa
+    }
+    r=ck.access( cp_adict )
+    if r['return']>0: return r
+
+    deployed_soft_entry_path = r['path']
+    python_file_name = r['dict']['customize']['soft_file_universal']
+
+    ck.out("Activating soft:{} CK entry as 'deployed'".format(soft_data_uoa))
+    ## ck update soft:deployed.optimizer --tags=deployed
+    #
+    update_adict = {'action':           'update',
+                    'module_uoa':       'soft',
+                    'data_uoa':         soft_data_uoa,
+                    'tags':             'deployed'
+    }
+    r=ck.access( update_adict )
+    if r['return']>0: return r
+
+    ck.out("Creating an environment entry that sets up the paths for the soft:{} CK entry".format(soft_data_uoa))
+    ## ck detect soft --tags=vqe,optimizer,lib,deployed --extra_tags=optimizer.custom --full_path=/Users/lg4/CK/local/soft/deployed.optimizer/python_code/optimizer.custom/custom_optimizer.py
+    ## ck detect soft:deployed.optimizer --extra_tags=optimizer.custom --full_path=/Users/lg4/CK/local/soft/deployed.optimizer/python_code/optimizer.custom/custom_optimizer.py
+    #
+    detect_adict = {'action':           'detect',
+                    'module_uoa':       'soft',
+                    'data_uoa':         soft_data_uoa,
+                    'extra_tags':       optimizer_name,
+                    'full_path':        os.path.join(deployed_soft_entry_path, 'python_code', optimizer_name, python_file_name),
+    }
+    r=ck.access( detect_adict )
+    if r['return']>0: return r
+
+    return r
+
+
+def cleanup(i):
+
+    ck.out("Removing the detected env entries")
+    ## ck clean env --tags=optimizer,deployed
+    #
+    clean_adict = { 'action':           'clean',
+                    'module_uoa':       'env',
+                    'tags':             'optimizer,deployed',
+                    'f':                'yes',
+    }
+    r=ck.access( clean_adict )
+    if r['return']>0: return r
+
+    ck.out("Removing the deployed soft entries")
+    ## ck rm soft:* --tags=vqe,optimizer,lib,deployed
+    #
+    rm_adict = {    'action':           'rm',
+                    'module_uoa':       'soft',
+                    'data_uoa':         '*',
+                    'tags':             'vqe,optimizer,lib,deployed',
+    }
+    r=ck.access( rm_adict )
+    if r['return']>0: return r
+
+    return {'return': 0}
 
 
 def run(i):
@@ -70,7 +176,7 @@ def run(i):
 
     record_uoa  = '{}__{}_{}_{}samples_{}'.format(timestamp, username, opti_method, sample_size, q_device)
 
-    print('Will be recording into {}{}:experiment:{}\n'.format(record_repo, '/{}'.format(remote_repo) if remote_repo else '', record_uoa))
+    ck.out('Will be recording into {}{}:experiment:{}\n'.format(record_repo, '/{}'.format(remote_repo) if remote_repo else '', record_uoa))
 
     benchmark_adict = {'action':                'benchmark',
                 'module_uoa':                   'program',

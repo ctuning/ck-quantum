@@ -1,5 +1,14 @@
 {
   "actions": {
+    "list_deployables": {
+      "desc": "code-containing soft template introspection"
+    },
+    "cleanup": {
+      "desc": "remove both created env and soft entries"
+    },
+    "deploy": {
+      "desc": "install the necessary environment for the 'run' method to work"
+    },
     "run": {
       "desc": "run several repetitions and record the results"
     }
