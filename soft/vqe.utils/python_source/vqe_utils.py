@@ -14,7 +14,7 @@ def get_first_callable( namespace ):
     if top_level_methods==1:
         return callable_names[0]
     else:
-        raise Exception("Expecting exactly one top level function in 'custom_optimizer.py', but found {}. Please refactor your code".format(top_level_methods))
+        raise Exception("Expecting exactly one top level function in 'custom_optimizer.py', but found {} ({}). Please refactor your code".format(top_level_methods, callable_names))
 
 
 def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_help, minimizer_options_default='{}', start_params_zeros_default=True):
