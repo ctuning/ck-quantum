@@ -27,7 +27,7 @@ def list_deployables(i):
 
     print('list_deployables() was called with the following arguments: {}\n'.format(i))
 
-    data_uoa = i.get('data_uoa', 'template_optimizer')
+    data_uoa = i.get('data_uoa', 'template.optimizer')
 
     load_adict = {  'action':           'load',
                     'module_uoa':       'soft',
@@ -47,27 +47,44 @@ def list_deployables(i):
     return {'return': 0, 'dir_names': dir_names}
 
 
+def deploy_optimizer(i):
+
+    i.update({'type' : 'optimizer'})
+
+    return deploy(i)
+
+
+def deploy_ansatz(i):
+
+    i.update({'type' : 'qiskit.ansatz'})
+
+    return deploy(i)
+
+
 def deploy(i):
 
     print('deploy() was called with the following arguments: {}\n'.format(i))
 
-    optimizer_name  = i.get('optimizer')
+    selection_type  = i.get('type', 'optimizer')
 
-    dir_names = list_deployables({ 'data_uoa': 'template.optimizer' })['dir_names']
+    selected_value  = i.get('value')
+    template_uoa    = 'template.' + selection_type
+    dir_names       = list_deployables({ 'data_uoa': template_uoa })['dir_names']
 
-    if not optimizer_name:
-        return {'return': 1, 'error': "--optimizer is an obligatory parameter.\nPlease try again with one of the following values: {}".format(dir_names)}
+    if not selected_value:
+        return {'return': 1, 'error': "--value is an obligatory parameter.\nPlease try again with one of the following values: {}".format(dir_names)}
 
-    soft_data_uoa   = 'deployed.' + optimizer_name
+    deployed_uoa    = 'deployed.' + selected_value
 
-    ck.out("Creating soft:{} code-containing CK entry from a template".format(soft_data_uoa))
+
+    ck.out("Creating soft:{} code-containing CK entry from a template".format(deployed_uoa))
     ## ck cp soft:template.optimizer soft:deployed.optimizer
     #
     cp_adict = {    'action':           'cp',
                     'module_uoa':       'soft',
-                    'data_uoa':         'template.optimizer',
+                    'data_uoa':         template_uoa,
                     'new_module_uoa':   'soft',
-                    'new_data_uoa':     soft_data_uoa
+                    'new_data_uoa':     deployed_uoa
     }
     r=ck.access( cp_adict )
     if r['return']>0: return r
@@ -75,12 +92,12 @@ def deploy(i):
     deployed_soft_entry_path = r['path']
     python_file_name = r['dict']['customize']['soft_file_universal']
 
-    ck.out("Activating soft:{} CK entry as 'deployed'".format(soft_data_uoa))
+    ck.out("Activating soft:{} CK entry as 'deployed'".format(deployed_uoa))
     ## ck update soft:deployed.optimizer --tags=deployed
     #
     update_adict = {'action':           'update',
                     'module_uoa':       'soft',
-                    'data_uoa':         soft_data_uoa,
+                    'data_uoa':         deployed_uoa,
                     'tags':             'deployed'
     }
     r=ck.access( update_adict )
@@ -88,19 +105,19 @@ def deploy(i):
 
     ck.out("Removing all the 'inactive' alternaitves")
     for dir_name in dir_names:
-        if dir_name!=optimizer_name:
+        if dir_name!=selected_value:
             dir_path = os.path.join(deployed_soft_entry_path, 'python_code', dir_name)
             os.system("rm -rf {}".format(dir_path))     # FIXME: dangerous, look at other options
 
-    ck.out("Creating an environment entry that sets up the paths for the soft:{} CK entry".format(soft_data_uoa))
+    ck.out("Creating an environment entry that sets up the paths for the soft:{} CK entry".format(deployed_uoa))
     ## ck detect soft --tags=vqe,optimizer,lib,deployed --extra_tags=optimizer.custom --full_path=/Users/lg4/CK/local/soft/deployed.optimizer/python_code/optimizer.custom/custom_optimizer.py
     ## ck detect soft:deployed.optimizer --extra_tags=optimizer.custom --full_path=/Users/lg4/CK/local/soft/deployed.optimizer/python_code/optimizer.custom/custom_optimizer.py
     #
     detect_adict = {'action':           'detect',
                     'module_uoa':       'soft',
-                    'data_uoa':         soft_data_uoa,
-                    'extra_tags':       optimizer_name,
-                    'full_path':        os.path.join(deployed_soft_entry_path, 'python_code', optimizer_name, python_file_name),
+                    'data_uoa':         deployed_uoa,
+                    'extra_tags':       selected_value,
+                    'full_path':        os.path.join(deployed_soft_entry_path, 'python_code', selected_value, python_file_name),
     }
     r=ck.access( detect_adict )
     if r['return']>0: return r
@@ -115,7 +132,7 @@ def cleanup(i):
     #
     clean_adict = { 'action':           'clean',
                     'module_uoa':       'env',
-                    'tags':             'optimizer,deployed',
+                    'tags':             'vqe,deployed',
                     'f':                'yes',
     }
     r=ck.access( clean_adict )
@@ -127,7 +144,7 @@ def cleanup(i):
     rm_adict = {    'action':           'rm',
                     'module_uoa':       'soft',
                     'data_uoa':         '*',
-                    'tags':             'vqe,optimizer,lib,deployed',
+                    'tags':             'vqe,deployed',
     }
     r=ck.access( rm_adict )
     if r['return']>0: return r

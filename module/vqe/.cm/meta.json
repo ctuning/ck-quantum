@@ -7,7 +7,13 @@
       "desc": "remove both created env and soft entries"
     },
     "deploy": {
-      "desc": "install the necessary environment for the 'run' method to work"
+      "desc": "install the necessary plugin (oprimizer or ansatz) and the corresponding environment for the 'run' method to work"
+    },
+    "deploy_ansatz": {
+      "desc": "specifically deploy an ansatz"
+    },
+    "deploy_optimizer": {
+      "desc": "specifically deploy an optimizer"
     },
     "run": {
       "desc": "run several repetitions and record the results"
