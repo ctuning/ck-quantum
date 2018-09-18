@@ -17,11 +17,11 @@ def get_first_callable( namespace ):
         raise Exception("Expecting exactly one top level function in 'custom_optimizer.py', but found {}. Please refactor your code".format(top_level_methods))
 
 
-def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_help, minimizer_options_default='{}'):
+def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_help, minimizer_options_default='{}', start_params_zeros_default=True):
 
     import argparse
 
-    start_params_default = np.random.randn( num_params )  # Initial guess of ansatz
+    start_params_default = [ 0.0 ] * num_params if start_params_zeros_default else np.random.randn( num_params )  # Initial guess of ansatz
 
     arg_parser = argparse.ArgumentParser()
 
@@ -40,6 +40,9 @@ def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_he
     arg_parser.add_argument('--minimizer_options', '--minimizer-options',
                             default=minimizer_options_default, help="A dictionary in JSON format to be passed to the minimizer function")
 
+    arg_parser.add_argument('--visualize_ansatz', '--visualize-ansatz',
+                            action='store_true', help="Whether to visualize the ansatz function (if supported by platform)")
+
     args = arg_parser.parse_args()
 
     start_params            = args.start_params
@@ -48,6 +51,7 @@ def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_he
     max_func_evaluations    = args.max_func_evaluations
     minimizer_options       = json.loads( args.minimizer_options )
     minimizer_method        = get_first_callable( custom_optimizer )
+    visualize_ansatz        = args.visualize_ansatz
 
     # We only know how to limit the number of iterations for certain methods,
     # so will introduce this as a "patch" to their minimizer_options dictionary:
@@ -68,10 +72,11 @@ def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_he
     print("Using minimizer_method = '%s'"       % minimizer_method)
     print("Using max_func_evaluations = %d"     % max_func_evaluations)         # this parameter may influence the next one
     print("Using minimizer_options = '%s'"      % str(minimizer_options) )
+    print("Using visualize_ansatz = '%s'"       % str(visualize_ansatz) )
 
     minimizer_function = getattr(custom_optimizer, minimizer_method)   # minimizer_method is a string/name, minimizer_function is an imported callable
 
-    return start_params, sample_number, q_device_name, minimizer_method, minimizer_options, minimizer_function
+    return start_params, sample_number, q_device_name, minimizer_method, minimizer_options, minimizer_function, visualize_ansatz
 
 
 def ttot(t,s,p):
