@@ -165,7 +165,7 @@ def run(i):
 
     username    = os.getlogin()
     opti_method = i.get('opti_method', 'my_cobyla')
-    sample_size = i.get('sample_size', 1)
+    sample_size = i.get('sample_size', 100)
     repetitions = i.get('repetitions', 3)
     max_iter    = i.get('max_iter', 80)
 
