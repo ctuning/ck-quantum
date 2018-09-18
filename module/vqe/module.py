@@ -155,7 +155,7 @@ def run(i):
     remote_bool = i.get('remote', '') == 'yes'      # whether to record the experiment remotely or locally
     (record_repo, remote_repo) = ('remote-ck', 'ck-quantum-hackathons') if remote_bool else ('local', '')
 
-    provider    = i.get('provider', 'rigetti').lower()              # 'rigetti' or 'ibm'
+    provider    = i.get('provider', 'ibm').lower()              # 'rigetti' or 'ibm'
     hw_bool     = i.get('hardware', '') == 'yes'
     dev_bool    = i.get('dev', '') == 'yes'
 
