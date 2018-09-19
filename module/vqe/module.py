@@ -127,22 +127,12 @@ def deploy(i):
 
 def cleanup(i):
 
-    ck.out("Removing the detected env entries")
-    ## ck clean env --tags=optimizer,deployed
-    #
-    clean_adict = { 'action':           'clean',
-                    'module_uoa':       'env',
-                    'tags':             'vqe,deployed',
-                    'f':                'yes',
-    }
-    r=ck.access( clean_adict )
-    if r['return']>0: return r
-
-    ck.out("Removing the deployed soft entries")
-    ## ck rm soft:* --tags=vqe,optimizer,lib,deployed
+    ck.out("Removing the deployed soft and env entries")
+    ## ck rm *:* --tags=vqe,deployed
     #
     rm_adict = {    'action':           'rm',
-                    'module_uoa':       'soft',
+                    'repo_uoa':         'local'
+                    'module_uoa':       '*',
                     'data_uoa':         '*',
                     'tags':             'vqe,deployed',
     }
