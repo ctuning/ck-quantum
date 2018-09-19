@@ -65,10 +65,10 @@ def deploy(i):
 
     print('deploy() was called with the following arguments: {}\n'.format(i))
 
-    selection_type  = i.get('type', 'optimizer')
+    plugin_type     = i.get('type', 'optimizer')
 
     selected_value  = i.get('value')
-    template_uoa    = 'template.' + selection_type
+    template_uoa    = 'template.' + plugin_type
     dir_names       = list_deployables({ 'data_uoa': template_uoa })['dir_names']
 
     if not selected_value:      # Acquire it interactively
@@ -76,7 +76,7 @@ def deploy(i):
                         'module_uoa': 'misc',
                         'options': dir_names,
                         'default': '',
-                        'question': 'Please select the value for {}'.format(selection_type),
+                        'question': 'Please select the value for {}'.format(plugin_type),
         }
         r=ck.access( select_adict )
         if r['return']>0:
@@ -97,7 +97,7 @@ def deploy(i):
                     'module_uoa':       'soft',
                     'data_uoa':         template_uoa,
                     'new_module_uoa':   'soft',
-                    'new_data_uoa':     deployed_uoa
+                    'new_data_uoa':     deployed_uoa,
     }
     r=ck.access( cp_adict )
     if r['return']>0: return r
@@ -111,7 +111,7 @@ def deploy(i):
     update_adict = {'action':           'update',
                     'module_uoa':       'soft',
                     'data_uoa':         deployed_uoa,
-                    'tags':             'deployed'
+                    'tags':             'deployed',
     }
     r=ck.access( update_adict )
     if r['return']>0: return r
@@ -136,6 +136,34 @@ def deploy(i):
     if r['return']>0: return r
 
     return r
+
+
+def plugin_path(i):
+
+    plugin_type     = i.get('type', 'optimizer')
+
+    ## ck search soft --tags=deployed,optimizer
+    #
+    search_adict = {'action':           'search',
+                    'module_uoa':       'soft',
+                    'tags':             'deployed,'+plugin_type,
+    }
+    r=ck.access( search_adict )
+    if r['return']>0: return r
+
+    items_found = len(r['lst'])
+    if items_found!=1:
+        return {'return':1, 'error':'the number of deployed {} plugins was {}, expecting 1'.format(plugin_type, items_found)}
+
+    deployed_soft_entry_path = r['lst'][0]['path']
+    python_file_name = 'custom_{}.py'.format(plugin_type)
+
+    editable_file_path = os.path.join(deployed_soft_entry_path, 'python_code', '*', python_file_name)
+
+    if i.get('out')=='con':
+        ck.out(editable_file_path)
+
+    return {'return': 0, 'editable_file_path': editable_file_path}
 
 
 def cleanup(i):

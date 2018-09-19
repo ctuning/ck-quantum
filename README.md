@@ -104,18 +104,11 @@ $ ck deploy_optimizer vqe
 $ ck deploy_ansatz vqe
 ```
 
-### Go and edit a deployed ansatz plugin (written in python)
+### Edit the deployed optimizer (written in python) or the deployed ansatz plugin (written in python using Qiskit)
 ```
-$ ANSATZ_PLUGIN_ADDR=`ck search soft --tags=deployed,ansatz`
-$ ANSATZ_PLUGIN_DIR=`ck find $ANSATZ_PLUGIN_ADDR`
-$ vi $ANSATZ_PLUGIN_DIR/python_code/*/custom_ansatz.py
-```
+$ vi `ck plugin_path vqe --type=optimizer`
 
-### Similar with a deployed optimizer plugin
-```
-$ OPTIMIZER_PLUGIN_ADDR=`ck search soft --tags=deployed,optimizer`
-$ OPTIMIZER_PLUGIN_DIR=`ck find $OPTIMIZER_PLUGIN_ADDR`
-$ vi $OPTIMIZER_PLUGIN_DIR/python_code/*/custom_optimizer.py
+$ vi `ck plugin_path vqe --type=ansatz`
 ```
 
 ### View and send us experimental results (unfinished)

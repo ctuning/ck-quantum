@@ -15,6 +15,9 @@
     "deploy_optimizer": {
       "desc": "specifically deploy an optimizer"
     },
+    "plugin_path": {
+      "desc": "provide the path to the plugin's editable python file"
+    },
     "run": {
       "desc": "run several repetitions and record the results"
     }
