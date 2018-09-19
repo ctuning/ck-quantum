@@ -71,11 +71,24 @@ def deploy(i):
     template_uoa    = 'template.' + selection_type
     dir_names       = list_deployables({ 'data_uoa': template_uoa })['dir_names']
 
-    if not selected_value:
-        return {'return': 1, 'error': "--value is an obligatory parameter.\nPlease try again with one of the following values: {}".format(dir_names)}
+    if not selected_value:      # Acquire it interactively
+        select_adict = {'action': 'select_string',
+                        'module_uoa': 'misc',
+                        'options': dir_names,
+                        'default': '',
+                        'question': 'Please select the value for {}'.format(selection_type),
+        }
+        r=ck.access( select_adict )
+        if r['return']>0:
+            return r
+        else:
+            idx = r.get('selected_index', -1)
+            if idx<0:
+                return {'return':1, 'error':'selection number {} is not recognized'.format(idx)}
+            else:
+                selected_value = dir_names[idx]
 
     deployed_uoa    = 'deployed.' + selected_value
-
 
     ck.out("Creating soft:{} code-containing CK entry from a template".format(deployed_uoa))
     ## ck cp soft:template.optimizer soft:deployed.optimizer
