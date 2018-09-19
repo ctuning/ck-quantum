@@ -131,7 +131,7 @@ def cleanup(i):
     ## ck rm *:* --tags=vqe,deployed
     #
     rm_adict = {    'action':           'rm',
-                    'repo_uoa':         'local'
+                    'repo_uoa':         'local',
                     'module_uoa':       '*',
                     'data_uoa':         '*',
                     'tags':             'vqe,deployed',
