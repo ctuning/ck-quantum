@@ -1,6 +1,6 @@
 ## Installation (on Ubuntu)
 
-### Install global prerequisites, Python3 and its pip (Python2 is also supported)
+### Install global prerequisites, Python3 and its pip (Python2 is not supported)
 
 ```
 $ sudo apt-get install python3 python3-pip
@@ -9,13 +9,13 @@ $ sudo apt-get install python3 python3-pip
 ### Install Collective Knowledge
 
 ```
-$ sudo pip3 install ck
+$ sudo python3 -m pip install ck
 ```
 
 
 ## Installation (on MacOS)
 
-### Install Python3 and its pip (Python2 is also supported)
+### Install Python3 and its pip (Python2 is not supported)
 
 ```
 $ brew update
@@ -23,7 +23,7 @@ $ brew reinstall python
 ```
 
 ```
-$ pip install ck
+$ python3 -m pip install ck
 ```
 
 ## Non-root CK installation
@@ -49,71 +49,79 @@ $ ck version
 ```
 $ ck pull repo:ck-quantum
 $ ck pull repo:ck-env
-$ ck pull repo:ck-rigetti
 $ ck pull repo:ck-qiskit
 ```
 
-### Detect a Python interpreter (interactively choose one if there are several options)
+### Run a Qiskit test that will also install necessary components (agree with most defaults by pressing Return at the prompt)
 ```
-$ ck detect soft:compiler.python
-```
-
-
-### Install this CK repository with all its dependencies (other CK repos to reuse artifacts)
-
-```
-$ ck install package:tool-hackathon
+$ ck run program:qiskit-demo --cmd_key=hello
 ```
 
-### Install pyQuil
-
+### Deploy an optimizer plugin (one that just works)
 ```
-$ ck install package:lib-pyquil-1.9.0
-```
-
-### Run a demo program (press Enter if prompted)
-
-```
-$ ck run program:pyquil-demo
-...
-
-    * tmp-stdout.tmp
-
-      Number of games: 10
-      Q's winning average: 1.0
-      Picard's flip-decision average: 0.5
+$ ck deploy_optimizer vqe --value=optimizer.cobyla
 ```
 
-### Run VQE
-
+### Deploy an ansatz plugin (one that just works)
 ```
-$ ck run program:rigetti-vqe
+$ ck deploy_ansatz vqe --value=ansatz.tiny1
 ```
 
-### Benchmark VQE
-
+### Benchmark Qiskit-VQE with the selected optimizer and ansatz
 ```
-$ ck benchmark program:rigetti-vqe --repetitions=3 \
-  --record --record_repo=local --record_uoa=<email>[-<plaform>] \
-  --tags=qck,hackathon-2018_06_15,<email>,<platform>,<minimizer_method> \
-  --env.RIGETTI_QUANTUM_DEVICE=<platform> \
-  --env.VQE_MINIMIZER_METHOD=<minimizer_method> \
-  --env.VQE_SAMPLE_SIZE=<sample_number> \
-  --env.VQE_MAX_ITERATIONS=<max_iterations>
+$ ck run vqe
 ```
-where:
-- `email`: a valid email address;
-- `platform`: `8Q-Agave` or `QVM`;
-- `minimizer_method`: `my_nelder_mead` or `my_cobyla` or `my_minimizer` (as defined in [optimizers.py](https://github.com/ctuning/ck-quantum/blob/master/package/tool-hackathon/hackathon-src/hackathon/optimizers.py) installed under e.g. `$CK_TOOLS/hackathon-1.0-linux-64/lib/hackathon`);
-- `sample_size`: e.g. `100` (but no more than 200 please);
-- `max_iterations`: e.g. `80` (or another cut-off point);
 
-### View experimental results
+## Tweaking of VQE
 
+### Extra options of the "run" command
+```
+$ ck run vqe \
+  --sample_size=100 \
+  --max_iter=80 \
+  --repetitions=3
+```
+
+## Working with deployable plugins
+
+### See which plugins are deployed (both "soft" and "env" entries)
+```
+$ ck search --tags=deployed
+```
+
+### Remove all plugins
+```
+$ ck cleanup vqe
+```
+
+### Select an optimizer plugin to deploy
+```
+$ ck deploy_optimizer vqe
+```
+
+### Select an ansatz plugin to deploy
+```
+$ ck deploy_ansatz vqe
+```
+
+### Go and edit a deployed ansatz plugin (written in python)
+```
+$ ANSATZ_PLUGIN_ADDR=`ck search soft --tags=deployed,ansatz`
+$ ANSATZ_PLUGIN_DIR=`ck find $ANSATZ_PLUGIN_ADDR`
+$ vi $ANSATZ_PLUGIN_DIR/python_code/*/custom_ansatz.py
+```
+
+### Similar with a deployed optimizer plugin
+```
+$ OPTIMIZER_PLUGIN_ADDR=`ck search soft --tags=deployed,optimizer`
+$ OPTIMIZER_PLUGIN_DIR=`ck find $OPTIMIZER_PLUGIN_ADDR`
+$ vi $OPTIMIZER_PLUGIN_DIR/python_code/*/custom_optimizer.py
+```
+
+### View and send us experimental results (unfinished)
 ```
 $ ck list local:experiment:*
-<email>
-$ ck find local:experiment:<email>
+$ ck find local:experiment:*
 $ ck list_points local:experiment:<email>
 $ ck zip local:experiment:* --archive_name=$HOME/<email>.zip
 ```
