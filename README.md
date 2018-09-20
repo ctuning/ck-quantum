@@ -4,7 +4,7 @@
 
 # Obtain your IBM Quantum Experience API token
 
-Please register at [Quantum Experience](https://quantumexperience.ng.bluemix.net/qx/signup) and copy your API token from the ["Advanced"](https://quantumexperience.ng.bluemix.net/qx/account/advanced) tab (click the "Regenerate" button first).
+Please register at [Quantum Experience](https://quantumexperience.ng.bluemix.net/qx/signup) and copy your API token from the ["Advanced"](https://quantumexperience.ng.bluemix.net/qx/account/advanced) tab (click on the "Regenerate" button first).
 
 # Install prerequisites and workflows
 
@@ -60,7 +60,7 @@ $ ck run program:qiskit-demo --cmd_key=hello
 Execution time: 2.077 sec.
 ```
 
-Run the same test, but this time remotely using [IBM Q Experience](https://quantumexperience.ng.bluemix.net/qx). When prompted, please provide your API token.
+Run the same test, but this time remotely using [IBM Q Experience](https://quantumexperience.ng.bluemix.net/qx). When prompted, please provide [your API token](https://github.com/ctuning/ck-quantum#obtain-your-ibm-quantum-experience-api-token).
 
 ```
 $ ck run program:qiskit-demo --cmd_key=hello --env.CK_IBM_BACKEND=ibmq_qasm_simulator
