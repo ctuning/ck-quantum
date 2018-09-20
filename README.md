@@ -26,33 +26,19 @@ $ brew reinstall python
 $ python3 -m pip install ck
 ```
 
-## Non-root CK installation
-
-You can install CK in your local user space as follows:
-
-```
-$ git clone http://github.com/ctuning/ck
-$ export PATH=$PWD/ck/bin:$PATH
-$ export PYTHONPATH=$PWD/ck:$PYTHONPATH
-```
-
-## Test CK installation
-
-```
-$ ck version
-```
-
 ## Common part of the workflow installation
 
 ### Pull CK repositories
 
 ```
 $ ck pull repo:ck-quantum
-$ ck pull repo:ck-env
-$ ck pull repo:ck-qiskit
 ```
+This pulls several repositories: `ck-env`, `ck-qiskit` and `ck-rigetti`.
 
-### Run a Qiskit test that will also install necessary components (agree with most defaults by pressing Return at the prompt)
+
+### Install dependencies and run a test
+
+Run the following to install all the required dependencies (accept most defaults by pressing `Enter`/`Return`) and run a simple QISKit test:
 ```
 $ ck run program:qiskit-demo --cmd_key=hello
 ```
@@ -67,24 +53,19 @@ $ ck deploy_optimizer vqe --value=optimizer.cobyla
 $ ck deploy_ansatz vqe --value=ansatz.tiny1
 ```
 
-### Benchmark Qiskit-VQE with the selected optimizer and ansatz
+### Run QISKit-VQE once with the selected optimizer and ansatz
 ```
-$ ck run vqe
-```
-
-## Tweaking of VQE
-
-### Extra options of the "run" command
-```
-$ ck run vqe \
-  --sample_size=100 \
-  --max_iter=80 \
-  --repetitions=3
+$ ck run vqe --repetitions=1
 ```
 
-## Working with deployable plugins
+## Easy VQE exploration via optimizer parameters
+```
+$ ck run vqe --repetitions=10 --sample_size=100 --max_iter=80
+```
 
-### See which plugins are deployed (both "soft" and "env" entries)
+## Advanced VQE exploration via plugins
+
+### See which plugins are deployed (both `soft` and `env` entries)
 ```
 $ ck search --tags=deployed
 ```
@@ -94,24 +75,33 @@ $ ck search --tags=deployed
 $ ck cleanup vqe
 ```
 
-### Select an optimizer plugin to deploy
+### Working with optimizer plugins
+
+#### Select an optimizer plugin to deploy
 ```
 $ ck deploy_optimizer vqe
 ```
 
-### Select an ansatz plugin to deploy
+#### Edit the deployed optimizer
+```
+$ vi `ck plugin_path vqe --type=optimizer`
+```
+**NB:** The optimizer is written in Python.
+
+### Working with ansatz plugins
+
+#### Select an ansatz plugin to deploy
 ```
 $ ck deploy_ansatz vqe
 ```
 
-### Edit the deployed optimizer (written in python) or the deployed ansatz plugin (written in python using Qiskit)
+#### Edit the deployed ansatz plugin
 ```
-$ vi `ck plugin_path vqe --type=optimizer`
-
 $ vi `ck plugin_path vqe --type=ansatz`
 ```
+**NB:** The ansatz plugin is written in Python with QISKit.
 
-### View and send us experimental results (unfinished)
+### TODO: View and send us experimental results
 ```
 $ ck list local:experiment:*
 $ ck find local:experiment:*
