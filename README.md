@@ -15,7 +15,7 @@ Please register at [Quantum Experience](https://quantumexperience.ng.bluemix.net
 
 ### Ubuntu
 ```
-$ sudo apt-get install python3 python3-pip
+$ sudo apt-get install python3 python3-pip python3-tk
 $ sudo apt-get install libblas-dev liblapack-dev
 $ sudo python3 -m pip install ck
 ```
@@ -36,7 +36,7 @@ $ ck pull repo:ck-quantum
 ```
 **NB:** This pulls several dependent CK repositories: `ck-env`, `ck-qiskit` and `ck-rigetti`.
 
-### Run a couple of tests that will install some common dependencies
+### Run a couple of tests which will install some dependencies
 
 Run the following to install the software dependencies (accept most defaults by pressing `Enter`/`Return`) and run a simple QISKit test on a local simulator:
 ```
@@ -83,18 +83,15 @@ $ ck run program:qiskit-demo --cmd_key=hello --env.CK_IBM_BACKEND=ibmq_qasm_simu
 Execution time: 10.422 sec.
 ```
 
+## Run QISKit-VQE once
 
-### Deploy an optimizer plugin (one that just works)
+First, deploy a VQE ansatz and optimizer plugins that should just work:
 ```
 $ ck deploy_optimizer vqe --value=optimizer.cobyla
-```
-
-### Deploy an ansatz plugin (one that just works)
-```
 $ ck deploy_ansatz vqe --value=ansatz.tiny1
 ```
 
-### Run QISKit-VQE once with the selected optimizer and ansatz
+Then, launch VQE with the deployed optimizer and ansatz:
 ```
 $ ck run vqe --repetitions=1
 ```
