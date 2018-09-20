@@ -1,40 +1,36 @@
-## Installation (on Ubuntu)
+# Hackaton with London Quantum Computing Meetup
 
-### Install global prerequisites, Python3 and its pip (Python2 is not supported)
+* [6 October 2018](https://www.meetup.com/London-Quantum-Computing-Meetup/events/254156028/) (**"sold out"!**)
 
+# Install prerequisites and workflows
+
+## Install prerequisites
+- Python 3 and [pip](https://pypi.org/project/pip/)
+- [QISKit](https://qiskit.org/) (requires Python 3)
+- [Collective Knowledge](https://cknowledge.org) (CK)
+
+### Ubuntu
 ```
 $ sudo apt-get install python3 python3-pip
-```
-
-### Install Collective Knowledge
-
-```
+$ sudo apt-get install libblas-dev liblapack-dev
 $ sudo python3 -m pip install ck
 ```
 
-
-## Installation (on MacOS)
-
-### Install Python3 and its pip (Python2 is not supported)
-
+### MacOS
 ```
 $ brew update
 $ brew reinstall python
-```
-
-```
 $ python3 -m pip install ck
 ```
 
-## Common part of the workflow installation
+## Install workflows
 
 ### Pull CK repositories
 
 ```
 $ ck pull repo:ck-quantum
 ```
-This pulls several repositories: `ck-env`, `ck-qiskit` and `ck-rigetti`.
-
+**NB:** This pulls several dependent CK repositories: `ck-env`, `ck-qiskit` and `ck-rigetti`.
 
 ### Run a couple of tests that will install some common dependencies
 
