@@ -36,12 +36,18 @@ $ ck pull repo:ck-quantum
 This pulls several repositories: `ck-env`, `ck-qiskit` and `ck-rigetti`.
 
 
-### Install dependencies and run a test
+### Run a couple of tests that will install some common dependencies
 
-Run the following to install all the required dependencies (accept most defaults by pressing `Enter`/`Return`) and run a simple QISKit test:
+Run the following to install the software dependencies (accept most defaults by pressing `Enter`/`Return`) and run a simple QISKit test:
 ```
 $ ck run program:qiskit-demo --cmd_key=hello
 ```
+
+Run the same Qiskit test, but this time remotely (to test the connection with IBM QuantumExperience). Provide your API Token when asked:
+```
+$ ck run program:qiskit-demo --cmd_key=hello --env.CK_IBM_BACKEND=ibmq_qasm_simulator
+```
+
 
 ### Deploy an optimizer plugin (one that just works)
 ```
