@@ -40,9 +40,6 @@ def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_he
     arg_parser.add_argument('--minimizer_options', '--minimizer-options',
                             default=minimizer_options_default, help="A dictionary in JSON format to be passed to the minimizer function")
 
-    arg_parser.add_argument('--visualize_ansatz', '--visualize-ansatz',
-                            action='store_true', help="Whether to visualize the ansatz function (if supported by platform)")
-
     args = arg_parser.parse_args()
 
     start_params            = args.start_params
@@ -51,7 +48,6 @@ def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_he
     max_func_evaluations    = args.max_func_evaluations
     minimizer_options       = json.loads( args.minimizer_options )
     minimizer_method        = get_first_callable( custom_optimizer )
-    visualize_ansatz        = args.visualize_ansatz
 
     # We only know how to limit the number of iterations for certain methods,
     # so will introduce this as a "patch" to their minimizer_options dictionary:
@@ -72,11 +68,10 @@ def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_he
     print("Using minimizer_method = '%s'"       % minimizer_method)
     print("Using max_func_evaluations = %d"     % max_func_evaluations)         # this parameter may influence the next one
     print("Using minimizer_options = '%s'"      % str(minimizer_options) )
-    print("Using visualize_ansatz = '%s'"       % str(visualize_ansatz) )
 
     minimizer_function = getattr(custom_optimizer, minimizer_method)   # minimizer_method is a string/name, minimizer_function is an imported callable
 
-    return start_params, sample_number, q_device_name, minimizer_method, minimizer_options, minimizer_function, visualize_ansatz
+    return start_params, sample_number, q_device_name, minimizer_method, minimizer_options, minimizer_function
 
 
 def ttot(t,s,p):
