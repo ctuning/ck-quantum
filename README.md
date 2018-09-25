@@ -2,15 +2,10 @@
 
 * [6 October 2018](https://www.meetup.com/London-Quantum-Computing-Meetup/events/254156028/) (**"sold out"!**)
 
-## Preparation before the hackathon (this will win you valuable time on the day!)
+## Preparation before the hackathon (this will save you time on the day!)
 
-### Obtain your IBM Quantum Experience API token
-
-Please register at [Quantum Experience](https://quantumexperience.ng.bluemix.net/qx/signup) and copy your API token from the ["Advanced"](https://quantumexperience.ng.bluemix.net/qx/account/advanced) tab (click on the "Regenerate" button first).
-
-### Follow the instructions to [install CK-QISKit](https://github.com/ctuning/ck-qiskit)
-
-
+1. Please register at [Quantum Experience](https://quantumexperience.ng.bluemix.net/qx/signup) and copy your API token from the ["Advanced"](https://quantumexperience.ng.bluemix.net/qx/account/advanced) tab (click on the "Regenerate" button first).
+1. Follow [CK-QISKit instructions](https://github.com/ctuning/ck-qiskit).
 
 ## Run QISKit-VQE once
 
