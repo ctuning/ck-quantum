@@ -2,86 +2,15 @@
 
 * [6 October 2018](https://www.meetup.com/London-Quantum-Computing-Meetup/events/254156028/) (**"sold out"!**)
 
-# Obtain your IBM Quantum Experience API token
+## Preparation before the hackathon (this will win you valuable time on the day!)
+
+### Obtain your IBM Quantum Experience API token
 
 Please register at [Quantum Experience](https://quantumexperience.ng.bluemix.net/qx/signup) and copy your API token from the ["Advanced"](https://quantumexperience.ng.bluemix.net/qx/account/advanced) tab (click on the "Regenerate" button first).
 
-# Install prerequisites and workflows
-
-## Install prerequisites
-- Python 3 and [pip](https://pypi.org/project/pip/)
-- [QISKit](https://qiskit.org/) (requires Python 3)
-- [Collective Knowledge](https://cknowledge.org) (CK)
-
-### Ubuntu
-```
-$ sudo apt-get install python3 python3-pip python3-tk
-$ sudo apt-get install libblas-dev liblapack-dev
-$ sudo python3 -m pip install ck
-```
-
-### MacOS
-```
-$ brew update
-$ brew reinstall python
-$ python3 -m pip install ck
-```
-
-## Install workflows
-
-### Pull CK repositories
-
-```
-$ ck pull repo:ck-quantum
-```
-**NB:** This pulls several dependent CK repositories: `ck-env`, `ck-qiskit` and `ck-rigetti`.
-
-### Run a couple of tests which will install some dependencies
-
-Run the following to install the software dependencies (accept most defaults by pressing `Enter`/`Return`) and run a simple QISKit test on a local simulator:
-```
-$ ck run program:qiskit-demo --cmd_key=hello
-...
- (printing output files)
-
-    * tmp-stdout.tmp
-
-      -- Ignoring SSL errors.  This is not recommended --
-      The backends available for use are: ['ibmq_qasm_simulator', 'ibmqx2', 'ibmqx4', 'ibmqx5', 'local_qasm_simulator', 'local_statevector_simulator', 'local_unitary_simulator']
-
-      COMPLETED
-      {'counts': {'00': 529, '11': 495}}
+### Follow the instructions to [install CK-QISKit](https://github.com/ctuning/ck-qiskit)
 
 
-    * tmp-stderr.tmp
-
-
-
-Execution time: 2.077 sec.
-```
-
-Run the same test, but this time remotely using [IBM Q Experience](https://quantumexperience.ng.bluemix.net/qx). When prompted, please provide [your API token](https://github.com/ctuning/ck-quantum#obtain-your-ibm-quantum-experience-api-token).
-
-```
-$ ck run program:qiskit-demo --cmd_key=hello --env.CK_IBM_BACKEND=ibmq_qasm_simulator
-...
- (printing output files)
-
-    * tmp-stdout.tmp
-
-      -- Ignoring SSL errors.  This is not recommended --
-      The backends available for use are: ['ibmq_qasm_simulator', 'ibmqx2', 'ibmqx4', 'ibmqx5', 'local_qasm_simulator', 'local_statevector_simulator', 'local_unitary_simulator']
-
-      COMPLETED
-      {'creg_labels': 'cr[2]', 'additionalData': {'seed': 1}, 'time': 0.00130243, 'counts': {'11': 495, '00': 529}, 'date': '2018-09-20T14:29:49.648Z'}
-
-
-    * tmp-stderr.tmp
-
-
-
-Execution time: 10.422 sec.
-```
 
 ## Run QISKit-VQE once
 
@@ -139,10 +68,10 @@ $ vi `ck plugin_path vqe --type=ansatz`
 ```
 **NB:** The ansatz plugin is written in Python with QISKit.
 
-### TODO: View and send us experimental results
+### TODO: Review and send us the results of your experiments
 ```
-$ ck list local:experiment:*
-$ ck find local:experiment:*
-$ ck list_points local:experiment:<email>
-$ ck zip local:experiment:* --archive_name=$HOME/<email>.zip
+$ ck list local:experiment:*                                # the list of all of your experimental entries
+$ ck find local:experiment:*                                # where the directories are located
+$ ck list_points local:experiment:my_experiment_1
+$ ck transfer misc local:experiment:my_experiment_256 --target_server_uoa=remote-ck --target_repo_uoa=ck-quantum-hackathon-20181006  # share your best result with us
 ```
