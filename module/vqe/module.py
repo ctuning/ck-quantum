@@ -15,10 +15,14 @@ ck=None # Will be updated by CK (initialized CK kernel)
 
 
 import os
+import sys
 from pprint import pprint
 
 
 def init(i):
+
+    vqe_plugin_directory = os.path.join( os.path.dirname(__file__), '..', '..', 'env', 'vqe_utils' )
+    sys.path.append( vqe_plugin_directory )    # allow this module to import vqe_utils
 
     return {'return':0}
 
@@ -220,8 +224,9 @@ def run(i):
     }[provider]
 
     record_uoa  = '{}__{}_{}_{}samples_{}'.format(timestamp, username, opti_method, sample_size, q_device)
+    record_cid  = 'local:experiment:{}'.format(record_uoa)
 
-    ck.out('Will be recording into local:experiment:{}\n'.format(record_uoa))
+    ck.out('Will be recording the results into {}\n'.format(record_cid))
 
     benchmark_adict = {'action':                'benchmark',
                 'module_uoa':                   'program',
@@ -239,6 +244,9 @@ def run(i):
     }
 
     r=ck.access( benchmark_adict )
+    if r['return']>0: return r
+
+    ck.out('The results have been recorded into {}\n'.format(record_cid))
 
     return r
 
@@ -262,3 +270,38 @@ def upload(i):
     }
     r=ck.access( transfer_adict )
     return r
+
+
+def time_to_solution(i):
+
+    # print('time_to_solution() was called with the following arguments: {}\n'.format(i))
+
+    from vqe_utils import benchmark_list_of_runs
+
+    delta       = float( i.get('delta', 0.15) )
+    prob        = float( i.get('prob', 0.90) )
+    which_fun   = i.get('which_fun', 'fun_validated')
+    which_time  = i.get('which_time', 'total_q_shots')
+    show_more   = i.get('show_more', '')=='yes'
+
+    xcids       = i.get('xcids',[])
+    xcid        = xcids[0]
+
+    repo_uoa    = xcid.get('repo_uoa', 'local')
+    module_uoa  = xcid.get('module_uoa', 'experiment')
+    data_uoa    = xcid.get('data_uoa')
+
+    load_point_adict = {    'action':           'load_point',
+                            'repo_uoa':         repo_uoa,
+                            'module_uoa':       module_uoa,
+                            'data_uoa':         data_uoa,
+    }
+    r=ck.access( load_point_adict )
+    if r['return']>0: return r
+
+    characteristics_list    = r['dict']['0001']['characteristics_list']
+    list_of_runs            = [char['run'] for char in characteristics_list]
+
+    benchmark_list_of_runs(list_of_runs, delta, prob, which_fun, which_time, show_more)
+
+    return {'return': 0}

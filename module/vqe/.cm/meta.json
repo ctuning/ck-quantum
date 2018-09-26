@@ -23,6 +23,9 @@
     },
     "upload": {
       "desc": "upload the best experimental results on the server for visualization and comparison"
+    },
+    "time_to_solution": {
+      "desc": "calculate the Time-to-Solution metric for a given experiment"
     }
   }, 
   "copyright": "See CK COPYRIGHT.txt for copyright details", 

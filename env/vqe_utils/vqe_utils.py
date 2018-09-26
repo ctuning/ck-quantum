@@ -1,8 +1,4 @@
-import json
 import numpy as np
-
-import custom_optimizer     # the file will be different depending on the plugin choice
-
 
 def get_first_callable( namespace ):
     "return the first callable function in the given namespace"
@@ -20,6 +16,8 @@ def get_first_callable( namespace ):
 def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_help, minimizer_options_default='{}', start_params_zeros_default=True):
 
     import argparse
+    import json
+    import custom_optimizer     # the file will be different depending on the plugin choice
 
     start_params_default = [ 0.0 ] * num_params if start_params_zeros_default else np.random.randn( num_params )  # Initial guess of ansatz
 
@@ -134,19 +132,24 @@ def benchmark_list_of_runs(list_of_runs, delta, prob, which_fun_key, which_time_
             vqe_output      = run['vqe_output']
             report          = run['report']
 
-            fun             = vqe_output['fun']
-            fun_validated   = vqe_output['fun_validated']
-            fun_exact       = vqe_output['fun_exact']
-            fun_selected    = vqe_output[which_fun_key]
+            fun             = float(vqe_output['fun'])
+            fun_validated   = float(vqe_output['fun_validated'])
+            fun_exact_present   = 'fun_exact' in vqe_output
+            fun_exact       = float(vqe_output['fun_exact']) if fun_exact_present else None     # may not be defined for a particular implementation
+            fun_selected    = float(vqe_output[which_fun_key])
 
             q_seconds       = report['total_q_seconds']
             q_shots         = report['total_q_shots']
             time_selected   = report[which_time_key]
 
             if verbose:
-                print("fun_participant={:.4f}, fun_validated={:.4f}, fun_exact={:.4f}, Qtime={:.2f}sec, Qshots={}".format(fun, fun_validated, fun_exact, q_seconds, q_shots))
+                abs_diff    = abs( fun_selected - classical_energy )
+                hit_bool    = abs_diff < delta
+                fun_exact_str = 'fun_exact={:.4f}, '.format(fun_exact) if fun_exact_present else ''
+                print("fun_participant={:.4f}, fun_validated={:.4f}, {}Qtime={:.2f}sec, Qshots={}, abs_diff={:.4f} {}" \
+                    .format(fun, fun_validated, fun_exact_str, q_seconds, q_shots, abs_diff, '(hit)' if hit_bool else '(miss)'))
 
-            if abs( fun_selected - classical_energy )<delta:
+            if hit_bool:
                 n_succ += 1
 
             list_selected_times.append(time_selected)
