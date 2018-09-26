@@ -11,8 +11,11 @@
 
 cfg={}  # Will be updated by CK (meta description of this module)
 work={} # Will be updated by CK (temporal data)
-ck=None # Will be updated by CK (initialized CK kernel) 
+ck=None # Will be updated by CK (initialized CK kernel)
 
+hackathon_date          = '20181006'    # TODO: change this to None after the event
+hackathon_tag           = 'hackathon-{}'.format(hackathon_date if hackathon_date else 'dev')
+hackathon_remote_repo   = 'ck-quautum-hackathon-{}'.format(hackathon_date) if hackathon_date else 'ck-quautum-hackathons'
 
 import os
 import sys
@@ -196,10 +199,9 @@ def run(i):
     if not timestamp:       # Get current timestamp:
         r=ck.get_current_date_time({})
         if r['return']>0: return r
-        timestamp   = r['iso_datetime'].split('.')[0].replace(':', '_')     # cut to seconds' resolution
+        timestamp   = r['iso_datetime'].split('.')[0].replace(':', '_').replace('-', '_')   # cut to seconds' resolution
 
     username    = os.getlogin()
-    opti_method = i.get('opti_method', 'my_cobyla')
     sample_size = i.get('sample_size', 100)
     repetitions = i.get('repetitions', 3)
     max_iter    = i.get('max_iter', 80)
@@ -223,7 +225,7 @@ def run(i):
         'rigetti':  'rigetti-vqe2',
     }[provider]
 
-    record_uoa  = '{}__{}_{}_{}samples_{}'.format(timestamp, username, opti_method, sample_size, q_device)
+    record_uoa  = '{}--{}-{}-{}samples-{}reps'.format(username, timestamp, q_device, sample_size, repetitions)
     record_cid  = 'local:experiment:{}'.format(record_uoa)
 
     ck.out('Will be recording the results into {}\n'.format(record_cid))
@@ -235,8 +237,7 @@ def run(i):
                 'record':                       'yes',
                 'record_repo':                  'local',
                 'record_uoa':                   record_uoa,
-                'tags':                         'hackathon-20181006,{},{},{}'.format(q_device, username, opti_method),
-                'env.VQE_MINIMIZER_METHOD':     opti_method,
+                'tags':                         ','.join([hackathon_tag, q_device, username]),
                 'env.VQE_SAMPLE_SIZE':          sample_size,
                 'env.VQE_MAX_ITERATIONS':       max_iter,
                 'env.VQE_QUANTUM_BACKEND':      q_device,
@@ -264,9 +265,9 @@ def upload(i):
 
     transfer_adict = {  'action':               'transfer',
                         'module_uoa':           'misc',
-                        'cids':                 cids,       # 'ck transfer' will perform its own cids->xcids parsing
+                        'cids':                 cids,                       # 'ck transfer' will perform its own cids->xcids parsing
                         'target_server_uoa':    'remote-ck',
-                        'target_repo_uoa':      'ck-quantum-hackathon-20181006',    # TODO: change this after the event to 'ck-quantum-hackathons'
+                        'target_repo_uoa':      hackathon_remote_repo,
     }
     r=ck.access( transfer_adict )
     return r
