@@ -20,6 +20,9 @@
     },
     "run": {
       "desc": "run several repetitions and record the results"
+    },
+    "upload": {
+      "desc": "upload the best experimental results on the server for visualization and comparison"
     }
   }, 
   "copyright": "See CK COPYRIGHT.txt for copyright details", 

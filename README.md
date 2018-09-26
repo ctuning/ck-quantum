@@ -65,8 +65,8 @@ $ vi `ck plugin_path vqe --type=ansatz`
 
 ### TODO: Review and send us the results of your experiments
 ```
-$ ck list local:experiment:*                                # the list of all of your experimental entries
+$ ck search local:experiment:*                              # the list of all of your experimental entries
 $ ck find local:experiment:*                                # where the directories are located
 $ ck list_points local:experiment:my_experiment_1
-$ ck transfer misc local:experiment:my_experiment_256 --target_server_uoa=remote-ck --target_repo_uoa=ck-quantum-hackathon-20181006  # share your best result with us
+$ ck upload vqe local:experiment:my_experiment_256          # share results of your best experiments with us
 ```

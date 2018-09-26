@@ -7,7 +7,7 @@
 # Developer: Leo Gordon, leo@dividiti.com
 #
 
-# ck benchmark program:rigetti-vqe --repetitions=3 --record --record_repo=local --record_uoa=lg4_again3 --tags=hackathon-again,lg4,QVM,my_cobyla --env.RIGETTI_QUANTUM_DEVICE=QVM --env.VQE_MINIMIZER_METHOD=my_cobyla --env.VQE_SAMPLE_SIZE=1 --env.VQE_MAX_ITERATIONS=80  --skip_freq
+# ck benchmark program:rigetti-vqe --repetitions=3 --record --record_uoa=lg4_again3 --tags=hackathon-again,lg4,QVM,my_cobyla --env.RIGETTI_QUANTUM_DEVICE=QVM --env.VQE_MINIMIZER_METHOD=my_cobyla --env.VQE_SAMPLE_SIZE=1 --env.VQE_MAX_ITERATIONS=80  --skip_freq
 
 cfg={}  # Will be updated by CK (meta description of this module)
 work={} # Will be updated by CK (temporal data)
@@ -200,12 +200,8 @@ def run(i):
     repetitions = i.get('repetitions', 3)
     max_iter    = i.get('max_iter', 80)
 
-    remote_bool = i.get('remote', '') == 'yes'      # whether to record the experiment remotely or locally
-    (record_repo, remote_repo) = ('remote-ck', 'ck-quantum-hackathons') if remote_bool else ('local', '')
-
-    provider    = i.get('provider', 'ibm').lower()              # 'rigetti' or 'ibm'
+    provider    = i.get('provider', 'ibm').lower()              # 'ibm' (default) or 'rigetti'
     hw_bool     = i.get('hardware', '') == 'yes'
-    dev_bool    = i.get('dev', '') == 'yes'
 
     q_device    = {
         'rigetti' : {
@@ -219,29 +215,22 @@ def run(i):
     }[provider][hw_bool]
 
     program     = {
-        'rigetti' : {
-            False : 'rigetti-vqe',
-            True : 'rigetti-vqe2',
-        },
-        'ibm' : {
-            False : 'qiskit-vqe',
-            True : 'qiskit-vqe',
-        },
-    }[provider][dev_bool]
+        'ibm':      'qiskit-vqe',
+        'rigetti':  'rigetti-vqe2',
+    }[provider]
 
     record_uoa  = '{}__{}_{}_{}samples_{}'.format(timestamp, username, opti_method, sample_size, q_device)
 
-    ck.out('Will be recording into {}{}:experiment:{}\n'.format(record_repo, '/{}'.format(remote_repo) if remote_repo else '', record_uoa))
+    ck.out('Will be recording into local:experiment:{}\n'.format(record_uoa))
 
     benchmark_adict = {'action':                'benchmark',
                 'module_uoa':                   'program',
                 'data_uoa':                     program,
                 'repetitions':                  repetitions,
                 'record':                       'yes',
-                'record_repo':                  record_repo,
+                'record_repo':                  'local',
                 'record_uoa':                   record_uoa,
-                'record_experiment_repo':       remote_repo,
-                'tags':                         'post-hackathon,{},{},{}'.format(q_device, username, opti_method),
+                'tags':                         'hackathon-20181006,{},{},{}'.format(q_device, username, opti_method),
                 'env.VQE_MINIMIZER_METHOD':     opti_method,
                 'env.VQE_SAMPLE_SIZE':          sample_size,
                 'env.VQE_MAX_ITERATIONS':       max_iter,
@@ -251,4 +240,25 @@ def run(i):
 
     r=ck.access( benchmark_adict )
 
+    return r
+
+
+def upload(i):
+
+    print('upload() was called with the following arguments: {}\n'.format(i))
+
+    # TODO: add other ways to pick the CID(s) we want to upload
+
+    cids    = i.get('cids')
+
+    if len(cids)==0:
+        return {'return':1, 'error':'expecting one or more entry names to be uploaded'}
+
+    transfer_adict = {  'action':               'transfer',
+                        'module_uoa':           'misc',
+                        'cids':                 cids,       # 'ck transfer' will perform its own cids->xcids parsing
+                        'target_server_uoa':    'remote-ck',
+                        'target_repo_uoa':      'ck-quantum-hackathon-20181006',    # TODO: change this after the event to 'ck-quantum-hackathons'
+    }
+    r=ck.access( transfer_adict )
     return r
