@@ -57,6 +57,12 @@ $ vi `ck plugin_path vqe --type=optimizer`
 $ ck deploy_ansatz vqe
 ```
 
+#### Visualize the ansatz circuit
+```
+$ ck run program:visualize-ansatz
+$ open `ck find program:visualize-ansatz`/tmp/ansatz_circuit.png
+```
+
 #### Edit the deployed ansatz plugin
 ```
 $ vi `ck plugin_path vqe --type=ansatz`
