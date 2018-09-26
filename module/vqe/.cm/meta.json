@@ -21,6 +21,9 @@
     "run": {
       "desc": "run several repetitions and record the results"
     },
+    "pick_an_experiment": {
+      "desc": "an interactive helper function"
+    },
     "upload": {
       "desc": "upload the best experimental results on the server for visualization and comparison"
     },

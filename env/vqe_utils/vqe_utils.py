@@ -119,14 +119,18 @@ def benchmark_list_of_runs(list_of_runs, delta, prob, which_fun_key, which_time_
     if num_repetitions:
         first_run_input     = list_of_runs[0]['vqe_input']
         classical_energy    = first_run_input['classical_energy']
-        minimizer_src       = first_run_input['minimizer_src']
         minimizer_method    = first_run_input['minimizer_method']
+        minimizer_src       = first_run_input['minimizer_src']
+        ansatz_method       = first_run_input.get('ansatz_method')
+        ansatz_src          = first_run_input.get('ansatz_src')
 
         n_succ              = 0
         list_selected_times = []
 
         if verbose:
-            print("experiment_file: Goal={}, Minimizer={}, Source:\n{}\n\n{}\n{}\n".format(classical_energy, minimizer_method, '-'*100, minimizer_src, '='*100))
+            print("experiment_file: Goal={}, Minimizer={}, Minimizer_source:\n{}\n\n{}\n{}\n".format(classical_energy, minimizer_method, '-'*100, minimizer_src, '='*100))
+            if ansatz_method and ansatz_src:
+                print("Ansatz={}, Ansatz_source:\n{}\n{}".format(ansatz_method, ansatz_src, '-'*100))
 
         for run in list_of_runs:
             vqe_output      = run['vqe_output']

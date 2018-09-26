@@ -72,14 +72,16 @@ $ vi `ck plugin_path vqe --type=ansatz`
 
 ## Review the results (e.g. using time-to-solution parametric metric)
 ```
-$ ck search local:experiment:*                                                      # the list of all of your experimental entries
-$ ck find local:experiment:*                                                        # where the experiment directories are located
-$ ck time_to_solution local:experiment:my_experiment_10 --delta=0.015 --prob=0.8    # check time-to-solution metric for a particular experiment and parameters
+$ ck search local:experiment:*                                                          # the list of all of your experimental entries
+$ ck find local:experiment:*                                                            # where the experiment directories are located
+$ ck time_to_solution vqe --delta=0.015 --prob=0.95                                     # TTS (pick the experiment entry interactively)
+OR
+$ ck time_to_solution vqe local:experiment:my_experiment_10 --delta=0.015 --prob=0.8    # TTS (supply the experiment from command line)
 ```
 
 ## Send us the results of your experiments
 ```
-$ ck upload vqe local:experiment:my_experiment_5 local:experiment:my_experiment_13  # share results of your best experiments with us
+$ ck upload vqe                                                                     # upload (pick the experiment entry interactively)
 OR
-$ ck upload vqe                                                                     # interactively select an entry to upload
+$ ck upload vqe local:experiment:my_experiment_5 local:experiment:my_experiment_13  # upload (supply the experiment from command line)
 ```

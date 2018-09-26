@@ -252,6 +252,37 @@ def run(i):
     return r
 
 
+def pick_an_experiment(i):
+
+    search_adict = {'action':       'search',
+                    'repo_uoa':     'local',
+                    'module_uoa':   'experiment',
+                    'data_uoa':     '*',
+    }
+    r=ck.access( search_adict )
+    if r['return']>0: return r
+
+    all_experiment_names = [ '{repo_uoa}:{module_uoa}:{data_uoa}'.format(**entry_dict) for entry_dict in r['lst']]
+
+    select_adict = {'action': 'select_string',
+                    'module_uoa': 'misc',
+                    'options': all_experiment_names,
+                    'default': '',
+                    'question': 'Please select the experiment entry to upload',
+    }
+    r=ck.access( select_adict )
+    if r['return']>0:
+        return r
+    else:
+        idx = r.get('selected_index', -1)
+        if idx<0:
+            return {'return':1, 'error':'selection number {} is not recognized'.format(idx)}
+        else:
+            cid = all_experiment_names[idx]
+
+    return {'return':0, 'cid': cid}
+
+
 def upload(i):
 
     # print('upload() was called with the following arguments: {}\n'.format(i))
@@ -259,32 +290,10 @@ def upload(i):
     cids    = i.get('cids')
 
     if len(cids)==0:
-        search_adict = {'action':       'search',
-                        'repo_uoa':     'local',
-                        'module_uoa':   'experiment',
-                        'data_uoa':     '*',
-        }
-        r=ck.access( search_adict )
+        r=ck.access( {'action': 'pick_an_experiment', 'module_uoa': 'vqe'} )
+
         if r['return']>0: return r
-
-        all_experiment_names = [ '{repo_uoa}:{module_uoa}:{data_uoa}'.format(**entry_dict) for entry_dict in r['lst']]
-
-        select_adict = {'action': 'select_string',
-                        'module_uoa': 'misc',
-                        'options': all_experiment_names,
-                        'default': '',
-                        'question': 'Please select the experiment entry to upload',
-        }
-        r=ck.access( select_adict )
-        if r['return']>0:
-            return r
-        else:
-            idx = r.get('selected_index', -1)
-            if idx<0:
-                return {'return':1, 'error':'selection number {} is not recognized'.format(idx)}
-            else:
-                cids = [ all_experiment_names[idx] ]
-
+        cids = [ r['cid'] ]
 
     transfer_adict = {  'action':               'transfer',
                         'module_uoa':           'misc',
@@ -311,12 +320,22 @@ def time_to_solution(i):
     which_time  = i.get('which_time', 'total_q_shots')
     show_more   = i.get('show_more', '')=='yes'
 
-    xcids       = i.get('xcids',[])
-    xcid        = xcids[0]
+    cids        = i.get('cids',[])
 
-    repo_uoa    = xcid.get('repo_uoa', 'local')
-    module_uoa  = xcid.get('module_uoa', 'experiment')
-    data_uoa    = xcid.get('data_uoa')
+    if len(cids)>0:
+        cid = cids[0]
+    else:
+        r=ck.access( {'action': 'pick_an_experiment', 'module_uoa': 'vqe'} )
+        if r['return']>0: return r
+        cid = r['cid']
+
+    r=ck.parse_cid({'cid': cid})
+    if r['return']>0:
+        print("Cannot parse CID '{}'".format(cid))
+    else:
+        repo_uoa    = r.get('repo_uoa','')
+        module_uoa  = r.get('module_uoa','')
+        data_uoa    = r.get('data_uoa','')
 
     load_point_adict = {    'action':           'load_point',
                             'repo_uoa':         repo_uoa,
