@@ -15,7 +15,7 @@ ck=None # Will be updated by CK (initialized CK kernel)
 
 hackathon_date          = '20181006'    # TODO: change this to None after the event
 hackathon_tag           = 'hackathon-{}'.format(hackathon_date if hackathon_date else 'dev')
-hackathon_remote_repo   = 'ck-quautum-hackathon-{}'.format(hackathon_date) if hackathon_date else 'ck-quautum-hackathons'
+hackathon_remote_repo   = 'ck-quantum-hackathon-{}'.format(hackathon_date) if hackathon_date else 'ck-quantum-hackathons'
 
 import os
 import sys
@@ -254,14 +254,37 @@ def run(i):
 
 def upload(i):
 
-    print('upload() was called with the following arguments: {}\n'.format(i))
-
-    # TODO: add other ways to pick the CID(s) we want to upload
+    # print('upload() was called with the following arguments: {}\n'.format(i))
 
     cids    = i.get('cids')
 
     if len(cids)==0:
-        return {'return':1, 'error':'expecting one or more entry names to be uploaded'}
+        search_adict = {'action':       'search',
+                        'repo_uoa':     'local',
+                        'module_uoa':   'experiment',
+                        'data_uoa':     '*',
+        }
+        r=ck.access( search_adict )
+        if r['return']>0: return r
+
+        all_experiment_names = [ '{repo_uoa}:{module_uoa}:{data_uoa}'.format(**entry_dict) for entry_dict in r['lst']]
+
+        select_adict = {'action': 'select_string',
+                        'module_uoa': 'misc',
+                        'options': all_experiment_names,
+                        'default': '',
+                        'question': 'Please select the experiment entry to upload',
+        }
+        r=ck.access( select_adict )
+        if r['return']>0:
+            return r
+        else:
+            idx = r.get('selected_index', -1)
+            if idx<0:
+                return {'return':1, 'error':'selection number {} is not recognized'.format(idx)}
+            else:
+                cids = [ all_experiment_names[idx] ]
+
 
     transfer_adict = {  'action':               'transfer',
                         'module_uoa':           'misc',
@@ -270,7 +293,10 @@ def upload(i):
                         'target_repo_uoa':      hackathon_remote_repo,
     }
     r=ck.access( transfer_adict )
-    return r
+    if r['return']>0: return r
+
+    ck.out('Uploaded.')
+    return {'return': 0}
 
 
 def time_to_solution(i):
