@@ -232,7 +232,23 @@ def run(i):
         'rigetti':  'rigetti-vqe2',
     }[provider]
 
-    record_uoa  = '{}--{}-{}-{}samples-{}reps'.format(username, timestamp, q_device, sample_size, repetitions)
+    opath_adict = { 'action':       'plugin_path',
+                    'module_uoa':   'vqe',
+                    'type':         'optimizer',
+    }
+    r=ck.access( opath_adict )
+    if r['return']>0: return r
+    optimizer_tag   = os.path.basename( r['plugin_dir'] )
+
+    apath_adict = { 'action':       'plugin_path',
+                    'module_uoa':   'vqe',
+                    'type':         'ansatz',
+    }
+    r=ck.access( apath_adict )
+    if r['return']>0: return r
+    ansatz_tag      = os.path.basename( r['plugin_dir'] )
+
+    record_uoa  = '{}--{}-{}-{}-{}-{}samples-{}reps'.format(username, timestamp, q_device, ansatz_tag, optimizer_tag, sample_size, repetitions)
     record_cid  = 'local:experiment:{}'.format(record_uoa)
 
     ck.out('Will be recording the results into {}\n'.format(record_cid))
@@ -244,7 +260,7 @@ def run(i):
                 'record':                       'yes',
                 'record_repo':                  'local',
                 'record_uoa':                   record_uoa,
-                'tags':                         ','.join([hackathon_tag, q_device, username]),
+                'tags':                         ','.join([hackathon_tag, username, q_device, ansatz_tag, optimizer_tag]),
                 'env.VQE_SAMPLE_SIZE':          sample_size,
                 'env.VQE_MAX_ITERATIONS':       max_iter,
                 'env.VQE_QUANTUM_BACKEND':      q_device,
