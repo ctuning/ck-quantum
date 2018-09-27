@@ -60,7 +60,7 @@ $ ck deploy_ansatz vqe
 #### Visualize the ansatz circuit
 ```
 $ ck run program:visualize-ansatz
-$ open `ck find program:visualize-ansatz`/tmp/ansatz_circuit.png
+$ open `ck find program:visualize-ansatz`/ansatz_circuit.png
 ```
 
 #### Edit the deployed ansatz plugin
