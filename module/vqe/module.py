@@ -149,28 +149,35 @@ def plugin_path(i):
 
     plugin_type     = i.get('type', 'optimizer')
 
-    ## ck search soft --tags=deployed,optimizer
-    #
     search_adict = {'action':           'search',
-                    'module_uoa':       'soft',
-                    'tags':             'deployed,'+plugin_type,
+                    'module_uoa':       'env',
+                    'data_uoa':         '*',
+                    'tags':             'deployed,{}'.format(plugin_type),
     }
     r=ck.access( search_adict )
     if r['return']>0: return r
 
-    items_found = len(r['lst'])
-    if items_found!=1:
-        return {'return':1, 'error':'the number of deployed {} plugins was {}, expecting 1'.format(plugin_type, items_found)}
+    lst_len = len(r['lst'])
+    if lst_len != 1:
+        return {'return':1, 'error':'Expecting a single {} plugin, but found {}'.format(plugin_type, lst_len)}
 
-    deployed_soft_entry_path = r['lst'][0]['path']
-    python_file_name = 'custom_{}.py'.format(plugin_type)
+    data_uoa = r['lst'][0]['data_uoa']
 
-    editable_file_path = os.path.join(deployed_soft_entry_path, 'python_code', '*', python_file_name)
+    load_adict = {  'action':           'load',
+                    'module_uoa':       'env',
+                    'data_uoa':         data_uoa,
+    }
+    r=ck.access( load_adict )
+    if r['return']>0: return r
+
+    full_path       = r['dict']['customize']['full_path']
+    plugin_dir      = os.path.dirname( full_path )
+    plugin_filename = os.path.basename( full_path )
 
     if i.get('out')=='con':
-        ck.out(editable_file_path)
+        ck.out( full_path )
 
-    return {'return': 0, 'editable_file_path': editable_file_path}
+    return {'return': 0, 'full_path': full_path, 'plugin_dir': plugin_dir, 'plugin_filename': plugin_filename}
 
 
 def cleanup(i):
