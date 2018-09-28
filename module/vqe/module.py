@@ -127,7 +127,7 @@ def deploy(i):
     for dir_name in dir_names:
         if dir_name!=selected_value:
             dir_path = os.path.join(deployed_soft_entry_path, 'python_code', dir_name)
-            os.system("rm -rf {}".format(dir_path))     # FIXME: dangerous, look at other options
+            ck.delete_directory( {'path': dir_path} )
 
     ck.out("Creating an environment entry that sets up the paths for the soft:{} CK entry".format(deployed_uoa))
     ## ck detect soft --tags=vqe,optimizer,lib,deployed --extra_tags=optimizer.custom --full_path=/Users/lg4/CK/local/soft/deployed.optimizer/python_code/optimizer.custom/custom_optimizer.py
