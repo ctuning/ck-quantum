@@ -260,7 +260,7 @@ def run(i):
                 'record':                       'yes',
                 'record_repo':                  'local',
                 'record_uoa':                   record_uoa,
-                'tags':                         ','.join([hackathon_tag, username, q_device, ansatz_tag, optimizer_tag]),
+                'tags':                         ','.join(['qck', hackathon_tag, username, q_device, ansatz_tag, optimizer_tag]),
                 'env.VQE_SAMPLE_SIZE':          sample_size,
                 'env.VQE_MAX_ITERATIONS':       max_iter,
                 'env.VQE_QUANTUM_BACKEND':      q_device,
