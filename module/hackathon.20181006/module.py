@@ -184,21 +184,13 @@ def get_raw_data(i):
             tags = r['dict']['tags']
 
             skip = False
-            # FIXME: Get the team name.
-            team_tags = [ tag for tag in tags if tag.startswith('team-') ]
-            email_tags = [ tag for tag in tags if tag.find('@')!=-1 ]
-            if len(team_tags) > 0:
-                team = team_tags[0][0:7]
-            elif len(email_tags) > 0:
-                team = email_tags[0]
-            else:
-                print('[Warning] Cannot determine team name for experiment in: \'%s\'' % r['path'])
-                team = 'team-default'
-
             if skip:
                 print('[Warning] Skipping experiment with bad tags:')
                 print(tags)
                 continue
+
+            # Get the team name.
+            team = r['dict'].get('team','team-default')
         
             # For each point.    
             for point in r['points']:
