@@ -1,0 +1,13 @@
+{
+  "actions": {
+    "get_raw_config": {
+      "desc": "get raw config for repo widget",
+      "for_web": "yes"
+    },
+    "get_raw_data": {
+      "desc": "get raw data for repo-widget",
+      "for_web": "yes"
+    }
+  },
+  "desc": "Raw data access (json)"
+}
