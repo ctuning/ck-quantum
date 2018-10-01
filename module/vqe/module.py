@@ -13,7 +13,7 @@ cfg={}  # Will be updated by CK (meta description of this module)
 work={} # Will be updated by CK (temporal data)
 ck=None # Will be updated by CK (initialized CK kernel)
 
-hackathon_date          = '20181006'    # TODO: change this to None after the event
+hackathon_date          = None # TODO: change this to '20181006' just before the event
 hackathon_tag           = 'hackathon-{}'.format(hackathon_date if hackathon_date else 'dev')
 hackathon_remote_repo   = 'ck-quantum-hackathon-{}'.format(hackathon_date) if hackathon_date else 'ck-quantum-hackathons'
 
