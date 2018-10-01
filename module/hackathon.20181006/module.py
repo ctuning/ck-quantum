@@ -164,6 +164,7 @@ def get_raw_data(i):
 
     """
         
+    # FIXME: Switch to 'ck-quantum-hackathon-20181006' for the event.
     repo_uoa = 'ck-quantum-hackathons'
 
     def get_experimental_results(repo_uoa, tags='qck', module_uoa='experiment'):
@@ -183,7 +184,7 @@ def get_raw_data(i):
             tags = r['dict']['tags']
 
             skip = False
-            # Get team name (final data) or email (submission data).
+            # FIXME: Get the team name.
             team_tags = [ tag for tag in tags if tag.startswith('team-') ]
             email_tags = [ tag for tag in tags if tag.find('@')!=-1 ]
             if len(team_tags) > 0:
