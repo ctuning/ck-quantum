@@ -29,6 +29,9 @@
     },
     "time_to_solution": {
       "desc": "calculate the Time-to-Solution metric for a given experiment"
+    },
+    "list_registered_emails": {
+      "desc": "see who has successfully recorded the quantum_coin_flip experiment"
     }
   }, 
   "copyright": "See CK COPYRIGHT.txt for copyright details", 

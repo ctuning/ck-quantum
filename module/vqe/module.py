@@ -374,3 +374,33 @@ def time_to_solution(i):
     benchmark_list_of_runs(list_of_runs, delta, prob, which_fun, which_time, show_more)
 
     return {'return': 0}
+
+
+def list_registered_emails(i):
+
+    entry_address = {
+        'repo_uoa':         'remote-ck',
+        'module_uoa':       'experiment',
+        'data_uoa':         'quantum_coin_flip',
+    }
+
+    list_points_adict = {   'action': 'list_points' }
+    list_points_adict.update( entry_address )
+    r=ck.access( list_points_adict )
+    if r['return']>0: return r
+
+    point_ids = r['points']
+
+    for point_id in point_ids:
+        load_point_adict = {    'action':           'load_point',
+                                'point':            point_id,
+        }
+        load_point_adict.update( entry_address )
+        r=ck.access( load_point_adict )
+        if r['return']>0: return r
+
+        email = r['dict']['0001']['characteristics_list'][0]['run']['email']
+
+        print(email)
+
+    return {'return': 0}
