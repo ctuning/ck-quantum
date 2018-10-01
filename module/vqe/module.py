@@ -208,10 +208,10 @@ def run(i):
         if r['return']>0: return r
         timestamp   = r['iso_datetime'].split('.')[0].replace(':', '_').replace('-', '_')   # cut to seconds' resolution
 
-    username    = os.getlogin()
-    sample_size = i.get('sample_size', 100)
-    repetitions = i.get('repetitions', 3)
-    max_iter    = i.get('max_iter', 80)
+    username       = os.getlogin()
+    sample_size    = i.get('sample_size', 100)
+    max_iterations = i.get('max_iterations', 80)
+    repetitions    = i.get('repetitions', 3)
 
     provider    = i.get('provider', 'ibm').lower()              # 'ibm' (default) or 'rigetti'
     hw_bool     = i.get('hardware', '') == 'yes'
@@ -262,7 +262,7 @@ def run(i):
                 'record_uoa':                   record_uoa,
                 'tags':                         ','.join(['qck', hackathon_tag, username, q_device, ansatz_tag, optimizer_tag]),
                 'env.VQE_SAMPLE_SIZE':          sample_size,
-                'env.VQE_MAX_ITERATIONS':       max_iter,
+                'env.VQE_MAX_ITERATIONS':       max_iterations,
                 'env.VQE_QUANTUM_BACKEND':      q_device,
                 'skip_freq':                    'yes',
     }

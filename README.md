@@ -22,7 +22,7 @@ $ ck run vqe --repetitions=1
 
 ## Easy VQE exploration via optimizer parameters
 ```
-$ ck run vqe --repetitions=10 --sample_size=100 --max_iter=80
+$ ck run vqe --repetitions=10 --sample_size=100 --max_iterations=80
 ```
 
 ## Advanced VQE exploration via plugins
