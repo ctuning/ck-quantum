@@ -220,18 +220,29 @@ def run(i):
     repetitions    = i.get('repetitions', 3)
 
     provider    = i.get('provider', 'ibm').lower()              # 'ibm' (default) or 'rigetti'
-    hw_bool     = i.get('hardware', '') == 'yes'
+    q_device      = i.get('device')
 
-    q_device    = {
-        'rigetti' : {
-            False : 'QVM',
-            True :  '8Q-Agave',
-        },
-        'ibm' : {
-            False : 'local_qasm_simulator',
-            True :  'ibmq_qasm_simulator',
-        },
-    }[provider][hw_bool]
+    if not q_device:
+        device_options = {
+            'ibm':      ['local_qasm_simulator', 'ibmq_qasm_simulator', 'ibmqx4'],
+            'rigetti':  ['QVM', '8Q-Agave'],
+        }[provider]
+
+        select_adict = {'action': 'select_string',
+                        'module_uoa': 'misc',
+                        'options': device_options,
+                        'default': '0',
+                        'question': 'Please select the target device',
+        }
+        r=ck.access( select_adict )
+        if r['return']>0:
+            return r
+        else:
+            idx = r.get('selected_index', -1)
+            if idx<0:
+                return {'return':1, 'error':'selection number {} is not recognized'.format(idx)}
+            else:
+                q_device = device_options[idx]
 
     program     = {
         'ibm':      'qiskit-vqe',
