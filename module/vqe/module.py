@@ -287,21 +287,25 @@ def pick_an_experiment(i):
 
     all_experiment_names = [ '{repo_uoa}:{module_uoa}:{data_uoa}'.format(**entry_dict) for entry_dict in r['lst']]
 
-    select_adict = {'action': 'select_string',
-                    'module_uoa': 'misc',
-                    'options': all_experiment_names,
-                    'default': '',
-                    'question': 'Please select the experiment entry to upload',
-    }
-    r=ck.access( select_adict )
-    if r['return']>0:
-        return r
+    if len(all_experiment_names)==1:
+        idx = 0
     else:
-        idx = r.get('selected_index', -1)
-        if idx<0:
-            return {'return':1, 'error':'selection number {} is not recognized'.format(idx)}
+        select_adict = {'action': 'select_string',
+                        'module_uoa': 'misc',
+                        'options': all_experiment_names,
+                        'default': '',
+                        'question': 'Please select the experiment entry',
+        }
+        r=ck.access( select_adict )
+        if r['return']>0:
+            return r
         else:
-            cid = all_experiment_names[idx]
+            idx = r.get('selected_index', -1)
+
+            if idx<0:
+                return {'return':1, 'error':'selection number {} is not recognized'.format(idx)}
+
+    cid = all_experiment_names[idx]
 
     return {'return':0, 'cid': cid}
 
