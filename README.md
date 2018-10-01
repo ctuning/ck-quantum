@@ -17,7 +17,7 @@ $ ck deploy_ansatz vqe --value=ansatz.tiny1
 
 Then, launch VQE with the deployed optimizer and ansatz:
 ```
-$ ck run vqe --repetitions=1
+$ ck run vqe --device=local_qasm_simulator --repetitions=1
 ```
 
 ## Easy VQE exploration via optimizer parameters
