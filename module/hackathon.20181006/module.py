@@ -197,6 +197,7 @@ def get_raw_data(i):
                 point_file_path = os.path.join(r['path'], 'ckp-%s.0001.json' % point)
                 with open(point_file_path) as point_file:
                     point_data_raw = json.load(point_file)
+                choices = point_data_raw['choices']
                 characteristics_list = point_data_raw['characteristics_list']
                 num_repetitions = len(characteristics_list)
                 data = [
@@ -208,6 +209,7 @@ def get_raw_data(i):
                         'minimizer_options': characteristics['run'].get('vqe_input', {}).get('minimizer_options', {'maxfev':-1}),
                         'minimizer_src': characteristics['run'].get('vqe_input', {}).get('minimizer_src', ''),
                         'sample_number': characteristics['run'].get('vqe_input', {}).get('sample_number','n/a'),
+                        'max_iterations': choices['env'].get('VQE_MAX_ITERATIONS', -1),
                         # statistical repetition
                         'repetition_id': repetition_id,
                         # runtime characteristics
@@ -235,8 +237,7 @@ def get_raw_data(i):
                     datum['total_seconds'] = np.float64(datum.get('report',{}).get('total_seconds',0))
                     datum['total_q_seconds'] = np.float64(datum.get('report',{}).get('total_q_seconds',0))
                     datum['total_q_shots'] = np.int64(datum.get('report',{}).get('total_q_shots',0))
-                    tmp_max_iterations = list(datum.get('minimizer_options',{'maxfev':-1}).values())
-                    datum['max_iterations'] = tmp_max_iterations[0] if len(tmp_max_iterations)>0 else -1
+                    datum['max_iterations'] = np.int64(datum.get('max_iterations',-1))
                     for key in index:
                         datum['_' + key] = datum[key]
                     datum['_minimizer_src'] = datum['minimizer_src']
