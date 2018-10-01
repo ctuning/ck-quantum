@@ -182,14 +182,20 @@ def plugin_path(i):
 
 def cleanup(i):
 
-    ck.out("Removing the deployed soft and env entries")
+    plugin_type     = i.get('type')
+    tags            = ['vqe', 'deployed']
+
+    if plugin_type:
+        tags.append( plugin_type )
+
+    ck.out("Removing the deployed soft and env entries for {} plugins".format( plugin_type if plugin_type else 'optimizer and ansatz') )
     ## ck rm *:* --tags=vqe,deployed
     #
     rm_adict = {    'action':           'rm',
                     'repo_uoa':         'local',
                     'module_uoa':       '*',
                     'data_uoa':         '*',
-                    'tags':             'vqe,deployed',
+                    'tags':             ','.join( tags ),
     }
     r=ck.access( rm_adict )
     if r['return']>0: return r
