@@ -392,6 +392,7 @@ def list_registered_emails(i):
 
     point_ids = r['points']
 
+    emails = []
     for point_id in point_ids:
         load_point_adict = {    'action':           'load_point',
                                 'point':            point_id,
@@ -402,6 +403,11 @@ def list_registered_emails(i):
 
         email = r['dict']['0001']['characteristics_list'][0]['run']['email']
 
-        print(email)
+        emails.append(email)
+
+    # Print unique emails.
+    ck.out("Unique registered emails:")
+    for email in sorted(set(emails)):
+        ck.out('- ' + email)
 
     return {'return': 0}
