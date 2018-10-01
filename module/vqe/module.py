@@ -332,7 +332,9 @@ def upload(i):
 
     # print('upload() was called with the following arguments: {}\n'.format(i))
 
-    cids    = i.get('cids')
+    cids                = i.get('cids')
+    team_name           = i.get('team', 'anonymous')
+    update_meta_dict    = { 'team': team_name } if team_name else {}
 
     if len(cids)==0:
         r=ck.access( {'action': 'pick_an_experiment', 'module_uoa': 'vqe'} )
@@ -345,6 +347,7 @@ def upload(i):
                         'cids':                 cids,                       # 'ck transfer' will perform its own cids->xcids parsing
                         'target_server_uoa':    'remote-ck',
                         'target_repo_uoa':      hackathon_remote_repo,
+                        'update_meta_dict':     update_meta_dict,           # extra meta data added during the transfer
     }
     r=ck.access( transfer_adict )
     if r['return']>0: return r

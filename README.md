@@ -81,7 +81,7 @@ $ ck time_to_solution vqe local:experiment:my_experiment_10 --delta=0.015 --prob
 
 ## Send us the results of your experiments
 ```
-$ ck upload vqe                                                                     # upload (pick the experiment entry interactively)
+$ ck upload vqe --team=schroedinger-cat-herders                                         # upload (pick the experiment entry interactively)
 OR
-$ ck upload vqe local:experiment:my_experiment_5 local:experiment:my_experiment_13  # upload (supply the experiment from command line)
+$ ck upload vqe --team=bell-state-ringers local:experiment:my_experiment_5 local:experiment:my_experiment_13  # upload (supply the experiment from command line)
 ```
