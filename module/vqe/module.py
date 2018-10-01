@@ -248,7 +248,7 @@ def run(i):
     if r['return']>0: return r
     ansatz_tag      = os.path.basename( r['plugin_dir'] )
 
-    record_uoa  = '{}--{}-{}-{}-{}-{}samples-{}reps'.format(username, timestamp, q_device, ansatz_tag, optimizer_tag, sample_size, repetitions)
+    record_uoa  = '{}-{}-{}-{}-{}-{}samples-{}repetitions'.format(username, timestamp, q_device, ansatz_tag, optimizer_tag, sample_size, repetitions)
     record_cid  = 'local:experiment:{}'.format(record_uoa)
 
     ck.out('Will be recording the results into {}\n'.format(record_cid))
