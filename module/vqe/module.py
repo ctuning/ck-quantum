@@ -382,6 +382,7 @@ def list_registered_emails(i):
         'repo_uoa':         'remote-ck',
         'module_uoa':       'experiment',
         'data_uoa':         'quantum_coin_flip',
+        'remote_repo_uoa':  'ck-quantum-hackathons',    # TODO: this may need changing in future
     }
 
     list_points_adict = {   'action': 'list_points' }
