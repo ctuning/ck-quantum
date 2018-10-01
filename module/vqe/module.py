@@ -293,13 +293,14 @@ def pick_an_experiment(i):
 
     all_experiment_names = [ '{repo_uoa}:{module_uoa}:{data_uoa}'.format(**entry_dict) for entry_dict in r['lst']]
 
-    if len(all_experiment_names)==1:
+    number_of_experiments = len(all_experiment_names)
+    if number_of_experiments==1:
         idx = 0
     else:
         select_adict = {'action': 'select_string',
                         'module_uoa': 'misc',
                         'options': all_experiment_names,
-                        'default': '',
+                        'default': str(number_of_experiments-1),
                         'question': 'Please select the experiment entry',
         }
         r=ck.access( select_adict )
