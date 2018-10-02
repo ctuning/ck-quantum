@@ -90,11 +90,7 @@ def deploy(i):
         if r['return']>0:
             return r
         else:
-            idx = r.get('selected_index', -1)
-            if idx<0:
-                return {'return':1, 'error':'selection number {} is not recognized'.format(idx)}
-            else:
-                selected_value = dir_names[idx]
+            selected_value = r['selected_value']
 
     deployed_uoa    = 'deployed.' + selected_value
 
@@ -302,25 +298,17 @@ def pick_an_experiment(i):
     all_experiment_names = [ '{repo_uoa}:{module_uoa}:{data_uoa}'.format(**entry_dict) for entry_dict in r['lst']]
 
     number_of_experiments = len(all_experiment_names)
-    if number_of_experiments==1:
-        idx = 0
+    select_adict = {'action': 'select_string',
+                    'module_uoa': 'misc',
+                    'options': all_experiment_names,
+                    'default': str(number_of_experiments-1),
+                    'question': 'Please select the experiment entry',
+    }
+    r=ck.access( select_adict )
+    if r['return']>0:
+        return r
     else:
-        select_adict = {'action': 'select_string',
-                        'module_uoa': 'misc',
-                        'options': all_experiment_names,
-                        'default': str(number_of_experiments-1),
-                        'question': 'Please select the experiment entry',
-        }
-        r=ck.access( select_adict )
-        if r['return']>0:
-            return r
-        else:
-            idx = r.get('selected_index', -1)
-
-            if idx<0:
-                return {'return':1, 'error':'selection number {} is not recognized'.format(idx)}
-
-    cid = all_experiment_names[idx]
+        cid = r['selected_value']
 
     return {'return':0, 'cid': cid}
 
