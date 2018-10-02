@@ -32,9 +32,13 @@ $ ck run vqe --repetitions=10 --sample_size=100 --max_iterations=80
 $ ck search --tags=deployed
 ```
 
-### Remove all plugins
+### Removing plugins
 ```
-$ ck cleanup vqe
+$ ck cleanup vqe --type=optimizer
+OR
+$ ck cleanup vqe --type=ansatz
+OR
+$ ck cleanup vqe                    # both deployed plugins
 ```
 
 ### Working with optimizer plugins
@@ -57,14 +61,14 @@ $ vi `ck plugin_path vqe --type=optimizer`
 $ ck deploy_ansatz vqe
 ```
 
-#### Visualize the ansatz circuit
+#### Visualize the ansatz circuit (use your favourite image viewer instead of "display")
 ```
 $ ck run program:visualize-ansatz
-$ open `ck find program:visualize-ansatz`/ansatz_circuit.png
+$ display `ck find program:visualize-ansatz`/ansatz_circuit.png
 ```
-**NB:** If `open` does not work, try `eog` or any other PNG viewer.
+**NB:** if unsure about the image viewer, try "open" on MacOS, "eog" or "eom" on Linux
 
-#### Edit the deployed ansatz plugin
+#### Edit the deployed ansatz plugin (use your favourite editor instead of "vi")
 ```
 $ vi `ck plugin_path vqe --type=ansatz`
 ```
