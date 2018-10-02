@@ -239,11 +239,7 @@ def run(i):
         if r['return']>0:
             return r
         else:
-            idx = r.get('selected_index', -1)
-            if idx<0:
-                return {'return':1, 'error':'selection number {} is not recognized'.format(idx)}
-            else:
-                q_device = device_options[idx]
+            q_device = r['selected_value']
 
     program     = {
         'ibm':      'qiskit-vqe',
