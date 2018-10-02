@@ -83,7 +83,8 @@ table_view=[
     {"key":"total_q_seconds", "name":"total_q_seconds", "format":"%.3f"},
     {"key":"total_q_shots", "name":"total_q_shots"},
     {"key":"total_seconds", "name":"total_seconds", "format":"%.3f"},
-    {"key":"_minimizer_src", "name":"Minimizer Source"},
+    {"key":"_ansatz_src", "name":"Ansatz source"},
+    {"key":"_minimizer_src", "name":"Minimizer source"},
 ]
 
 metrics_table_view=[
@@ -208,6 +209,7 @@ def get_raw_data(i):
                         'minimizer_method': characteristics['run'].get('vqe_input', {}).get('minimizer_method', 'n/a'),
                         'minimizer_options': characteristics['run'].get('vqe_input', {}).get('minimizer_options', {'maxfev':-1}),
                         'minimizer_src': characteristics['run'].get('vqe_input', {}).get('minimizer_src', ''),
+                        'ansatz_src': characteristics['run'].get('vqe_input', {}).get('ansatz_src', ''),
                         'sample_number': characteristics['run'].get('vqe_input', {}).get('sample_number','n/a'),
                         'max_iterations': choices['env'].get('VQE_MAX_ITERATIONS', -1),
                         # statistical repetition
@@ -240,6 +242,7 @@ def get_raw_data(i):
                     datum['max_iterations'] = np.int64(datum.get('max_iterations',-1))
                     for key in index:
                         datum['_' + key] = datum[key]
+                    datum['_ansatz_src'] = datum['ansatz_src']
                     datum['_minimizer_src'] = datum['minimizer_src']
 
                 # Construct a DataFrame.
@@ -268,7 +271,7 @@ def get_raw_data(i):
             if df_prev is not None: # if not the very first row
                 if df_prev.index.levels[:-2]==df_curr.index.levels[:-2]: # if the indices match for all but the last two levels
                     if df_prev.index.levels[-2]!=df_curr.index.levels[-2]: # if the experiments are different
-                        if df_prev['minimizer_src'].values==df_curr['minimizer_src'].values: # if the minimizer source is the same
+                        if df_prev['minimizer_src'].values==df_curr['minimizer_src'].values and df_prev['ansatz_src'].values==df_curr['ansatz_src'].values: # if the minimizer and ansatz sources are the same
                             print('[Info] Merging experiment:')
                             print(df_curr.index.levels)
                             print('[Info] into:')
@@ -279,14 +282,10 @@ def get_raw_data(i):
                             print(df_curr.index.levels)
                             print
                         else:
-                            print('[Warning] Cannot merge experiments as the minimizer source is different:')
-        #                     print('------------------------------------------------------------------------')
+                            print('[Warning] Cannot merge experiments as the minimizer or ansatz sources are different (previous vs current):')
                             print(df_prev.index.levels)
-        #                     print(df_prev['minimizer_src'].values[0])
-        #                     print
-        #                     print('------------------------------------------------------------------------')
+                            print
                             print(df_curr.index.levels)
-        #                     print(df_curr['minimizer_src'].values[0])
                             print
         #             else:
         #                 print('[Info] Keeping experiments separate:')
@@ -352,6 +351,11 @@ def get_raw_data(i):
         row['__fevs'] = fevs
 
         row['##data_uid'] = "{}:{}".format(record['_point'], record['_repetition_id'])
+
+        row['_ansatz_src'] = {
+            'title': 'Show',
+            'cmd': record['_ansatz_src']
+           }
 
         row['_minimizer_src'] = {
             'title': 'Show',
