@@ -62,6 +62,7 @@ $ ck deploy_ansatz vqe
 $ ck run program:visualize-ansatz
 $ open `ck find program:visualize-ansatz`/ansatz_circuit.png
 ```
+**NB:** If `open` does not work, try `eog` or any other PNG viewer.
 
 #### Edit the deployed ansatz plugin
 ```
