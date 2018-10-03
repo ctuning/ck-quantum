@@ -24,6 +24,9 @@ from pprint import pprint
 
 
 def init(i):
+    """
+    Not to be called directly. Sets the path to the vqe_plugin.
+    """
 
     vqe_plugin_directory = os.path.join( os.path.dirname(__file__), '..', '..', 'env', 'vqe_utils' )
     sys.path.append( vqe_plugin_directory )    # allow this module to import vqe_utils
@@ -32,6 +35,18 @@ def init(i):
 
 
 def list_deployables(i):
+    """
+    Input:  {
+                data_uoa            - name of the template soft entry
+            }
+
+    Output: {
+                dir_names           - full list of deployables within the given template soft entry
+                return              - return code =  0, if successful
+                                                  >  0, if error
+                (error)             - error text if return > 0
+            }
+    """
 
     print('list_deployables() was called with the following arguments: {}\n'.format(i))
 
@@ -47,6 +62,7 @@ def list_deployables(i):
     template_soft_entry_path = r['path']
     python_code_common_path = os.path.join(template_soft_entry_path, 'python_code')
 
+    # gather all the subdirectories of python_code_common_path
     dir_names = [dir_name for dir_name in (os.listdir( python_code_common_path )) if os.path.isdir( os.path.join( python_code_common_path, dir_name ) ) ]
 
     if i.get('out')=='con':
@@ -56,6 +72,18 @@ def list_deployables(i):
 
 
 def deploy_optimizer(i):
+    """
+    Specialization of deploy() method where type='optimizer'.
+    Input:  {
+                (value)             - which deployable to deploy
+            }
+
+    Output: {
+                return              - return code =  0, if successful
+                                                  >  0, if error
+                (error)             - error text if return > 0
+            }
+    """
 
     i.update({'type' : 'optimizer'})
 
@@ -63,6 +91,18 @@ def deploy_optimizer(i):
 
 
 def deploy_ansatz(i):
+    """
+    Specialization of deploy() method where type='qiskit.ansatz'.
+    Input:  {
+                (value)             - which deployable to deploy
+            }
+
+    Output: {
+                return              - return code =  0, if successful
+                                                  >  0, if error
+                (error)             - error text if return > 0
+            }
+    """
 
     i.update({'type' : 'qiskit.ansatz'})
 
@@ -70,6 +110,18 @@ def deploy_ansatz(i):
 
 
 def deploy(i):
+    """
+    Input:  {
+                type                - either 'optimizer' or 'qiskit.ansatz'
+                (value)             - which deployable to deploy
+            }
+
+    Output: {
+                return              - return code =  0, if successful
+                                                  >  0, if error
+                (error)             - error text if return > 0
+            }
+    """
 
     print('deploy() was called with the following arguments: {}\n'.format(i))
 
@@ -143,6 +195,21 @@ def deploy(i):
 
 
 def plugin_path(i):
+    """
+    Input:  {
+                type                - either 'optimizer' or 'ansatz'
+            }
+
+    Output: {
+                full_path           - full path to the plugin python file to be edited
+                plugin_dir          - dirname(full_path)
+                plugin_filename     - basename(full_path)
+
+                return              - return code =  0, if successful
+                                                  >  0, if error
+                (error)             - error text if return > 0
+            }
+    """
 
     plugin_type     = i.get('type', 'optimizer')
 
@@ -178,6 +245,17 @@ def plugin_path(i):
 
 
 def cleanup(i):
+    """
+    Input:  {
+                (type)              - either 'optimizer' or 'ansatz' to only cleanup one plugin
+            }
+
+    Output: {
+                return              - return code =  0, if successful
+                                                  >  0, if error
+                (error)             - error text if return > 0
+            }
+    """
 
     plugin_type     = i.get('type')
     tags            = ['vqe', 'deployed']
@@ -201,6 +279,22 @@ def cleanup(i):
 
 
 def run(i):
+    """
+    Input:  {
+                (sample_size)       - number of "shots" to use in each quantum program execution
+                (max_iterations)    - a (soft) limit on the number of optimizer's iterations
+                (repetitions)       - a number of times to run the whole optimizer convergence experiment (for stats)
+                (provider)          - 'ibm' (default) or 'rigetti'
+                (device)            - which simulator or quantum device to run the whole experiment on (interactive by default)
+                (timestamp)         - when the experiment was started (normally generated automatically)
+            }
+
+    Output: {
+                return              - return code =  0, if successful
+                                                  >  0, if error
+                (error)             - error text if return > 0
+            }
+    """
 
     print('run() was called with the following arguments: {}\n'.format(i))
 
@@ -286,6 +380,16 @@ def run(i):
 
 
 def pick_an_experiment(i):
+    """
+    Input:  {
+            }
+
+    Output: {
+                return              - return code =  0, if successful
+                                                  >  0, if error
+                (error)             - error text if return > 0
+            }
+    """
 
     search_adict = {'action':       'search',
                     'repo_uoa':     'local',
@@ -314,6 +418,18 @@ def pick_an_experiment(i):
 
 
 def upload(i):
+    """
+    Input:  {
+                (cids[])            - CIDs of entries to upload
+                (team)              - team name to be added to meta_data on upload
+            }
+
+    Output: {
+                return              - return code =  0, if successful
+                                                  >  0, if error
+                (error)             - error text if return > 0
+            }
+    """
 
     # print('upload() was called with the following arguments: {}\n'.format(i))
 
@@ -342,6 +458,22 @@ def upload(i):
 
 
 def time_to_solution(i):
+    """
+    Input:  {
+                (cids[])            - CIDs of entries to compute the TTS metric for (interactive by default)
+                (delta)             - delta parameter of TTS metric
+                (prob)              - probability parameter of TTS metric
+                (which_fun)         - 'fun_exact', 'fun_validated' or 'fun'
+                (which_time)        - 'total_q_shots' or 'total_q_seconds'
+                (show_more)         - more verbose if 'yes'
+            }
+
+    Output: {
+                return              - return code =  0, if successful
+                                                  >  0, if error
+                (error)             - error text if return > 0
+            }
+    """
 
     # print('time_to_solution() was called with the following arguments: {}\n'.format(i))
 
@@ -387,6 +519,18 @@ def time_to_solution(i):
 
 
 def list_registered_emails(i):
+    """
+    Input:  {
+            }
+
+    Output: {
+                emails              - a sorted list of unique registered email addresses
+
+                return              - return code =  0, if successful
+                                                  >  0, if error
+                (error)             - error text if return > 0
+            }
+    """
 
     entry_address = {
         'repo_uoa':         'remote-ck',
@@ -415,9 +559,11 @@ def list_registered_emails(i):
 
         emails.append(email)
 
-    # Print unique emails.
-    ck.out("Unique registered emails:")
-    for email in sorted(set(emails)):
-        ck.out('- ' + email)
+    emails = sorted(set(emails))
 
-    return {'return': 0}
+    if i.get('out')=='con':
+        ck.out("Unique registered emails:")
+        for email in emails:
+            ck.out('- ' + email)
+
+    return {'return': 0, 'emails': emails }
