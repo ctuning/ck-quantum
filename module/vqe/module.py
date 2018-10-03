@@ -365,7 +365,7 @@ def run(i):
     if r['return']>0: return r
 
     program_entry_path  = r['path']
-    stream_file_path    = os.path.join( program_entry_path, 'tmp', 'ibm_vqe_stream.json')
+    stream_file_path    = os.path.join( program_entry_path, 'tmp', 'vqe_stream.json')
 
     try:
         os.remove( stream_file_path )   # the data is appended to it by each iteration, so this file has to be cleaned-up before benchmarking
