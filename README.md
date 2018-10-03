@@ -52,7 +52,9 @@ $ ck deploy_optimizer vqe
 ```
 $ vi `ck plugin_path vqe --type=optimizer`
 ```
-**NB:** The optimizer is written in Python.
+**NB:** The optimizer plugin is written in Python.
+It is expected to contain only one top-level function.
+If you need more, please define them within the top-level one.
 
 ### Working with ansatz plugins
 
@@ -73,7 +75,8 @@ $ display `ck find program:visualize-ansatz`/ansatz_circuit.png
 $ vi `ck plugin_path vqe --type=ansatz`
 ```
 **NB:** The ansatz plugin is written in Python with QISKit.
-
+It is expected to contain only one top-level function.
+If you need more, please define them within the top-level one.
 
 ## Review the results (e.g. using time-to-solution parametric metric)
 ```
