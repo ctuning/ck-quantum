@@ -198,7 +198,7 @@ def plugin_path(i):
     """
     Input:  {
                 type                - either 'optimizer' or 'ansatz'
-            }
+             }
 
     Output: {
                 full_path           - full path to the plugin python file to be edited
@@ -356,6 +356,21 @@ def run(i):
     record_cid  = 'local:experiment:{}'.format(record_uoa)
 
     ck.out('Will be recording the results into {}\n'.format(record_cid))
+
+    load_adict = {  'action':           'load',
+                    'module_uoa':       'program',
+                    'data_uoa':         program,
+    }
+    r=ck.access( load_adict )
+    if r['return']>0: return r
+
+    program_entry_path  = r['path']
+    stream_file_path    = os.path.join( program_entry_path, 'tmp', 'ibm_vqe_stream.json')
+
+    try:
+        os.remove( stream_file_path )   # the data is appended to it by each iteration, so this file has to be cleaned-up before benchmarking
+    except OSError:
+        pass
 
     benchmark_adict = {'action':                'benchmark',
                 'module_uoa':                   'program',
