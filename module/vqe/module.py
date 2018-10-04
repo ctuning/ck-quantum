@@ -436,8 +436,8 @@ def pick_an_experiment(i):
 def upload(i):
     """
     Input:  {
-                (cids[])            - CIDs of entries to upload
-                (team)              - team name to be added to meta_data on upload
+                (cids[])            - CIDs of entries to upload (interactive by default)
+                (team)              - team name to be added to meta_data on upload (interactive by default)
             }
 
     Output: {
@@ -450,7 +450,7 @@ def upload(i):
     # print('upload() was called with the following arguments: {}\n'.format(i))
 
     cids                = i.get('cids')
-    team_name           = i.get('team', 'anonymous')
+    team_name           = i.get('team')
     update_meta_dict    = { 'team': team_name } if team_name else {}
 
     if len(cids)==0:
@@ -458,6 +458,10 @@ def upload(i):
 
         if r['return']>0: return r
         cids = [ r['cid'] ]
+
+    if not team_name:
+        r = ck.inp({'text': "Your team name: "})
+        team_name = r['string']
 
     transfer_adict = {  'action':               'transfer',
                         'module_uoa':           'misc',
@@ -469,7 +473,7 @@ def upload(i):
     r=ck.access( transfer_adict )
     if r['return']>0: return r
 
-    ck.out('Uploaded.')
+    ck.out('Uploaded by {}'.format(team_name))
     return {'return': 0}
 
 
