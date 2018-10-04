@@ -1,37 +1,37 @@
 {
   "actions": {
-    "list_deployables": {
-      "desc": "code-containing soft template introspection"
-    },
     "cleanup": {
-      "desc": "remove both created env and soft entries"
+      "desc": "Remove env and soft entries that make up deployed plugin(s)"
     },
     "deploy": {
-      "desc": "install the necessary plugin (oprimizer or ansatz) and the corresponding environment for the 'run' method to work"
+      "desc": "Install the necessary plugin (optimizer or ansatz) and the corresponding environment for the 'run' method to work (helper function)"
     },
     "deploy_ansatz": {
-      "desc": "specifically deploy an ansatz"
+      "desc": "Deploy one ansatz plugin"
     },
     "deploy_optimizer": {
-      "desc": "specifically deploy an optimizer"
+      "desc": "Deploy one optimizer plugin"
     },
-    "plugin_path": {
-      "desc": "provide the path to the plugin's editable python file"
-    },
-    "run": {
-      "desc": "run several repetitions and record the results"
-    },
-    "pick_an_experiment": {
-      "desc": "an interactive helper function"
-    },
-    "upload": {
-      "desc": "upload the best experimental results on the server for visualization and comparison"
-    },
-    "time_to_solution": {
-      "desc": "calculate the Time-to-Solution metric for a given experiment"
+    "list_deployables": {
+      "desc": "Get the list of all deployables of a template code-containing soft entry (helper function)"
     },
     "list_registered_emails": {
-      "desc": "see who has successfully recorded the quantum_coin_flip experiment"
+      "desc": "Get the list of emails of the users that have successfully recorded the quantum_coin_flip experiment (helper function)"
+    },
+    "pick_an_experiment": {
+      "desc": "Select an experiment from the list (interactive helper function)"
+    },
+    "plugin_path": {
+      "desc": "Get the path to the plugin's editable python file"
+    },
+    "run": {
+      "desc": "Run several repetitions and record the results locally"
+    },
+    "time_to_solution": {
+      "desc": "Calculate the Time-to-Solution metric for a given experiment"
+    },
+    "upload": {
+      "desc": "Upload the best experimental results on the server for visualization and comparison"
     }
   }, 
   "copyright": "See CK COPYRIGHT.txt for copyright details", 
