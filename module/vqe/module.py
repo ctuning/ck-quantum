@@ -410,6 +410,7 @@ def pick_an_experiment(i):
                     'repo_uoa':     'local',
                     'module_uoa':   'experiment',
                     'data_uoa':     '*',
+                    'tags':         'qck',
     }
     r=ck.access( search_adict )
     if r['return']>0: return r
