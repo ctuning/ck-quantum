@@ -269,7 +269,6 @@ def cleanup(i):
     if plugin_type:
         tags.append( plugin_type )
 
-    ck.out("Removing the deployed soft and env entries for {} plugins".format( plugin_type if plugin_type else 'optimizer and ansatz') )
     ## ck rm *:* --tags=vqe,deployed
     #
     rm_adict = {    'action':           'rm',
@@ -280,6 +279,9 @@ def cleanup(i):
     }
     r=ck.access( rm_adict )
     if r['return']>0: return r
+
+    if i.get('out')=='con':
+        ck.out("Removed deployed soft and env entries for {} plugins".format( plugin_type if plugin_type else 'optimizer and ansatz') )
 
     return {'return': 0}
 
