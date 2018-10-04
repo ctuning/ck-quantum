@@ -48,8 +48,6 @@ def list_deployables(i):
             }
     """
 
-    print('list_deployables() was called with the following arguments: {}\n'.format(i))
-
     data_uoa = i.get('data_uoa', 'template.optimizer')
 
     load_adict = {  'action':           'load',
@@ -122,8 +120,6 @@ def deploy(i):
                 (error)             - error text if return > 0
             }
     """
-
-    print('deploy() was called with the following arguments: {}\n'.format(i))
 
     plugin_type     = i.get('type', 'optimizer')
 
@@ -296,8 +292,6 @@ def run(i):
             }
     """
 
-    print('run() was called with the following arguments: {}\n'.format(i))
-
     timestamp   = i.get('timestamp')
 
     if not timestamp:       # Get current timestamp:
@@ -447,8 +441,6 @@ def upload(i):
             }
     """
 
-    # print('upload() was called with the following arguments: {}\n'.format(i))
-
     cids                = i.get('cids')
     team_name           = i.get('team')
     update_meta_dict    = { 'team': team_name } if team_name else {}
@@ -495,8 +487,6 @@ def time_to_solution(i):
             }
     """
 
-    # print('time_to_solution() was called with the following arguments: {}\n'.format(i))
-
     from vqe_utils import benchmark_list_of_runs
 
     delta       = float( i.get('delta', 0.15) )
@@ -516,7 +506,7 @@ def time_to_solution(i):
 
     r=ck.parse_cid({'cid': cid})
     if r['return']>0:
-        print("Cannot parse CID '{}'".format(cid))
+        return { 'return': 1, 'error': "Cannot parse CID '{}'".format(cid) }
     else:
         repo_uoa    = r.get('repo_uoa','')
         module_uoa  = r.get('module_uoa','')
