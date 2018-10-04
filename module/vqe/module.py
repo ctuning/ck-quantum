@@ -142,7 +142,7 @@ def deploy(i):
 
     deployed_uoa    = 'deployed.' + selected_value
 
-    ck.out("Creating soft:{} code-containing CK entry from a template".format(deployed_uoa))
+    # ck.out("Creating soft:{} code-containing CK entry from a template".format(deployed_uoa))
     ## ck cp soft:template.optimizer soft:deployed.optimizer
     #
     cp_adict = {    'action':           'cp',
@@ -154,10 +154,13 @@ def deploy(i):
     r=ck.access( cp_adict )
     if r['return']>0: return r
 
+    deployed_soft_cid = '{}:{}:{}'.format(r['repo_uoa'], r['module_uoa'], r['data_uoa'])
+
     deployed_soft_entry_path = r['path']
     python_file_name = r['dict']['customize']['soft_file_universal']
+    python_plugin_full_path = os.path.join(deployed_soft_entry_path, 'python_code', selected_value, python_file_name)
 
-    ck.out("Activating soft:{} CK entry as 'deployed'".format(deployed_uoa))
+    # ck.out("Activating soft:{} CK entry as 'deployed'".format(deployed_uoa))
     ## ck update soft:deployed.optimizer --tags=deployed
     #
     update_adict = {'action':           'update',
@@ -168,13 +171,13 @@ def deploy(i):
     r=ck.access( update_adict )
     if r['return']>0: return r
 
-    ck.out("Removing all the 'inactive' alternaitves")
+    # ck.out("Removing all the 'inactive' alternaitves")
     for dir_name in dir_names:
         if dir_name!=selected_value:
             dir_path = os.path.join(deployed_soft_entry_path, 'python_code', dir_name)
             ck.delete_directory( {'path': dir_path} )
 
-    ck.out("Creating an environment entry that sets up the paths for the soft:{} CK entry".format(deployed_uoa))
+    # ck.out("Creating an environment entry that sets up the paths for the soft:{} CK entry".format(deployed_uoa))
     ## ck detect soft --tags=vqe,optimizer,lib,deployed --extra_tags=optimizer.custom --full_path=/Users/lg4/CK/local/soft/deployed.optimizer/python_code/optimizer.custom/custom_optimizer.py
     ## ck detect soft:deployed.optimizer --extra_tags=optimizer.custom --full_path=/Users/lg4/CK/local/soft/deployed.optimizer/python_code/optimizer.custom/custom_optimizer.py
     #
@@ -182,12 +185,19 @@ def deploy(i):
                     'module_uoa':       'soft',
                     'data_uoa':         deployed_uoa,
                     'extra_tags':       selected_value,
-                    'full_path':        os.path.join(deployed_soft_entry_path, 'python_code', selected_value, python_file_name),
+                    'full_path':        python_plugin_full_path,
     }
     r=ck.access( detect_adict )
     if r['return']>0: return r
 
-    return r
+    deployed_env_cid = '{}:{}:{}'.format('local', 'env', r['env_data_uoa'])
+
+    if i.get('out')=='con':
+        ck.out( "Deployed soft entry:    {}".format(deployed_soft_cid) )
+        ck.out( "Deployed env entry:     {}".format(deployed_env_cid) )
+        ck.out( "Editable python source: {}".format(python_plugin_full_path))
+
+    return { 'return': 0, 'deployed_soft_cid': deployed_soft_cid, 'deployed_env_cid': deployed_env_cid, 'full_path': python_plugin_full_path }
 
 
 def plugin_path(i):
