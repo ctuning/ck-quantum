@@ -56,7 +56,7 @@ $ ck cleanup vqe
 $ ck deploy_optimizer vqe
 ```
 
-#### Locate and edit the deployed optimizer plugin (use your favourite editor instead of `vi`)
+#### Locate and edit the deployed optimizer plugin (use your favourite text editor instead of `vi`)
 ```
 $ ck plugin_path vqe --type=optimizer
 $ vi `ck plugin_path vqe --type=optimizer`
@@ -79,7 +79,7 @@ $ display `ck find program:visualize-ansatz`/ansatz_circuit.png
 ```
 **NB:** If unsure about the image viewer, try `eog` or `eom` on Linux, `open` on macOS.
 
-#### Locate and edit the deployed ansatz plugin (use your favourite editor instead of `vi`)
+#### Locate and edit the deployed ansatz plugin (use your favourite text editor instead of `vi`)
 ```
 $ ck plugin_path vqe --type=ansatz
 $ vi `ck plugin_path vqe --type=ansatz`
