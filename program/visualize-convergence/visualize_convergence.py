@@ -12,6 +12,7 @@ from functools import partial
 import subprocess
 import json
 import threading
+import signal
 
 try:
     import inotify
@@ -19,7 +20,6 @@ try:
 except ImportError:
     NOTIFY_AVAILABLE = False
 
-# just run in a thread.
 class DataSource(threading.Thread):
     """Class for obtaining data from the log saved by ck run.
 
@@ -31,7 +31,7 @@ class DataSource(threading.Thread):
     def __init__(self, fname, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fname = fname
-        self.logs = None # [[0, 1, 2, 3, 4, 5], [0.5, 1.5, 2.5, 3.5]]
+        self.logs = None
         self.running = False
         self.file = None
         self.Nruns = 0
@@ -65,11 +65,25 @@ class DataSource(threading.Thread):
                     self.file = open(self.fname, "r")
                     self.logs = [[]]
                 except FileNotFoundError:
-                    if not NOTIFY_AVAILABLE:
-                        time.sleep(0.1)
-                    else:
-                        # can do somthing fancy.
-                        time.sleep(0.1)
+                    time.sleep(0.1)
+
+
+class Colors():
+
+    end = '\x1b[0m'
+
+    def __init__(self):
+        # generate a style list
+        self.styles = []
+        for style in range(8):
+            for fg in range(30,38):
+                s1 = ''
+                for bg in range(40,48):
+                    format = ';'.join([str(style), str(fg), str(bg)])
+                    self.styles.append(format)
+
+        self.N = len(self.styles)
+
 
 
 class CURSESDisplay(threading.Thread):
@@ -83,6 +97,10 @@ Final variance = {var}
     def __init__(self, datasource, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.data = datasource
+        self.running = False
+        self.numerical_markers = True
+        self.colors = Colors()
+        self.color = False
 
 
     def run(self):
@@ -110,6 +128,15 @@ Final variance = {var}
             window.addstr("No data yet!")
 
 
+    def getmarker(self, i):
+        marker = '_,' if i == len(self.data.logs)-1 else \
+                str(i) if self.numerical_markers else \
+                '_.'
+        if self.color:
+            marker = self.colors.styles[i % self.colors.N] + marker + self.colors.end
+        return marker
+
+
 
 
     def draw_graphs(self, window):
@@ -120,15 +147,12 @@ Final variance = {var}
         if self.data.logs:
             min_, max_ = -1.7, -1.6
             p = ap.AFigure(shape=(width-2, height-3))
-            # p.xlabel("optimiser iteration")
-            # p.ylabel("Energy")
             for i, log in enumerate(self.data.logs):
                 if len(log) < 1:
                     continue
-                marker = '_,' if i == len(self.data.logs)-1 else '_.'
                 x = np.arange(len(log))
                 y = log
-                _ = p.plot(x, y, marker=marker, plot_slope=False)
+                _ = p.plot(x, y, marker=self.getmarker(i), plot_slope=False)
                 min_ = min(min_, min(log))
                 max_ = max(max_, max(log))
 
@@ -146,22 +170,33 @@ Final variance = {var}
         graph_size = ceil(curses.LINES * (2/3))
         echo_v_size = floor(curses.LINES * (1/3))
 
-        stats_border = curses.newwin(echo_v_size, curses.COLS, graph_size, 0)
-        stats = stats_border.derwin(echo_v_size-2, curses.COLS-2, 1, 1)
+        stats_h_size = ceil(curses.COLS * (2/3))
+        opts_h_size = floor(curses.COLS * (1/3))
+
+        stats_border = curses.newwin(echo_v_size, stats_h_size, graph_size, 0)
+        stats = stats_border.derwin(echo_v_size-2, stats_h_size-2, 1, 1)
+
+        options_border = curses.newwin(echo_v_size, opts_h_size, graph_size, stats_h_size)
+        options = options_border.derwin(echo_v_size-2, opts_h_size-2, 1, 1)
 
         graph_border = curses.newwin(graph_size, curses.COLS, 0, 0)
         graphwin = graph_border.derwin(graph_size-2, curses.COLS-2, 1, 1)
 
         # graphwin.scrollok(True)
         stdscr.nodelay(True)
+        stdscr.refresh()
         graph_border.border()
         stats_border.border()
+        options_border.border()
         stats_border.addstr(0, 2, "stats")
+        options_border.addstr(0, 2, "usage")
+        options.addstr("Toggle numerical markers: n\nQuit: q")
+        options_border.refresh()
 
         logs = []
-        running = True
+        self.running = True
 
-        while running:
+        while self.running:
 
             stdscr.refresh()
 
@@ -176,6 +211,11 @@ Final variance = {var}
             cmd = stdscr.getch()
             if cmd == ord('q'):
                 break
+            elif cmd == ord('n'):
+                self.numerical_markers = not self.numerical_markers
+            elif cmd == ord('c') and False:
+                self.color = not self.color
+
 
             self.draw_graphs(graphwin)
             self.draw_stats(stats)
@@ -220,8 +260,16 @@ if __name__ == "__main__":
     fname = sys.argv[1] if len(sys.argv) > 1 else get_fname()
     data = DataSource(fname)
     ui = CURSESDisplay(data)
+
+    def die(_, __):
+        ui.running = False
+        data.running = False
+        signal.signal(signal.SIGINT, signal.SIG_DFL)
+
     data.start()
     ui.start()
+    signal.signal(signal.SIGINT, die)
+
     ui.join()
     data.running = False
     data.join()
