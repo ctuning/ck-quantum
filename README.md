@@ -33,12 +33,20 @@ $ ck search --tags=deployed
 ```
 
 ### Removing plugins
+
+#### Removing an optimizer plugin
 ```
 $ ck cleanup vqe --type=optimizer
-OR
+```
+
+#### Removing an ansatz plugin
+```
 $ ck cleanup vqe --type=ansatz
-OR
-$ ck cleanup vqe                    # both deployed plugins
+```
+
+#### Removing both optimizer and ansatz plugins
+```
+$ ck cleanup vqe
 ```
 
 ### Working with optimizer plugins
