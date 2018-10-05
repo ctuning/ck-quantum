@@ -235,11 +235,17 @@ def get_fname():
         import sys
         sys.path.append( os.environ['CK_ROOT'] )
 
+    provider = os.environ.get('VQE_QUANTUM_PROVIDER', 'ibm')
+    program     = {
+        'ibm':      'qiskit-vqe',
+        'rigetti':  'rigetti-vqe2',
+    }[provider]
+
     import ck.kernel as ck
 
     load_adict = {  'action':           'load',
                     'module_uoa':       'program',
-                    'data_uoa':         'qiskit-vqe',
+                    'data_uoa':         program,
     }
     r=ck.access( load_adict )
     if r['return']>0: return r
