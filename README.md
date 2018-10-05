@@ -36,7 +36,9 @@ where:
 - `max_iterations`: the maximum number of optimizer iterations ("iteration limit"); by default, 80.
 - `repetitions`: the number of times to repeat the experiment with the same parameters; by default, 3.
 
-**NB:** The aim is to minimize the [Time-To-Solution](https://nbviewer.jupyter.org/urls/dl.dropbox.com/s/d9iysrawnprjy2w/ck-quantum-hackathon-20180615.ipynb#Time-to-solution-metric) (TTS) metric. As TTS is proportional to `sample_size`, the metric penalizes using higher values of `sample_size` for no good reason! At the same time, a low number of `repetitions` may make it hard to demonstrate solution convergence with a high probability, so using 5-10 `repetitions` is a good guess.
+**NB:** The aim is to minimize the [Time-To-Solution](https://nbviewer.jupyter.org/urls/dl.dropbox.com/s/d9iysrawnprjy2w/ck-quantum-hackathon-20180615.ipynb#Time-to-solution-metric) metric (TTS). As TTS is proportional to `sample_size`, exploring lower values of `sample_size` may be sensible.
+
+At the same time, a low number of `repetitions` may make it hard to demonstrate solution convergence with a high probability. For experiments to be uploaded, we recommend using at least 10 repetitions on the simulators and 3-5 repetitions on the hardware.
 
 ## Advanced VQE exploration via plugins
 
