@@ -187,13 +187,28 @@ Final variance = {var}
             time.sleep(0.1)
 
 
-
 def get_fname():
     """Uses CK to get the file that contains the live-updated iteration progress.
     """
-    ck_output = subprocess.check_output(["ck", "load", "program:qiskit-vqe", "--out=json"]).decode()
-    decoded = json.loads(ck_output)
-    return decoded["path"] + "/tmp/vqe_stream.json"
+
+    if 'CK_ROOT' in os.environ:
+        import sys
+        sys.path.append( os.environ['CK_ROOT'] )
+
+    import ck.kernel as ck
+
+    load_adict = {  'action':           'load',
+                    'module_uoa':       'program',
+                    'data_uoa':         'qiskit-vqe',
+    }
+    r=ck.access( load_adict )
+    if r['return']>0: return r
+
+    program_entry_path  = r['path']
+    stream_file_path    = os.path.join( program_entry_path, 'tmp', 'vqe_stream.json')
+
+    return stream_file_path
+
 
 if __name__ == "__main__":
 
