@@ -20,6 +20,12 @@ Then, launch VQE with the deployed optimizer and ansatz:
 $ ck run vqe --device=local_qasm_simulator --repetitions=1
 ```
 
+## Monitor the convergence process (an ASCII-graphics program run in a separate Terminal window)
+```
+ck run program:visualize-convergence
+```
+
+
 ## Easy VQE exploration via optimizer parameters
 ```
 $ ck run vqe --repetitions=10 --sample_size=100 --max_iterations=80
