@@ -28,8 +28,15 @@ ck run program:visualize-convergence
 
 ## Easy VQE exploration via optimizer parameters
 ```
-$ ck run vqe --repetitions=10 --sample_size=100 --max_iterations=80
+$ ck run vqe --device=<device> --sample_size=<sample_size> --max_iterations=<max_iterations> --repetitions=<repetitions>
 ```
+where:
+- `device`: `local_qasm_simulator` (local simulator), `ibmq_qasm_simulator` (remote simulator), `ibmqx4` (remote hardware); by default, QCK will prompt to select one of these target quantum devices (0, 1, 2).
+- `sample_size`: the number of times to evaluate the Hamiltonian function on the quantum device ("sampling resolution") per optimizer iteration; by default, 100.
+- `max_iterations`: the maximum number of optimizer iterations ("iteration limit"); by default, 80.
+- `repetitions`: the number of times to repeat the experiment with the same parameters; by default, 3.
+
+**NB:** The aim is to minimize the [Time-To-Solution](https://nbviewer.jupyter.org/urls/dl.dropbox.com/s/d9iysrawnprjy2w/ck-quantum-hackathon-20180615.ipynb#Time-to-solution-metric) (TTS) metric. As TTS is proportional to `sample_size`, the metric penalizes using higher values of `sample_size` for no good reason! At the same time, a low number of `repetitions` may make it hard to demonstrate solution convergence with a high probability, so using 5-10 `repetitions` is a good guess.
 
 ## Advanced VQE exploration via plugins
 
