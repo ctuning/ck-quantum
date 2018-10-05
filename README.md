@@ -1,6 +1,6 @@
 # Hackaton with London Quantum Computing Meetup
 
-* [6 October 2018](https://www.meetup.com/London-Quantum-Computing-Meetup/events/254156028/) (**"sold out"!**)
+* [6 October 2018](https://www.meetup.com/London-Quantum-Computing-Meetup/events/254156028/) (**fully booked 5 weeks in advance!**)
 
 ## Preparation before the hackathon (this will save you time on the day!)
 
