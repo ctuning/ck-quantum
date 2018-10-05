@@ -48,8 +48,9 @@ $ ck cleanup vqe                    # both deployed plugins
 $ ck deploy_optimizer vqe
 ```
 
-#### Edit the deployed optimizer
+#### Locate and edit the deployed optimizer plugin (use your favourite editor instead of `vi`)
 ```
+$ ck plugin_path vqe --type=optimizer
 $ vi `ck plugin_path vqe --type=optimizer`
 ```
 **NB:** The optimizer plugin is written in Python.
@@ -63,22 +64,23 @@ If you need more, please define them within the top-level one.
 $ ck deploy_ansatz vqe
 ```
 
-#### Visualize the ansatz circuit (use your favourite image viewer instead of "display")
+#### Visualize the ansatz circuit (use your favourite image viewer instead of `display`)
 ```
 $ ck run program:visualize-ansatz
 $ display `ck find program:visualize-ansatz`/ansatz_circuit.png
 ```
-**NB:** if unsure about the image viewer, try "open" on MacOS, "eog" or "eom" on Linux
+**NB:** If unsure about the image viewer, try `eog` or `eom` on Linux, `open` on macOS.
 
-#### Edit the deployed ansatz plugin (use your favourite editor instead of "vi")
+#### Locate and edit the deployed ansatz plugin (use your favourite editor instead of `vi`)
 ```
+$ ck plugin_path vqe --type=ansatz
 $ vi `ck plugin_path vqe --type=ansatz`
 ```
 **NB:** The ansatz plugin is written in Python with QISKit.
 It is expected to contain only one top-level function.
 If you need more, please define them within the top-level one.
 
-## Review the results (e.g. using time-to-solution parametric metric)
+## Review the results (e.g. using the time-to-solution parametric metric)
 ```
 $ ck search local:experiment:*                                                          # the list of all of your experimental entries
 $ ck find local:experiment:*                                                            # where the experiment directories are located
@@ -87,7 +89,7 @@ OR
 $ ck time_to_solution vqe local:experiment:my_experiment_10 --delta=0.015 --prob=0.8    # TTS (supply the experiment from command line)
 ```
 
-## Send us the results of your experiments
+## Upload the results of your experiments to Quantum Collective Knowledge
 ```
 $ ck upload vqe --team=schroedinger-cat-herders                                         # upload (pick the experiment entry interactively)
 OR
