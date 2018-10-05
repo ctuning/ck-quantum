@@ -12,6 +12,7 @@ from functools import partial
 import subprocess
 import json
 import threading
+import signal
 
 try:
     import inotify
@@ -19,7 +20,6 @@ try:
 except ImportError:
     NOTIFY_AVAILABLE = False
 
-# just run in a thread.
 class DataSource(threading.Thread):
     """Class for obtaining data from the log saved by ck run.
 
@@ -31,7 +31,7 @@ class DataSource(threading.Thread):
     def __init__(self, fname, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fname = fname
-        self.logs = None # [[0, 1, 2, 3, 4, 5], [0.5, 1.5, 2.5, 3.5]]
+        self.logs = None
         self.running = False
         self.file = None
         self.Nruns = 0
@@ -65,11 +65,7 @@ class DataSource(threading.Thread):
                     self.file = open(self.fname, "r")
                     self.logs = [[]]
                 except FileNotFoundError:
-                    if not NOTIFY_AVAILABLE:
-                        time.sleep(0.1)
-                    else:
-                        # can do somthing fancy.
-                        time.sleep(0.1)
+                    time.sleep(0.1)
 
 
 class CURSESDisplay(threading.Thread):
@@ -83,6 +79,7 @@ Final variance = {var}
     def __init__(self, datasource, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.data = datasource
+        self.running = False
 
 
     def run(self):
@@ -120,8 +117,6 @@ Final variance = {var}
         if self.data.logs:
             min_, max_ = -1.7, -1.6
             p = ap.AFigure(shape=(width-2, height-3))
-            # p.xlabel("optimiser iteration")
-            # p.ylabel("Energy")
             for i, log in enumerate(self.data.logs):
                 if len(log) < 1:
                     continue
@@ -159,9 +154,9 @@ Final variance = {var}
         stats_border.addstr(0, 2, "stats")
 
         logs = []
-        running = True
+        self.running = True
 
-        while running:
+        while self.running:
 
             stdscr.refresh()
 
@@ -220,8 +215,16 @@ if __name__ == "__main__":
     fname = sys.argv[1] if len(sys.argv) > 1 else get_fname()
     data = DataSource(fname)
     ui = CURSESDisplay(data)
+
+    def die(_, __):
+        ui.running = False
+        data.running = False
+        signal.signal(signal.SIGINT, signal.SIG_DFL)
+
     data.start()
     ui.start()
+    signal.signal(signal.SIGINT, die)
+
     ui.join()
     data.running = False
     data.join()
