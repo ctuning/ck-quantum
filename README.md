@@ -12,7 +12,7 @@
 First, deploy a VQE ansatz and optimizer plugins that should just work:
 ```
 $ ck deploy_optimizer vqe --value=optimizer.cobyla
-$ ck deploy_ansatz vqe --value=ansatz.tiny1
+$ ck deploy_ansatz vqe --value=ansatz.universal4
 ```
 
 Then, launch VQE with the deployed optimizer and ansatz:
