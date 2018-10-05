@@ -28,8 +28,17 @@ ck run program:visualize-convergence
 
 ## Easy VQE exploration via optimizer parameters
 ```
-$ ck run vqe --repetitions=10 --sample_size=100 --max_iterations=80
+$ ck run vqe --device=<device> --sample_size=<sample_size> --max_iterations=<max_iterations> --repetitions=<repetitions>
 ```
+where:
+- `device`: `local_qasm_simulator` (local simulator), `ibmq_qasm_simulator` (remote simulator), `ibmqx4` (remote hardware); by default, QCK will prompt to select one of these target quantum devices (0, 1, 2).
+- `sample_size`: the number of times to evaluate the Hamiltonian function on the quantum device ("sampling resolution") per optimizer iteration; by default, 100.
+- `max_iterations`: the maximum number of optimizer iterations ("iteration limit"); by default, 80.
+- `repetitions`: the number of times to repeat the experiment with the same parameters; by default, 3.
+
+**NB:** The aim is to minimize the [Time-To-Solution](https://nbviewer.jupyter.org/urls/dl.dropbox.com/s/d9iysrawnprjy2w/ck-quantum-hackathon-20180615.ipynb#Time-to-solution-metric) metric (TTS). As TTS is proportional to `sample_size`, exploring lower values of `sample_size` may be sensible.
+
+At the same time, a low number of `repetitions` may make it hard to demonstrate solution convergence with a high probability. For experiments to be uploaded, we recommend using at least 10 repetitions on the simulators and 3-5 repetitions on the hardware.
 
 ## Advanced VQE exploration via plugins
 
@@ -94,18 +103,35 @@ $ vi `ck plugin_path vqe --type=ansatz`
 It is expected to contain only one top-level function.
 If you need more, please define them within the top-level one.
 
-## Review the results (e.g. using the time-to-solution parametric metric)
+## Locate the experimental results
+
+You can list all your experimental entries and locate them on disk as follows:
 ```
-$ ck search local:experiment:*                                                          # the list of all of your experimental entries
-$ ck find local:experiment:*                                                            # where the experiment directories are located
-$ ck time_to_solution vqe --delta=0.015 --prob=0.95                                     # TTS (pick the experiment entry interactively)
-OR
-$ ck time_to_solution vqe local:experiment:my_experiment_10 --delta=0.015 --prob=0.8    # TTS (supply the experiment from command line)
+$ ck search local:experiment:* --tags=qck
+$ ck find local:experiment:*
 ```
 
-## Upload the results of your experiments to Quantum Collective Knowledge
+## View the TTS metric
+
+Run the following and select an experiment entry to compute TTS for:
 ```
-$ ck upload vqe --team=schroedinger-cat-herders                                         # upload (pick the experiment entry interactively)
-OR
-$ ck upload vqe --team=bell-state-ringers local:experiment:my_experiment_5 local:experiment:my_experiment_13  # upload (supply the experiment from command line)
+$ ck time_to_solution vqe --delta=0.015 --prob=0.95
+```
+
+To compute TTS for a particular experiment, supply its entry e.g.:
+```
+$ ck time_to_solution vqe --delta=0.015 --prob=0.8 local:experiment:anton-2018_10_05T12_18_19-local_qasm_simulator-ansatz.universal4-optimizer.cobyla-samples.100-repetitions.1
+```
+
+## Upload your experimental results to Quantum Collective Knowledge
+
+When you have an experiment you would like to share, run:
+```
+$ ck upload vqe --team=schroedinger-cat-herders
+```
+and select the experiment from the list. We recommend uploading all experiments on the hardware and most successful experiments on the simulators.
+
+Alternatively, upload one or more experiments by using their entries e.g.:
+```
+$ ck upload vqe --team=bell-state-ringers local:experiment:my_experiment_5 local:experiment:my_experiment_13
 ```
