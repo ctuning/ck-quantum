@@ -291,6 +291,7 @@ def run(i):
     Input:  {
                 (sample_size)       - number of "shots" to use in each quantum program execution
                 (max_iterations)    - a (soft) limit on the number of optimizer's iterations
+                (start_param_value) - set the starting value for each optimizer's parameter (a float number or the word 'random')
                 (repetitions)       - a number of times to run the whole optimizer convergence experiment (for stats)
                 (provider)          - 'ibm' (default) or 'rigetti'
                 (device)            - which simulator or quantum device to run the whole experiment on (interactive by default)
@@ -311,10 +312,11 @@ def run(i):
         if r['return']>0: return r
         timestamp   = r['iso_datetime'].split('.')[0].replace(':', '_').replace('-', '_')   # cut to seconds' resolution
 
-    username       = getpass.getuser()
-    sample_size    = i.get('sample_size', 100)
-    max_iterations = i.get('max_iterations', 80)
-    repetitions    = i.get('repetitions', 3)
+    username            = getpass.getuser()
+    sample_size         = i.get('sample_size', 100)
+    max_iterations      = i.get('max_iterations', 80)
+    repetitions         = i.get('repetitions', 3)
+    start_param_value   = i.get('start_param_value', 'random')
 
     provider    = i.get('provider', 'ibm').lower()              # 'ibm' (default) or 'rigetti'
     q_device      = i.get('device')
@@ -389,6 +391,7 @@ def run(i):
                 'env.VQE_SAMPLE_SIZE':          sample_size,
                 'env.VQE_MAX_ITERATIONS':       max_iterations,
                 'env.VQE_QUANTUM_BACKEND':      q_device,
+                'env.VQE_START_PARAM_VALUE':    start_param_value,
                 'skip_freq':                    'yes',
     }
 

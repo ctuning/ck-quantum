@@ -13,18 +13,19 @@ def get_first_callable( namespace ):
         raise Exception("Expecting exactly one top level function in 'custom_optimizer.py', but found {} ({}). Please refactor your code".format(top_level_methods, callable_names))
 
 
-def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_help, minimizer_options_default='{}', start_params_zeros_default=True):
+def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_help, minimizer_options_default='{}', start_param_value_default=0.0):
 
     import argparse
     import json
     import custom_optimizer     # the file will be different depending on the plugin choice
 
-    start_params_default = [ 0.0 ] * num_params if start_params_zeros_default else np.random.randn( num_params )  # Initial guess of ansatz
-
     arg_parser = argparse.ArgumentParser()
 
+    arg_parser.add_argument('--start_param_value', '--start-param-value',
+                            default=start_param_value_default, help="Initial value of each optimized parameter")
+
     arg_parser.add_argument('--start_params', '--start-params',
-                            default=start_params_default, type=float, nargs=num_params, help="Initial values of optimized parameters")
+                            type=float, nargs=num_params, help="Initial values of optimized parameters")
 
     arg_parser.add_argument('--sample_number', '--sample-number', '--shots',
                             default=100, type=int, help="Number of repetitions of each individual quantum run")
@@ -40,7 +41,10 @@ def cmdline_parse_and_report(num_params, q_device_name_default, q_device_name_he
 
     args = arg_parser.parse_args()
 
-    start_params            = args.start_params
+    start_param_value       = args.start_param_value
+    start_params_default    = np.random.randn( num_params ) if start_param_value == 'random' else [ float(start_param_value) ] * num_params
+
+    start_params            = args.start_params or start_params_default
     sample_number           = args.sample_number
     q_device_name           = args.q_device_name
     max_func_evaluations    = args.max_func_evaluations
