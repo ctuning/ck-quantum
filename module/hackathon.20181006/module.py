@@ -209,6 +209,7 @@ def get_raw_data(i):
                         'minimizer_method': characteristics['run'].get('vqe_input', {}).get('minimizer_method', 'n/a'),
                         'minimizer_options': characteristics['run'].get('vqe_input', {}).get('minimizer_options', {'maxfev':-1}),
                         'minimizer_src': characteristics['run'].get('vqe_input', {}).get('minimizer_src', ''),
+                        'ansatz_method': characteristics['run'].get('vqe_input', {}).get('ansatz_method', ''),
                         'ansatz_src': characteristics['run'].get('vqe_input', {}).get('ansatz_src', ''),
                         'sample_number': characteristics['run'].get('vqe_input', {}).get('sample_number','n/a'),
                         'max_iterations': choices['env'].get('VQE_MAX_ITERATIONS', -1),
@@ -242,6 +243,7 @@ def get_raw_data(i):
                     datum['max_iterations'] = np.int64(datum.get('max_iterations',-1))
                     for key in index:
                         datum['_' + key] = datum[key]
+                    datum['_ansatz_method'] = datum['ansatz_method']
                     datum['_ansatz_src'] = datum['ansatz_src']
                     datum['_minimizer_src'] = datum['minimizer_src']
 
@@ -353,12 +355,12 @@ def get_raw_data(i):
         row['##data_uid'] = "{}:{}".format(record['_point'], record['_repetition_id'])
 
         row['_ansatz_src'] = {
-            'title': 'Show',
+            'title': record.get('_ansatz_method','Show'),
             'cmd': record['_ansatz_src']
            }
 
         row['_minimizer_src'] = {
-            'title': 'Show',
+            'title': record.get('_minimizer_method','Show'),
             'cmd': record['_minimizer_src']
            }
 
