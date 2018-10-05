@@ -4,8 +4,13 @@
   "compile_deps": {
     "compiler": {
       "local": "yes",
-      "name": "Python",
-      "tags": "compiler,lang-python"
+      "name": "Python 3",
+      "tags": "compiler,python",
+      "version_from": [
+            3,
+            5,
+            0
+      ]
     }
   },
   "data_name": "visualize-convergence",
