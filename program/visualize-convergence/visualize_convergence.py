@@ -68,6 +68,24 @@ class DataSource(threading.Thread):
                     time.sleep(0.1)
 
 
+class Colors():
+
+    end = '\x1b[0m'
+
+    def __init__(self):
+        # generate a style list
+        self.styles = []
+        for style in range(8):
+            for fg in range(30,38):
+                s1 = ''
+                for bg in range(40,48):
+                    format = ';'.join([str(style), str(fg), str(bg)])
+                    self.styles.append(format)
+
+        self.N = len(self.styles)
+
+
+
 class CURSESDisplay(threading.Thread):
 
     stats_format = """N runs = {nruns}
@@ -80,6 +98,9 @@ Final variance = {var}
         super().__init__(*args, **kwargs)
         self.data = datasource
         self.running = False
+        self.numerical_markers = True
+        self.colors = Colors()
+        self.color = False
 
 
     def run(self):
@@ -107,6 +128,15 @@ Final variance = {var}
             window.addstr("No data yet!")
 
 
+    def getmarker(self, i):
+        marker = '_,' if i == len(self.data.logs)-1 else \
+                str(i) if self.numerical_markers else \
+                '_.'
+        if self.color:
+            marker = self.colors.styles[i % self.colors.N] + marker + self.colors.end
+        return marker
+
+
 
 
     def draw_graphs(self, window):
@@ -120,10 +150,9 @@ Final variance = {var}
             for i, log in enumerate(self.data.logs):
                 if len(log) < 1:
                     continue
-                marker = '_,' if i == len(self.data.logs)-1 else '_.'
                 x = np.arange(len(log))
                 y = log
-                _ = p.plot(x, y, marker=marker, plot_slope=False)
+                _ = p.plot(x, y, marker=self.getmarker(i), plot_slope=False)
                 min_ = min(min_, min(log))
                 max_ = max(max_, max(log))
 
@@ -141,17 +170,28 @@ Final variance = {var}
         graph_size = ceil(curses.LINES * (2/3))
         echo_v_size = floor(curses.LINES * (1/3))
 
-        stats_border = curses.newwin(echo_v_size, curses.COLS, graph_size, 0)
-        stats = stats_border.derwin(echo_v_size-2, curses.COLS-2, 1, 1)
+        stats_h_size = ceil(curses.COLS * (2/3))
+        opts_h_size = floor(curses.COLS * (1/3))
+
+        stats_border = curses.newwin(echo_v_size, stats_h_size, graph_size, 0)
+        stats = stats_border.derwin(echo_v_size-2, stats_h_size-2, 1, 1)
+
+        options_border = curses.newwin(echo_v_size, opts_h_size, graph_size, stats_h_size)
+        options = options_border.derwin(echo_v_size-2, opts_h_size-2, 1, 1)
 
         graph_border = curses.newwin(graph_size, curses.COLS, 0, 0)
         graphwin = graph_border.derwin(graph_size-2, curses.COLS-2, 1, 1)
 
         # graphwin.scrollok(True)
         stdscr.nodelay(True)
+        stdscr.refresh()
         graph_border.border()
         stats_border.border()
+        options_border.border()
         stats_border.addstr(0, 2, "stats")
+        options_border.addstr(0, 2, "usage")
+        options.addstr("Toggle numerical markers: n\nQuit: q")
+        options_border.refresh()
 
         logs = []
         self.running = True
@@ -171,6 +211,11 @@ Final variance = {var}
             cmd = stdscr.getch()
             if cmd == ord('q'):
                 break
+            elif cmd == ord('n'):
+                self.numerical_markers = not self.numerical_markers
+            elif cmd == ord('c') and False:
+                self.color = not self.color
+
 
             self.draw_graphs(graphwin)
             self.draw_stats(stats)
