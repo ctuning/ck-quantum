@@ -358,9 +358,9 @@ def run(i):
     }
     r=ck.access( apath_adict )
     if r['return']>0: return r
-    ansatz_tag      = os.path.basename( r['plugin_dir'] )
+    ansatz_tag      = os.path.basename( r['plugin_dir'] ) if provider=='ibm' else 'ansatz.builtin'
 
-    record_uoa  = '{}-{}-{}-{}-{}-samples.{}-repetitions.{}'.format(username, timestamp, q_device, ansatz_tag, optimizer_tag, sample_size, repetitions)
+    record_uoa  = '{}-{}-{}-{}-{}-samples.{}-start.{}-repetitions.{}'.format(username, timestamp, q_device, ansatz_tag, optimizer_tag, sample_size, start_param_value, repetitions)
     record_cid  = 'local:experiment:{}'.format(record_uoa)
 
     ck.out('Will be recording the results into {}\n'.format(record_cid))
