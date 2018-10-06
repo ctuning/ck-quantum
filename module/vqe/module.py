@@ -461,7 +461,6 @@ def upload(i):
 
     cids                = i.get('cids')
     team_name           = i.get('team')
-    update_meta_dict    = { 'team': team_name } if team_name else {}
 
     if len(cids)==0:
         r=ck.access( {'action': 'pick_an_experiment', 'module_uoa': 'vqe'} )
@@ -472,6 +471,8 @@ def upload(i):
     if not team_name:
         r = ck.inp({'text': "Your team name: "})
         team_name = r['string']
+
+    update_meta_dict    = { 'team': team_name } if team_name else {}
 
     transfer_adict = {  'action':               'transfer',
                         'module_uoa':           'misc',
