@@ -165,8 +165,7 @@ def get_raw_data(i):
 
     """
         
-    # FIXME: Switch to 'ck-quantum-hackathon-20181006' for the event.
-    repo_uoa = 'ck-quantum-hackathons'
+    repo_uoa = 'ck-quantum-hackathon-20181006'
 
     def get_experimental_results(repo_uoa, tags='qck', module_uoa='experiment'):
         r = ck.access({'action':'search', 'repo_uoa':repo_uoa, 'module_uoa':module_uoa, 'tags':tags})
