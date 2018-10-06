@@ -1,10 +1,13 @@
-# Hackaton with London Quantum Computing Meetup
+# London Quantum Computing Hackathon, 6 October 2018
 
-* [6 October 2018](https://www.meetup.com/London-Quantum-Computing-Meetup/events/254156028/) (**fully booked 5 weeks in advance!**)
+* [Meeetup](https://www.meetup.com/London-Quantum-Computing-Meetup/events/254156028/) (**fully booked 5 weeks in advance!**)
+* [Slides](https://docs.google.com/presentation/d/13O5hqez88NVyR0Gn9q9pGdVlRtKOtEkwQO5kAUyVOLs/edit?usp=sharing) (check often for updates)
 
-## Preparation before the hackathon (this will save you time on the day!)
+## Getting started
 
-1. Please register at [Quantum Experience](https://quantumexperience.ng.bluemix.net/qx/signup) and copy your API token from the ["Advanced"](https://quantumexperience.ng.bluemix.net/qx/account/advanced) tab (click on the "Regenerate" button first).
+1. Please register at [Quantum Experience](https://quantumexperience.ng.bluemix.net/qx/signup)
+  1. Copy your API token from the ["Advanced"](https://quantumexperience.ng.bluemix.net/qx/account/advanced) tab (click on the "Regenerate" button first).
+  1. For the day, please also change your "Institution" to "QuantumHackers" in the ["Account"](https://quantumexperience.ng.bluemix.net/qx/account/profile) tab.
 1. Follow [CK-QISKit instructions](https://github.com/ctuning/ck-qiskit).
 
 ## Run QISKit-VQE once
