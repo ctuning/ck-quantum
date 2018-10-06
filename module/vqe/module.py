@@ -296,6 +296,7 @@ def run(i):
                 (provider)          - 'ibm' (default) or 'rigetti'
                 (device)            - which simulator or quantum device to run the whole experiment on (interactive by default)
                 (timestamp)         - when the experiment was started (normally generated automatically)
+                (timeout)           - timeout for the device
             }
 
     Output: {
@@ -317,6 +318,7 @@ def run(i):
     max_iterations      = i.get('max_iterations', 80)
     repetitions         = i.get('repetitions', 3)
     start_param_value   = i.get('start_param_value', 'random')
+    timeout             = i.get('timeout', 300)
 
     provider    = i.get('provider', 'ibm').lower()              # 'ibm' (default) or 'rigetti'
     q_device      = i.get('device')
@@ -392,6 +394,7 @@ def run(i):
                 'env.VQE_MAX_ITERATIONS':       max_iterations,
                 'env.VQE_QUANTUM_BACKEND':      q_device,
                 'env.VQE_START_PARAM_VALUE':    start_param_value,
+                'env.VQE_QUANTUM_TIMEOUT':      timeout,
                 'skip_freq':                    'yes',
     }
 
