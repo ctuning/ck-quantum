@@ -36,7 +36,7 @@ selector3=[
 metrics_selector_s=[
     {'name':'Fun Key', 'key':'__fun_key', 'values':['fun','fun_exact','fun_validated']},
     {'name':'Time Key', 'key':'__time_key', 'values':['total_q_shots','total_q_seconds','total_seconds']},
-    {'name':'Delta', 'key':'__delta', 'config':{'type':'number','min':0,'step':0.05}},
+    {'name':'Delta', 'key':'__delta', 'config':{'type':'number','min':0,'step':0.01}},
     {'name':'Prob', 'key':'__prob', 'config':{'type':'number','min':0,'max':1,'step':0.1}}
 ]
 
