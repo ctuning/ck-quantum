@@ -204,6 +204,8 @@ def plugin_path(i):
     """
     Input:  {
                 type                - either 'optimizer' or 'ansatz'
+                (tags)              - extra comma-separated tags to narrow down the search
+                (data_uoa)          - narrow the search down to just one env entry
              }
 
     Output: {
@@ -218,18 +220,22 @@ def plugin_path(i):
     """
 
     plugin_type     = i.get('type', 'optimizer')
+    data_uoa        = i.get('data_uoa', '*')
+    tags            = i.get('tags')
 
     search_adict = {'action':           'search',
                     'module_uoa':       'env',
-                    'data_uoa':         '*',
-                    'tags':             'deployed,{}'.format(plugin_type),
+                    'data_uoa':         data_uoa,
+                    'tags':             ','.join( ['deployed', plugin_type ] + ([tags] if tags else []) ),
     }
     r=ck.access( search_adict )
     if r['return']>0: return r
 
     lst_len = len(r['lst'])
-    if lst_len != 1:
-        return {'return':1, 'error':'Expecting a single {} plugin, but found {}'.format(plugin_type, lst_len)}
+    if lst_len == 0:
+        return {'return':1, 'error':'The {} plugin with --tags="{}" does not seem to be deployed'.format(plugin_type, tags or '')}
+    elif lst_len > 1:
+        return {'return':1, 'error':'Found {} matches for {} plugin, please narrow the search down with --tags='.format(lst_len, plugin_type)}
 
     data_uoa = r['lst'][0]['data_uoa']
 
@@ -306,8 +312,6 @@ def run(i):
             }
     """
 
-    pprint(i)
-
     force_bool          = i.get('f', i.get('force'))=='yes'
     timestamp           = i.get('timestamp')
 
@@ -349,8 +353,50 @@ def run(i):
         'rigetti':  'rigetti-vqe2',
     }[provider]
 
+    load_adict = {  'action':           'load',
+                    'module_uoa':       'program',
+                    'data_uoa':         program,
+    }
+    r=ck.access( load_adict )
+    if r['return']>0: return r
+    program_entry_path  = r['path']
+    program_dict        = r['dict']
+    program_rdeps       = program_dict['run_deps']
+
+    pipeline_adict = {  'action':                       'pipeline',
+                        'prepare':                      'yes',
+                        'module_uoa':                   'program',
+                        'data_uoa':                     program,
+                        'no_state_check':               'yes',
+                        'no_compiler_description':      'yes',
+                        'skip_calibration':             'yes',
+                        'speed':                        'no',
+                        'energy':                       'no',
+                        'cpu_freq':                     '',
+                        'gpu_freq':                     '',
+                        'no_state_check':               'yes',
+                        'skip_print_timers':            'yes',
+                        'out':                          'con',
+                        'env':{
+                            'VQE_SAMPLE_SIZE':          sample_size,
+                            'VQE_MAX_ITERATIONS':       max_iterations,
+                            'VQE_QUANTUM_BACKEND':      q_device,
+                            'VQE_START_PARAM_VALUE':    start_param_value,
+                            'VQE_QUANTUM_TIMEOUT':      timeout,
+                        },
+                    }
+    pipeline=ck.access( pipeline_adict )
+    if pipeline['return']>0: return pipeline
+
+    for k in ['ready', 'fail', 'return']:
+        if k in pipeline:
+            del(pipeline[k])
+
+    program_rdeps = pipeline['dependencies'].copy()
+
     opath_adict = { 'action':       'plugin_path',
                     'module_uoa':   'vqe',
+                    'data_uoa':     pipeline['dependencies']['optimizer-plugin']['uoa'],
                     'type':         'optimizer',
     }
     r=ck.access( opath_adict )
@@ -359,6 +405,7 @@ def run(i):
 
     apath_adict = { 'action':       'plugin_path',
                     'module_uoa':   'vqe',
+                    'data_uoa':     pipeline['dependencies']['ansatz-plugin']['uoa'],
                     'type':         'ansatz',
     }
     r=ck.access( apath_adict )
@@ -384,37 +431,23 @@ def run(i):
         if continue_reply[0] != 'y':
             return {'return':1, 'error':'Please set the desired parameters and run again'}
 
-    load_adict = {  'action':           'load',
-                    'module_uoa':       'program',
-                    'data_uoa':         program,
-    }
-    r=ck.access( load_adict )
-    if r['return']>0: return r
-
-    program_entry_path  = r['path']
-    stream_file_path    = os.path.join( program_entry_path, 'tmp', 'vqe_stream.json')
-
     try:
+        stream_file_path    = os.path.join( program_entry_path, 'tmp', 'vqe_stream.json')
         os.remove( stream_file_path )   # the data is appended to it by each iteration, so this file has to be cleaned-up before benchmarking
     except OSError:
         pass
 
-    benchmark_adict = {'action':                'benchmark',
-                'module_uoa':                   'program',
-                'data_uoa':                     program,
-                'repetitions':                  repetitions,
-                'record':                       'yes',
-                'record_repo':                  'local',
-                'record_uoa':                   record_uoa,
-                'tags':                         ','.join(['qck', 'quantum', hackathon_tag, username, q_device, ansatz_tag, optimizer_tag]),
-                'env.VQE_SAMPLE_SIZE':          sample_size,
-                'env.VQE_MAX_ITERATIONS':       max_iterations,
-                'env.VQE_QUANTUM_BACKEND':      q_device,
-                'env.VQE_START_PARAM_VALUE':    start_param_value,
-                'env.VQE_QUANTUM_TIMEOUT':      timeout,
-                'skip_freq':                    'yes',
-    }
+    benchmark_adict = { 'action':                       'run',
+                        'module_uoa':                   'pipeline',
+                        'data_uoa':                     'program',
+                        'pipeline':                     pipeline,
 
+                        'repetitions':                  repetitions,
+                        'record':                       'yes',
+                        'record_repo':                  'local',
+                        'record_uoa':                   record_uoa,
+                        'tags':                         ','.join(['qck', 'quantum', hackathon_tag, username, q_device, ansatz_tag, optimizer_tag]),
+    }
     r=ck.access( benchmark_adict )
     if r['return']>0: return r
 
