@@ -306,7 +306,10 @@ def run(i):
             }
     """
 
-    timestamp   = i.get('timestamp')
+    pprint(i)
+
+    force_bool          = i.get('f', i.get('force'))=='yes'
+    timestamp           = i.get('timestamp')
 
     if not timestamp:       # Get current timestamp:
         r=ck.get_current_date_time({})
@@ -365,7 +368,21 @@ def run(i):
     record_uoa  = '{}-{}-{}-{}-{}-samples.{}-start.{}-repetitions.{}'.format(username, timestamp, q_device, ansatz_tag, optimizer_tag, sample_size, start_param_value, repetitions)
     record_cid  = 'local:experiment:{}'.format(record_uoa)
 
-    ck.out('Will be recording the results into {}\n'.format(record_cid))
+    ck.out('=== About to run VQE with the following parameters: ==============')
+    ck.out('    --max_iterations={}'.format(max_iterations))
+    ck.out('    --start_param_value={}'.format(start_param_value))
+    ck.out('    --sample_size={}'.format(sample_size))
+    ck.out('    --repetitions={}'.format(repetitions))
+    ck.out('    --device={}'.format(q_device))
+    ck.out('    --timeout={}'.format(timeout))
+    ck.out('    --timestamp={}'.format(timestamp))
+    ck.out('=== Recording the results into  {}\n'.format(record_cid))
+
+    if not force_bool:
+        rx=ck.inp({'text': '\nContinue with the above parameters [Y/n]? '})
+        continue_reply  = rx['string'].strip().lower() or 'yes'
+        if continue_reply[0] != 'y':
+            return {'return':1, 'error':'Please set the desired parameters and run again'}
 
     load_adict = {  'action':           'load',
                     'module_uoa':       'program',
