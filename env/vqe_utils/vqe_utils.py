@@ -1,4 +1,17 @@
 import numpy as np
+import json
+
+
+# See https://stackoverflow.com/questions/26646362/numpy-array-is-not-json-serializable
+#
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif isinstance(obj, np.bool_):
+            return bool(obj)
+        return json.JSONEncoder.default(self, obj)
+
 
 def get_first_callable( namespace ):
     "return the first callable function in the given namespace"
