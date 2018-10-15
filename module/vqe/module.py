@@ -359,8 +359,6 @@ def run(i):
     r=ck.access( load_adict )
     if r['return']>0: return r
     program_entry_path  = r['path']
-    program_dict        = r['dict']
-    program_rdeps       = program_dict['run_deps']
 
     pipeline_adict = {  'action':                       'pipeline',
                         'prepare':                      'yes',
@@ -391,38 +389,35 @@ def run(i):
         if k in pipeline:
             del(pipeline[k])
 
-    program_rdeps = pipeline['dependencies'].copy()
-
-    opath_adict = { 'action':       'plugin_path',
-                    'module_uoa':   'vqe',
-                    'data_uoa':     pipeline['dependencies']['optimizer-plugin']['uoa'],
-                    'type':         'optimizer',
-    }
-    r=ck.access( opath_adict )
-    if r['return']>0: return r
-    optimizer_tag   = os.path.basename( r['plugin_dir'] )
-
-    apath_adict = { 'action':       'plugin_path',
-                    'module_uoa':   'vqe',
-                    'data_uoa':     pipeline['dependencies']['ansatz-plugin']['uoa'],
-                    'type':         'ansatz',
-    }
-    r=ck.access( apath_adict )
-    if r['return']>0: return r
-    ansatz_tag      = os.path.basename( r['plugin_dir'] ) if provider=='ibm' else 'ansatz.builtin'
-
-    record_uoa  = '{}-{}-{}-{}-{}-samples.{}-start.{}-repetitions.{}'.format(username, timestamp, q_device, ansatz_tag, optimizer_tag, sample_size, start_param_value, repetitions)
-    record_cid  = 'local:experiment:{}'.format(record_uoa)
 
     ck.out('=== About to run VQE with the following parameters: ==============')
+    ck.out('    --device={}'.format(q_device))
     ck.out('    --max_iterations={}'.format(max_iterations))
     ck.out('    --start_param_value={}'.format(start_param_value))
     ck.out('    --sample_size={}'.format(sample_size))
     ck.out('    --repetitions={}'.format(repetitions))
-    ck.out('    --device={}'.format(q_device))
     ck.out('    --timeout={}'.format(timeout))
     ck.out('    --timestamp={}'.format(timestamp))
+
+    ck.out('=== Selected plugins: ============================================')
+    ## Figuring out the plugins selected via CK's interactive layer:
+    #
+    plugin_tag = {}
+    for plugin_type in ('hamiltonian', 'ansatz', 'optimizer'):
+        plugin_dependency_name  = plugin_type + '-plugin'
+        plugin_dependency_dict  = pipeline['dependencies'].get( plugin_dependency_name )
+        if plugin_dependency_dict:
+            plugin_full_path    = plugin_dependency_dict['cus']['full_path']
+            plugin_tag[plugin_type] = os.path.basename( os.path.dirname( plugin_full_path ))
+        else:
+            plugin_tag[plugin_type] = plugin_type + '.builtin'
+        ck.out('    {}'.format( plugin_tag[plugin_type] ))
+
+    record_uoa  = '{}-{}-{}-{}-{}-{}-samples.{}-start.{}-repetitions.{}'.format(username, timestamp, q_device, plugin_tag['hamiltonian'], plugin_tag['ansatz'], plugin_tag['optimizer'], sample_size, start_param_value, repetitions)
+    record_cid  = 'local:experiment:{}'.format(record_uoa)
+
     ck.out('=== Recording the results into  {}\n'.format(record_cid))
+
 
     if not force_bool:
         rx=ck.inp({'text': '\nContinue with the above parameters [Y/n]? '})
@@ -445,7 +440,7 @@ def run(i):
                         'record':                       'yes',
                         'record_repo':                  'local',
                         'record_uoa':                   record_uoa,
-                        'tags':                         ','.join(['qck', 'quantum', hackathon_tag, username, q_device, ansatz_tag, optimizer_tag]),
+                        'tags':                         ','.join( ['qck', 'quantum', hackathon_tag, username, q_device] + plugin_tag.values() ),
     }
     r=ck.access( benchmark_adict )
     if r['return']>0: return r
