@@ -402,18 +402,23 @@ def run(i):
     ck.out('=== Selected plugins: ============================================')
     ## Figuring out the plugins selected via CK's interactive layer:
     #
-    plugin_tag = {}
+    meta_attribs = {}
     for plugin_type in ('hamiltonian', 'ansatz', 'optimizer'):
         plugin_dependency_name  = plugin_type + '-plugin'
         plugin_dependency_dict  = pipeline['dependencies'].get( plugin_dependency_name )
         if plugin_dependency_dict:
             plugin_full_path    = plugin_dependency_dict['cus']['full_path']
-            plugin_tag[plugin_type] = os.path.basename( os.path.dirname( plugin_full_path ))
+            plugin_tag          = os.path.basename( os.path.dirname( plugin_full_path ))
+            plugin_name         = plugin_tag.split('.',1)[1]
         else:
-            plugin_tag[plugin_type] = plugin_type + '.builtin'
-        ck.out('    {}'.format( plugin_tag[plugin_type] ))
+            plugin_name         ='builtin'
+        meta_attribs[plugin_type] = plugin_name
+        ck.out('    {:>12} : {}'.format( plugin_type, plugin_name ))
 
-    record_uoa  = '{}-{}-{}-{}-{}-{}-samples.{}-start.{}-repetitions.{}'.format(username, timestamp, q_device, plugin_tag['hamiltonian'], plugin_tag['ansatz'], plugin_tag['optimizer'], sample_size, start_param_value, repetitions)
+    record_uoa  = '{}-{}-{}-hamiltonian.{}-ansatz.{}-optimizer.{}-samples.{}-start.{}-repetitions.{}'.format( \
+                    username, timestamp, q_device, \
+                    meta_attribs['hamiltonian'], meta_attribs['ansatz'], meta_attribs['optimizer'], \
+                    sample_size, start_param_value, repetitions)
     record_cid  = 'local:experiment:{}'.format(record_uoa)
 
     ck.out('=== Recording the results into  {}\n'.format(record_cid))
@@ -431,6 +436,13 @@ def run(i):
     except OSError:
         pass
 
+    ## Adding more experiment parameters to tags and meta attributes:
+    #
+    meta_attribs.update( {
+        'device':   q_device,
+        'username': username,
+    })
+
     benchmark_adict = { 'action':                       'run',
                         'module_uoa':                   'pipeline',
                         'data_uoa':                     'program',
@@ -440,8 +452,8 @@ def run(i):
                         'record':                       'yes',
                         'record_repo':                  'local',
                         'record_uoa':                   record_uoa,
-                        'tags':                         ','.join( ['qck', 'quantum', hackathon_tag, username, q_device] + plugin_tag.values() ),
-                        'meta':                         plugin_tag,     # a "meta" dictionary within the experiment's meta.json
+                        'tags':                         ','.join( ['qck', 'quantum', hackathon_tag] + [ k+'.'+meta_attribs[k] for k in meta_attribs ] ),
+                        'meta':                         meta_attribs,     # a "meta" dictionary within the experiment's meta.json
     }
     r=ck.access( benchmark_adict )
     if r['return']>0: return r
