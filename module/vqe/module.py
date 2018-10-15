@@ -441,6 +441,7 @@ def run(i):
                         'record_repo':                  'local',
                         'record_uoa':                   record_uoa,
                         'tags':                         ','.join( ['qck', 'quantum', hackathon_tag, username, q_device] + plugin_tag.values() ),
+                        'meta':                         plugin_tag,     # a "meta" dictionary within the experiment's meta.json
     }
     r=ck.access( benchmark_adict )
     if r['return']>0: return r
