@@ -178,13 +178,12 @@ def deploy(i):
             ck.delete_directory( {'path': dir_path} )
 
     # ck.out("Creating an environment entry that sets up the paths for the soft:{} CK entry".format(deployed_uoa))
-    ## ck detect soft --tags=vqe,optimizer,lib,deployed --extra_tags=optimizer.custom --full_path=/Users/lg4/CK/local/soft/deployed.optimizer/python_code/optimizer.custom/custom_optimizer.py
-    ## ck detect soft:deployed.optimizer --extra_tags=optimizer.custom --full_path=/Users/lg4/CK/local/soft/deployed.optimizer/python_code/optimizer.custom/custom_optimizer.py
+    ## ck detect soft --tags=vqe,optimizer,lib,deployed --full_path=/Users/lg4/CK/local/soft/deployed.optimizer/python_code/optimizer.custom/custom_optimizer.py
+    ## ck detect soft:deployed.optimizer --full_path=/Users/lg4/CK/local/soft/deployed.optimizer/python_code/optimizer.custom/custom_optimizer.py
     #
     detect_adict = {'action':           'detect',
                     'module_uoa':       'soft',
                     'data_uoa':         deployed_uoa,
-                    'extra_tags':       selected_value,
                     'full_path':        python_plugin_full_path,
     }
     r=ck.access( detect_adict )
