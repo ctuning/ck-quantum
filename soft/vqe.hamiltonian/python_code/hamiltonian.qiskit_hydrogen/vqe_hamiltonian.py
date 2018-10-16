@@ -15,3 +15,5 @@ label_to_hamiltonian_coeff = {
     "IZ":    0.39793570529466216,
     "XX":    0.18093133934472627,
 }
+
+classical_energy = -1.8572746704950887
