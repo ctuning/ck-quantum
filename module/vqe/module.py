@@ -439,9 +439,9 @@ def run(i):
     ## Adding more experiment parameters to tags and meta attributes:
     #
     meta_attribs.update( {
+        'provider': provider,
         'device':   q_device,
-        'username': username,
-    })
+    } )
 
     benchmark_adict = { 'action':                       'run',
                         'module_uoa':                   'pipeline',
