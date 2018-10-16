@@ -16,6 +16,7 @@ ck=None # Will be updated by CK (initialized CK kernel)
 hackathon_date          = '20181006' # Switch to None after the hackathon
 hackathon_tag           = 'hackathon-{}'.format(hackathon_date if hackathon_date else 'dev')
 hackathon_remote_repo   = 'ck-quantum-hackathon-{}'.format(hackathon_date) if hackathon_date else 'ck-quantum-hackathons'
+default_provider        = 'ibm'
 
 import getpass
 import os
@@ -102,7 +103,12 @@ def deploy_ansatz(i):
             }
     """
 
-    i.update({'type' : 'qiskit.ansatz'})
+    provider    = i.get('provider', default_provider)
+    plugin_type = {
+        'ibm':      'qiskit.ansatz',
+        'rigetti':  'pyquil.ansatz',
+    }[provider]
+    i.update({'type' : plugin_type})
 
     return deploy(i)
 
@@ -110,7 +116,7 @@ def deploy_ansatz(i):
 def deploy(i):
     """
     Input:  {
-                type                - either 'optimizer' or 'qiskit.ansatz'
+                type                - either 'optimizer', 'qiskit.ansatz' or 'pyquil.ansatz'
                 (value)             - which deployable to deploy
             }
 
@@ -298,7 +304,7 @@ def run(i):
                 (max_iterations)    - a (soft) limit on the number of optimizer's iterations
                 (start_param_value) - set the starting value for each optimizer's parameter (a float number or the word 'random')
                 (repetitions)       - a number of times to run the whole optimizer convergence experiment (for stats)
-                (provider)          - 'ibm' (default) or 'rigetti'
+                (provider)          - 'ibm' or 'rigetti' (see default_provider)
                 (device)            - which simulator or quantum device to run the whole experiment on (interactive by default)
                 (timestamp)         - when the experiment was started (normally generated automatically)
                 (timeout)           - timeout for the device
@@ -326,7 +332,7 @@ def run(i):
     start_param_value   = i.get('start_param_value', 'random')
     timeout             = i.get('timeout', 300)
 
-    provider    = i.get('provider', 'ibm').lower()              # 'ibm' (default) or 'rigetti'
+    provider    = i.get('provider', default_provider).lower()
     q_device      = i.get('device')
 
     if not q_device:
