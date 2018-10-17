@@ -332,8 +332,8 @@ def run(i):
     start_param_value   = i.get('start_param_value', 'random')
     timeout             = i.get('timeout', 300)
 
-    provider    = i.get('provider', default_provider).lower()
-    q_device      = i.get('device')
+    provider            = i.get('provider', default_provider).lower()
+    q_device            = i.get('device')
 
     if not q_device:
         device_options = {
@@ -387,7 +387,7 @@ def run(i):
                             'VQE_START_PARAM_VALUE':    start_param_value,
                             'VQE_QUANTUM_TIMEOUT':      timeout,
                         },
-                    }
+    }
     pipeline=ck.access( pipeline_adict )
     if pipeline['return']>0: return pipeline
 
