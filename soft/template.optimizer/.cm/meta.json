@@ -4,6 +4,7 @@
     "check_that_exists": "yes", 
     "detect_in_soft_dir": "yes", 
     "unsplit_version_to_tags_prefixed_with": "optimizer.",
+    "deployed_name_infix": "optimizer.",
     "env_prefix": "CK_ENV_VQE_OPTIMIZER", 
     "limit_recursion_dir_search": {
       "linux": 2,

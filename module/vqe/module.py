@@ -58,7 +58,8 @@ def list_deployables(i):
     r=ck.access( load_adict )
     if r['return']>0: return r
 
-    template_soft_entry_path = r['path']
+    template_soft_entry_path    = r['path']
+    deployed_name_infix         = r['dict']['customize'].get('deployed_name_infix', '')
     python_code_common_path = os.path.join(template_soft_entry_path, 'python_code')
 
     # gather all the subdirectories of python_code_common_path
@@ -67,7 +68,7 @@ def list_deployables(i):
     if i.get('out')=='con':
         ck.out("{}".format(dir_names))
 
-    return {'return': 0, 'dir_names': dir_names}
+    return {'return': 0, 'dir_names': dir_names, 'deployed_name_infix': deployed_name_infix}
 
 
 def deploy_optimizer(i):
@@ -128,10 +129,13 @@ def deploy(i):
     """
 
     plugin_type     = i.get('type', 'optimizer')
+    template_uoa    = 'template.' + plugin_type
 
     selected_value  = i.get('value')
-    template_uoa    = 'template.' + plugin_type
-    dir_names       = list_deployables({ 'data_uoa': template_uoa })['dir_names']
+
+    ld_output           = list_deployables({ 'data_uoa': template_uoa })
+    dir_names           = ld_output['dir_names']
+    deployed_name_infix = ld_output['deployed_name_infix']
 
     if not selected_value:      # Acquire it interactively
         select_adict = {'action': 'select_string',
@@ -146,7 +150,7 @@ def deploy(i):
         else:
             selected_value = r['selected_value']
 
-    deployed_uoa    = 'deployed.' + selected_value
+    deployed_uoa    = 'deployed.' + deployed_name_infix + selected_value
 
     # ck.out("Creating soft:{} code-containing CK entry from a template".format(deployed_uoa))
     ## ck cp soft:template.optimizer soft:deployed.optimizer
@@ -414,8 +418,7 @@ def run(i):
         plugin_dependency_dict  = pipeline['dependencies'].get( plugin_dependency_name )
         if plugin_dependency_dict:
             plugin_full_path    = plugin_dependency_dict['cus']['full_path']
-            plugin_tag          = os.path.basename( os.path.dirname( plugin_full_path ))
-            plugin_name         = plugin_tag.split('.',1)[1]
+            plugin_name         = os.path.basename( os.path.dirname( plugin_full_path ))
         else:
             plugin_name         ='builtin'
         meta_attribs[plugin_type] = plugin_name
