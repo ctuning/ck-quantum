@@ -13,9 +13,8 @@ def version_cmd(i):
 
     full_path       = i.get('full_path')
     plugin_name     = os.path.basename( os.path.dirname( full_path ) )
-    plugin_suffix   = plugin_name.split('.', 1)[1]
 
-    return {'return':0, 'cmd':'', 'version': plugin_suffix }
+    return {'return':0, 'cmd':'', 'version': plugin_name }
 
 
 ##############################################################################
