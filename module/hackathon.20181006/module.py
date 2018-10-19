@@ -25,7 +25,7 @@ selector=[
 ]
 
 selector2=[
-    {'name':'Platform', 'key':'_platform'},
+    {'name':'Device', 'key':'_platform'},
     {'name':'Team', 'key':'_team'},
     {'name':'Minimizer method', 'key':'_minimizer_method'}
 ]
@@ -67,7 +67,7 @@ view_cache=[
 ]
 
 table_view=[
-    {"key":"_platform", "name":"Platform"},
+    {"key":"_platform", "name":"Device"},
     {"key":"_team", "name":"Team"},
     {"key":"_minimizer_method", "name":"Minimizer method"},
     {"key":"_sample_number", "name":"Sample number"},
@@ -88,7 +88,7 @@ table_view=[
 ]
 
 metrics_table_view=[
-    {"key":"_platform", "name":"Platform"},
+    {"key":"_platform", "name":"Device"},
     {"key":"_team", "name":"Team"},
     {"key":"_minimizer_method", "name":"Minimizer method"},
     {"key":"_sample_number", "name":"Sample number"},
