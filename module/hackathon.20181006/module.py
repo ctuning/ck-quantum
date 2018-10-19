@@ -29,6 +29,7 @@ selector2=[
     {'name':'Team', 'key':'_team'},
     {'name':'Minimizer', 'key':'_minimizer_method'},
     {"name":"Ansatz", "key":"_ansatz_method"},
+    {"name":"Point", "key":"_point"},
 ]
 
 selector3=[
