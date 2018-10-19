@@ -28,6 +28,7 @@ selector2=[
     {'name':'Device', 'key':'_platform'},
     {'name':'Team', 'key':'_team'},
     {'name':'Minimizer', 'key':'_minimizer_method'},
+    {"name":"Ansatz", "key":"_ansatz_method"},
 ]
 
 selector3=[
@@ -335,7 +336,9 @@ def get_raw_data(i):
         'success',
         'total_q_seconds',
         'total_q_shots',
-        'total_seconds']
+        'total_seconds',
+        '_ansatz_method',
+    ]
 
     for record in df.to_dict(orient='records'):
         row = {}
