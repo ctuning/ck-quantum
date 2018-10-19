@@ -459,6 +459,7 @@ def run(i):
 
                         'repetitions':                  repetitions,
                         'record':                       'yes',
+                        'skip_stat_analysis':           'yes',
                         'record_repo':                  'local',
                         'record_uoa':                   record_uoa,
                         'tags':                         ','.join( ['qck', 'quantum', hackathon_tag] + [ k+'.'+meta_attribs[k] for k in meta_attribs ] ),
