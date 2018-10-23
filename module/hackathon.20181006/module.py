@@ -25,11 +25,13 @@ selector=[
 ]
 
 selector2=[
+    {'name':'Vendor', 'key':'vendor'},
     {'name':'Device', 'key':'_platform'},
     {'name':'Team', 'key':'_team'},
     {'name':'Minimizer', 'key':'_minimizer_method'},
     {"name":"Ansatz", "key":"_ansatz_method"},
     {"name":"Point", "key":"_point"},
+    {'name':'Molecule', 'key':'molecule', 'filter_by_all':False },
 ]
 
 selector3=[
@@ -193,6 +195,9 @@ def get_raw_data(i):
 
             # Get the team name.
             team = r['dict'].get('team','team-default')
+            # note: hamiltonian is molecule in quantum jargon
+            molecule = r['dict']['meta'].get('hamiltonian', '')
+            vendor = r['dict']['meta'].get('provider', 'N/A')
         
             # For each point.    
             for point in r['points']:
@@ -242,6 +247,8 @@ def get_raw_data(i):
                     datum['total_q_seconds'] = np.float64(datum.get('report',{}).get('total_q_seconds',0))
                     datum['total_q_shots'] = np.int64(datum.get('report',{}).get('total_q_shots',0))
                     datum['max_iterations'] = np.int64(datum.get('max_iterations',-1))
+                    datum['molecule'] = molecule
+                    datum['vendor'] = vendor
                     for key in index:
                         datum['_' + key] = datum[key]
                     datum['_ansatz_method'] = datum['ansatz_method']
@@ -339,6 +346,8 @@ def get_raw_data(i):
         'total_q_shots',
         'total_seconds',
         '_ansatz_method',
+        'vendor',
+        'molecule',
     ]
 
     for record in df.to_dict(orient='records'):
