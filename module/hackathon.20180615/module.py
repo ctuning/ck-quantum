@@ -25,9 +25,9 @@ selector=[
 ]
 
 selector2=[
-    {'name':'Platform', 'key':'_platform'},
+    {'name':'Device', 'key':'_platform'},
     {'name':'Team', 'key':'_team'},
-    {'name':'Minimizer method', 'key':'_minimizer_method'}
+    {'name':'Minimizer', 'key':'_minimizer_method'}
 ]
 
 selector3=[
@@ -67,9 +67,9 @@ view_cache=[
 ]
 
 table_view=[
-    {"key":"_platform", "name":"Platform"},
+    {"key":"_platform", "name":"Device"},
     {"key":"_team", "name":"Team"},
-    {"key":"_minimizer_method", "name":"Minimizer method"},
+    {"key":"_minimizer_method", "name":"Minimizer"},
     {"key":"_sample_number", "name":"Sample number"},
     {"key":"_max_iterations", "name":"Max iterations"},
     {"key":"_point", "name":"Point"},
@@ -87,9 +87,9 @@ table_view=[
 ]
 
 metrics_table_view=[
-    {"key":"_platform", "name":"Platform"},
+    {"key":"_platform", "name":"Device"},
     {"key":"_team", "name":"Team"},
-    {"key":"_minimizer_method", "name":"Minimizer method"},
+    {"key":"_minimizer_method", "name":"Minimizer"},
     {"key":"_sample_number", "name":"Sample number"},
     {"key":"_max_iterations", "name":"Max iterations"},
     {"key":"_point", "name":"Point"},

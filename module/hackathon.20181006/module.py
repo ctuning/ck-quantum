@@ -25,9 +25,13 @@ selector=[
 ]
 
 selector2=[
-    {'name':'Platform', 'key':'_platform'},
+    {'name':'Vendor', 'key':'vendor'},
+    {'name':'Device', 'key':'_platform'},
     {'name':'Team', 'key':'_team'},
-    {'name':'Minimizer method', 'key':'_minimizer_method'}
+    {'name':'Minimizer', 'key':'_minimizer_method'},
+    {"name":"Ansatz", "key":"_ansatz_method"},
+    {"name":"Point", "key":"_point"},
+    {'name':'Molecule', 'key':'molecule', 'filter_by_all':False },
 ]
 
 selector3=[
@@ -67,9 +71,9 @@ view_cache=[
 ]
 
 table_view=[
-    {"key":"_platform", "name":"Platform"},
+    {"key":"_platform", "name":"Device"},
     {"key":"_team", "name":"Team"},
-    {"key":"_minimizer_method", "name":"Minimizer method"},
+    {"key":"_minimizer_method", "name":"Minimizer"},
     {"key":"_sample_number", "name":"Sample number"},
     {"key":"_max_iterations", "name":"Max iterations"},
     {"key":"_point", "name":"Point"},
@@ -88,9 +92,9 @@ table_view=[
 ]
 
 metrics_table_view=[
-    {"key":"_platform", "name":"Platform"},
+    {"key":"_platform", "name":"Device"},
     {"key":"_team", "name":"Team"},
-    {"key":"_minimizer_method", "name":"Minimizer method"},
+    {"key":"_minimizer_method", "name":"Minimizer"},
     {"key":"_sample_number", "name":"Sample number"},
     {"key":"_max_iterations", "name":"Max iterations"},
     {"key":"_point", "name":"Point"},
@@ -191,6 +195,9 @@ def get_raw_data(i):
 
             # Get the team name.
             team = r['dict'].get('team','team-default')
+            # note: hamiltonian is molecule in quantum jargon
+            molecule = r['dict']['meta'].get('hamiltonian', '')
+            vendor = r['dict']['meta'].get('provider', 'N/A')
         
             # For each point.    
             for point in r['points']:
@@ -240,6 +247,8 @@ def get_raw_data(i):
                     datum['total_q_seconds'] = np.float64(datum.get('report',{}).get('total_q_seconds',0))
                     datum['total_q_shots'] = np.int64(datum.get('report',{}).get('total_q_shots',0))
                     datum['max_iterations'] = np.int64(datum.get('max_iterations',-1))
+                    datum['molecule'] = molecule
+                    datum['vendor'] = vendor
                     for key in index:
                         datum['_' + key] = datum[key]
                     datum['_ansatz_method'] = datum['ansatz_method']
@@ -335,7 +344,11 @@ def get_raw_data(i):
         'success',
         'total_q_seconds',
         'total_q_shots',
-        'total_seconds']
+        'total_seconds',
+        '_ansatz_method',
+        'vendor',
+        'molecule',
+    ]
 
     for record in df.to_dict(orient='records'):
         row = {}
