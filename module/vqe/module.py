@@ -540,6 +540,7 @@ def upload(i):
         team_name = r['string']
 
     update_meta_dict    = { 'team': team_name } if team_name else {}
+    update_mmeta_dict   = update_meta_dict.copy()
 
     transfer_adict = {  'action':               'transfer',
                         'module_uoa':           'misc',
@@ -547,6 +548,7 @@ def upload(i):
                         'target_server_uoa':    'remote-ck',
                         'target_repo_uoa':      hackathon_remote_repo,
                         'update_meta_dict':     update_meta_dict,           # extra meta data added during the transfer
+                        'update_mmeta_dict':    update_mmeta_dict,          # extra meta data added during the transfer (updated location)
     }
     r=ck.access( transfer_adict )
     if r['return']>0: return r
