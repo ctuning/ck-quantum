@@ -18,6 +18,9 @@
     "list_registered_emails": {
       "desc": "Get the list of emails of the users that have successfully recorded the quantum_coin_flip experiment (helper function)"
     },
+    "list_experiments": {
+      "desc": "Returns a list of all VQE-relevant CK experiment entries"
+    },
     "pick_an_experiment": {
       "desc": "Select an experiment from the list (interactive helper function)"
     },

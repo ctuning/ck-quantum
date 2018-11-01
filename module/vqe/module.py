@@ -473,10 +473,45 @@ def run(i):
     return r
 
 
+def list_experiments(i):
+    """
+    Input:  {
+                (repo_uoa)          - experiment repository name (defaults to '*')
+                (extra_tags)        - extra tags to filter
+            }
+
+    Output: {
+                return              - return code =  0, if successful
+                                                  >  0, if error
+                (error)             - error text if return > 0
+            }
+    """
+
+    repo_uoa        = i.get('repo_uoa', '*')
+    extra_tags      = i.get('extra_tags')
+    all_tags        = 'qck' + ( ',' + extra_tags if extra_tags else '' )
+
+    search_adict    = { 'action':       'search',
+                        'repo_uoa':     repo_uoa,
+                        'module_uoa':   'experiment',
+                        'data_uoa':     '*',
+                        'tags':         all_tags,
+    }
+    r=ck.access( search_adict )
+    if r['return']>0: return r
+
+    if i.get('out')=='con':
+        for experiment_name in [ '{repo_uoa}:{module_uoa}:{data_uoa}'.format(**entry_dict) for entry_dict in r['lst']]:
+            ck.out( experiment_name )
+
+    return r
+
+
 def pick_an_experiment(i):
     """
     Input:  {
-                (repo_uoa)          - experiment repository name (defaults to local)
+                (repo_uoa)          - experiment repository name (defaults to 'local', but can be overridden by '*')
+                (extra_tags)        - extra tags to filter
             }
 
     Output: {
@@ -487,15 +522,18 @@ def pick_an_experiment(i):
     """
 
     repo_uoa        = i.get('repo_uoa', 'local')
+    extra_tags      = i.get('extra_tags')
 
-    search_adict    = { 'action':       'search',
+    list_exp_adict  = { 'action':       'list_experiments',
+                        'module_uoa':   'vqe',
                         'repo_uoa':     repo_uoa,
-                        'module_uoa':   'experiment',
-                        'data_uoa':     '*',
-                        'tags':         'qck',
+                        'extra_tags':   extra_tags,
     }
-    r=ck.access( search_adict )
+    r=ck.access( list_exp_adict )
     if r['return']>0: return r
+
+    if len(r['lst'])==0:
+        return {'return':1, 'error':'No experiments to choose from - please relax your filters'}
 
     all_experiment_names = [ '{repo_uoa}:{module_uoa}:{data_uoa}'.format(**entry_dict) for entry_dict in r['lst']]
 
@@ -520,7 +558,8 @@ def upload(i):
     Input:  {
                 (cids[])            - CIDs of entries to upload (interactive by default)
                 OR
-                (repo_uoa)          - experiment repository name (defaults to local)
+                (repo_uoa)          - experiment repository name (defaults to 'local', but can be overridden by '*')
+                (extra_tags)        - extra tags to filter
 
                 (team)              - team name to be added to meta_data on upload (interactive by default)
             }
@@ -536,10 +575,15 @@ def upload(i):
     team_name           = i.get('team')
 
     if len(cids)==0:
-        repo_uoa        = i.get('repo_uoa', 'local')
+        repo_uoa        = i.get('repo_uoa')
+        extra_tags      = i.get('extra_tags')
 
-        r=ck.access( {'action': 'pick_an_experiment', 'module_uoa': 'vqe', 'repo_uoa': repo_uoa} )
-
+        pick_exp_adict  = { 'action':       'pick_an_experiment',
+                            'module_uoa':   'vqe',
+                            'repo_uoa':     repo_uoa,
+                            'extra_tags':   extra_tags,
+        }
+        r=ck.access( pick_exp_adict )
         if r['return']>0: return r
         cids = [ r['cid'] ]
 
@@ -570,7 +614,8 @@ def time_to_solution(i):
     Input:  {
                 (cids[])            - CIDs of entries to compute the TTS metric for (interactive by default)
                 OR
-                (repo_uoa)          - experiment repository name (defaults to local)
+                (repo_uoa)          - experiment repository name (defaults to 'local', but can be overridden by '*')
+                (extra_tags)        - extra tags to filter
 
                 (delta)             - delta parameter of TTS metric
                 (prob)              - probability parameter of TTS metric
@@ -597,12 +642,17 @@ def time_to_solution(i):
     cids        = i.get('cids',[])
 
     if len(cids)>0:
-        cid = cids[0]
+        cid = cids[0]       # FIXME: only one CID is supported at the moment
     else:
-        repo_uoa        = i.get('repo_uoa', 'local')
+        repo_uoa        = i.get('repo_uoa')
+        extra_tags      = i.get('extra_tags')
 
-        r=ck.access( {'action': 'pick_an_experiment', 'module_uoa': 'vqe', 'repo_uoa': repo_uoa} )
-
+        pick_exp_adict  = { 'action':       'pick_an_experiment',
+                            'module_uoa':   'vqe',
+                            'repo_uoa':     repo_uoa,
+                            'extra_tags':   extra_tags,
+        }
+        r=ck.access( pick_exp_adict )
         if r['return']>0: return r
         cid = r['cid']
 
