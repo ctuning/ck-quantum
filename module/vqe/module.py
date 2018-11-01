@@ -476,6 +476,7 @@ def run(i):
 def pick_an_experiment(i):
     """
     Input:  {
+                (repo_uoa)          - experiment repository name (defaults to local)
             }
 
     Output: {
@@ -485,11 +486,13 @@ def pick_an_experiment(i):
             }
     """
 
-    search_adict = {'action':       'search',
-                    'repo_uoa':     'local',
-                    'module_uoa':   'experiment',
-                    'data_uoa':     '*',
-                    'tags':         'qck',
+    repo_uoa        = i.get('repo_uoa', 'local')
+
+    search_adict    = { 'action':       'search',
+                        'repo_uoa':     repo_uoa,
+                        'module_uoa':   'experiment',
+                        'data_uoa':     '*',
+                        'tags':         'qck',
     }
     r=ck.access( search_adict )
     if r['return']>0: return r
@@ -516,6 +519,9 @@ def upload(i):
     """
     Input:  {
                 (cids[])            - CIDs of entries to upload (interactive by default)
+                OR
+                (repo_uoa)          - experiment repository name (defaults to local)
+
                 (team)              - team name to be added to meta_data on upload (interactive by default)
             }
 
@@ -530,7 +536,9 @@ def upload(i):
     team_name           = i.get('team')
 
     if len(cids)==0:
-        r=ck.access( {'action': 'pick_an_experiment', 'module_uoa': 'vqe'} )
+        repo_uoa        = i.get('repo_uoa', 'local')
+
+        r=ck.access( {'action': 'pick_an_experiment', 'module_uoa': 'vqe', 'repo_uoa': repo_uoa} )
 
         if r['return']>0: return r
         cids = [ r['cid'] ]
@@ -561,6 +569,9 @@ def time_to_solution(i):
     """
     Input:  {
                 (cids[])            - CIDs of entries to compute the TTS metric for (interactive by default)
+                OR
+                (repo_uoa)          - experiment repository name (defaults to local)
+
                 (delta)             - delta parameter of TTS metric
                 (prob)              - probability parameter of TTS metric
                 (which_fun)         - 'fun_exact', 'fun_validated' or 'fun'
@@ -588,7 +599,10 @@ def time_to_solution(i):
     if len(cids)>0:
         cid = cids[0]
     else:
-        r=ck.access( {'action': 'pick_an_experiment', 'module_uoa': 'vqe'} )
+        repo_uoa        = i.get('repo_uoa', 'local')
+
+        r=ck.access( {'action': 'pick_an_experiment', 'module_uoa': 'vqe', 'repo_uoa': repo_uoa} )
+
         if r['return']>0: return r
         cid = r['cid']
 
