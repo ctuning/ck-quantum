@@ -500,11 +500,25 @@ def list_experiments(i):
     r=ck.access( search_adict )
     if r['return']>0: return r
 
-    if i.get('out')=='con':
-        for experiment_name in [ '{repo_uoa}:{module_uoa}:{data_uoa}'.format(**entry_dict) for entry_dict in r['lst']]:
-            ck.out( experiment_name )
+    list_of_experiments = r['lst']
 
-    return r
+    repo_to_names_list = {}
+    for entry in list_of_experiments:
+        repo_uoa    = entry['repo_uoa']
+        data_uoa    = entry['data_uoa']
+        if not repo_uoa in repo_to_names_list:
+            repo_to_names_list[ repo_uoa ] = []
+        repo_to_names_list[ repo_uoa ] += [ data_uoa ]
+
+    if i.get('out')=='con':
+        for repo_uoa in repo_to_names_list:
+            experiments_this_repo = repo_to_names_list[ repo_uoa ]
+            ck.out( '{} ({}) :'.format(repo_uoa, len(experiments_this_repo) ) )
+            for data_uoa in experiments_this_repo:
+                ck.out( '\t' + data_uoa )
+            ck.out( '' )
+
+    return {'return':0, 'lst': list_of_experiments, 'repo_to_names_list': repo_to_names_list}
 
 
 def pick_an_experiment(i):
