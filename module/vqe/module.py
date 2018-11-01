@@ -478,6 +478,7 @@ def list_experiments(i):
     Input:  {
                 (repo_uoa)          - experiment repository name (defaults to '*')
                 (extra_tags)        - extra tags to filter
+                (add_meta)          - request to return metadata with each experiment entry
             }
 
     Output: {
@@ -490,12 +491,14 @@ def list_experiments(i):
     repo_uoa        = i.get('repo_uoa', '*')
     extra_tags      = i.get('extra_tags')
     all_tags        = 'qck' + ( ',' + extra_tags if extra_tags else '' )
+    add_meta        = i.get('add_meta')
 
     search_adict    = { 'action':       'search',
                         'repo_uoa':     repo_uoa,
                         'module_uoa':   'experiment',
                         'data_uoa':     '*',
                         'tags':         all_tags,
+                        'add_meta':     add_meta,
     }
     r=ck.access( search_adict )
     if r['return']>0: return r
