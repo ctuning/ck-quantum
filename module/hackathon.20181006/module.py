@@ -193,11 +193,12 @@ def get_raw_data(i):
                 print(tags)
                 continue
 
-            # Get the team name.
-            team = r['dict'].get('team','team-default')
-            # note: hamiltonian is molecule in quantum jargon
-            molecule = r['dict']['meta'].get('hamiltonian', '')
-            vendor = r['dict']['meta'].get('provider', 'N/A')
+            # Get all the parameters from meta.json -> "meta"
+            mmeta       = r['dict']['meta']
+
+            team        = mmeta.get('team', r['dict'].get('team', 'team-default') )
+            molecule    = mmeta.get('hamiltonian', 'Hydrogen')
+            vendor      = mmeta.get('provider', 'IBM')
         
             # For each point.    
             for point in r['points']:
