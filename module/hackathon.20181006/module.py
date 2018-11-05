@@ -70,13 +70,6 @@ def get_raw_data(i):
             if r['return']>0:
                 print('Error: %s' % r['error'])
                 exit(1)
-            tags = r['dict']['tags']
-
-            skip = False
-            if skip:
-                print('[Warning] Skipping experiment with bad tags:')
-                print(tags)
-                continue
 
             # Get all the parameters from meta.json -> "meta"
             mmeta       = r['dict']['meta']
