@@ -13,10 +13,17 @@ cfg={}  # Will be updated by CK (meta description of this module)
 work={} # Will be updated by CK (temporal data)
 ck=None # Will be updated by CK (initialized CK kernel)
 
-hackathon_date          = '20181006' # Switch to None after the hackathon
-hackathon_tag           = 'hackathon-{}'.format(hackathon_date if hackathon_date else 'dev')
-hackathon_remote_repo   = 'ck-quantum-hackathon-{}'.format(hackathon_date) if hackathon_date else 'ck-quantum-hackathons'
+hackathon_date          = None # '20181006' # Switch to None after the hackathon
 default_provider        = 'ibm'
+
+if hackathon_date:
+    hackathon_tag           = 'hackathon-{}'.format(hackathon_date)
+    hackathon_remote_repo   = 'ck-quantum-hackathon-{}'.format(hackathon_date)
+    competition_tag         = 'vqe-hackathon-3'
+else:
+    hackathon_tag           = 'hackathon-dev'
+    hackathon_remote_repo   = 'ck-quantum-hackathons'
+    competition_tag         = 'vqe-open-challenge'
 
 import getpass
 import os
@@ -341,7 +348,7 @@ def run(i):
 
     if not q_device:
         device_options = {
-            'ibm':      ['local_qasm_simulator', 'ibmq_qasm_simulator', 'ibmqx4'],
+            'ibm':      ['qasm_simulator', 'ibmq_qasm_simulator', 'ibmqx4', 'ibmq_16_melbourne'],
             'rigetti':  ['QVM', '8Q-Agave'],
         }[provider]
 
@@ -358,7 +365,7 @@ def run(i):
             q_device = r['selected_value']
 
     program     = {
-        'ibm':      'qiskit-vqe',
+        'ibm':      'qiskit-0.6-vqe',
         'rigetti':  'rigetti-vqe2',
     }[provider]
 
@@ -448,8 +455,12 @@ def run(i):
     ## Adding more experiment parameters to tags and meta attributes:
     #
     meta_attribs.update( {
-        'provider': provider,
-        'device':   q_device,
+        'provider':                 provider,
+        'device':                   q_device,
+        'optimizer_max_iterations': str(max_iterations),
+        'quantum_shots':            str(sample_size),
+        'start_param_value':        str(start_param_value),
+        'competition':              competition_tag,
     } )
 
     benchmark_adict = { 'action':                       'run',
