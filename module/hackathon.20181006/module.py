@@ -111,7 +111,7 @@ def get_raw_data(i):
                 ]
                 
                 index = [
-                    'platform', 'team', 'minimizer_method', 'sample_number', 'max_iterations', 'point', 'repetition_id', 'molecule'
+                    'platform', 'team', 'minimizer_method', 'sample_number', 'max_iterations', 'point', 'repetition_id', 'molecule', 'ansatz_method'
                 ]
 
                 for datum in data:
@@ -130,7 +130,6 @@ def get_raw_data(i):
                     datum['vendor'] = vendor
                     for key in index:
                         datum['_' + key] = datum[key]
-                    datum['_ansatz_method'] = datum['ansatz_method']
                     datum['_ansatz_src'] = datum['ansatz_src']
                     datum['_minimizer_src'] = datum['minimizer_src']
 
@@ -167,7 +166,7 @@ def get_raw_data(i):
                             print(df_prev.index.levels)
                             print('[Info] as:')
         #                     df_curr.index = df_prev.index.copy() # TODO: increment repetition_id
-                            df_curr.index = pd.MultiIndex.from_tuples([(x[0],x[1],x[2],x[3],x[4],x[5],x[6]+1,x[7]) for x in df_prev.index])
+                            df_curr.index = pd.MultiIndex.from_tuples([(x[0],x[1],x[2],x[3],x[4],x[5],x[6]+1,x[7],x[8]) for x in df_prev.index])
                             print(df_curr.index.levels)
                             print
                         else:
