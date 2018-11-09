@@ -68,7 +68,7 @@
             {"key":"_minimizer_method", "name":"Minimizer"},
             {"key":"_ansatz_method",    "name":"Ansatz"},
             {"key":"_point",            "name":"Point"},
-            {"key":"_molecule",          "name":"Molecule",              "filter_by_all":false }
+            {"key":"_molecule",         "name":"Molecule",              "filter_by_all":false }
         ],
 
         "metrics_selector3": [],
