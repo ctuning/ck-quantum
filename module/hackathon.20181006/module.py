@@ -90,6 +90,7 @@ def get_raw_data(i):
                     {
                         # features
                         'platform': characteristics['run'].get('vqe_input', {}).get('q_device_name', 'unknown').lower(),
+                        'molecule': molecule,
                         # choices
                         'minimizer_method': characteristics['run'].get('vqe_input', {}).get('minimizer_method', 'n/a'),
                         'minimizer_options': characteristics['run'].get('vqe_input', {}).get('minimizer_options', {'maxfev':-1}),
@@ -110,7 +111,7 @@ def get_raw_data(i):
                 ]
                 
                 index = [
-                    'platform', 'team', 'minimizer_method', 'sample_number', 'max_iterations', 'point', 'repetition_id'
+                    'platform', 'team', 'minimizer_method', 'sample_number', 'max_iterations', 'point', 'repetition_id', 'molecule', 'ansatz_method'
                 ]
 
                 for datum in data:
@@ -126,11 +127,9 @@ def get_raw_data(i):
                     datum['total_q_seconds'] = np.float64(datum.get('report',{}).get('total_q_seconds',0))
                     datum['total_q_shots'] = np.int64(datum.get('report',{}).get('total_q_shots',0))
                     datum['max_iterations'] = np.int64(datum.get('max_iterations',-1))
-                    datum['molecule'] = molecule
                     datum['vendor'] = vendor
                     for key in index:
                         datum['_' + key] = datum[key]
-                    datum['_ansatz_method'] = datum['ansatz_method']
                     datum['_ansatz_src'] = datum['ansatz_src']
                     datum['_minimizer_src'] = datum['minimizer_src']
 
@@ -158,8 +157,8 @@ def get_raw_data(i):
             df_curr = pd.DataFrame(row).T
             # Check if this row is similar to the previous row.
             if df_prev is not None: # if not the very first row
-                if df_prev.index.levels[:-2]==df_curr.index.levels[:-2]: # if the indices match for all but the last two levels
-                    if df_prev.index.levels[-2]!=df_curr.index.levels[-2]: # if the experiments are different
+                if df_prev.index.levels[:5]==df_curr.index.levels[:5]: # if the indices match for all but the last two levels
+                    if df_prev.index.levels[5]!=df_curr.index.levels[5]: # if the experiments are different
                         if df_prev['minimizer_src'].values==df_curr['minimizer_src'].values and df_prev['ansatz_src'].values==df_curr['ansatz_src'].values: # if the minimizer and ansatz sources are the same
                             print('[Info] Merging experiment:')
                             print(df_curr.index.levels)
@@ -167,7 +166,7 @@ def get_raw_data(i):
                             print(df_prev.index.levels)
                             print('[Info] as:')
         #                     df_curr.index = df_prev.index.copy() # TODO: increment repetition_id
-                            df_curr.index = pd.MultiIndex.from_tuples([(x[0],x[1],x[2],x[3],x[4],x[5],x[6]+1) for x in df_prev.index])
+                            df_curr.index = pd.MultiIndex.from_tuples([(x[0],x[1],x[2],x[3],x[4],x[5],x[6]+1,x[7],x[8]) for x in df_prev.index])
                             print(df_curr.index.levels)
                             print
                         else:
@@ -226,7 +225,7 @@ def get_raw_data(i):
         'total_seconds',
         '_ansatz_method',
         'vendor',
-        'molecule',
+        '_molecule',
     ]
 
     for record in df.to_dict(orient='records'):
@@ -261,7 +260,7 @@ def get_raw_data(i):
     df_m = merge_experimental_results(df)
 
     metrics_data = []
-    names_no_repetitions = df_m.index.names[:-1]
+    names_no_repetitions = [ n for n in df_m.index.names if n != 'repetition_id' ]
 
     for index, group in df_m.groupby(level=names_no_repetitions):
         runs = []
