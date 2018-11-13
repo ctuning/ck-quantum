@@ -14,7 +14,7 @@
         "full_selector": [],
 
         "full_selector2": [
-            {"key":"vendor",            "name":"Vendor"},
+            {"key":"_vendor",           "name":"Vendor"},
             {"key":"_platform",         "name":"Device"},
             {"key":"_team",             "name":"Team"},
             {"key":"_minimizer_method", "name":"Minimizer"},
@@ -62,7 +62,7 @@
         "metrics_selector": [],
 
         "metrics_selector2": [
-            {"key":"vendor",            "name":"Vendor"},
+            {"key":"_vendor",           "name":"Vendor"},
             {"key":"_platform",         "name":"Device"},
             {"key":"_team",             "name":"Team"},
             {"key":"_minimizer_method", "name":"Minimizer"},
