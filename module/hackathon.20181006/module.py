@@ -91,6 +91,7 @@ def get_raw_data(i):
                         # features
                         'platform': characteristics['run'].get('vqe_input', {}).get('q_device_name', 'unknown').lower(),
                         'molecule': molecule,
+                        'vendor': vendor,
                         # choices
                         'minimizer_method': characteristics['run'].get('vqe_input', {}).get('minimizer_method', 'n/a'),
                         'minimizer_options': characteristics['run'].get('vqe_input', {}).get('minimizer_options', {'maxfev':-1}),
@@ -111,7 +112,7 @@ def get_raw_data(i):
                 ]
                 
                 index = [
-                    'platform', 'team', 'minimizer_method', 'sample_number', 'max_iterations', 'point', 'repetition_id', 'molecule', 'ansatz_method'
+                    'platform', 'team', 'minimizer_method', 'sample_number', 'max_iterations', 'point', 'repetition_id', 'molecule', 'ansatz_method', 'vendor'
                 ]
 
                 for datum in data:
@@ -127,7 +128,6 @@ def get_raw_data(i):
                     datum['total_q_seconds'] = np.float64(datum.get('report',{}).get('total_q_seconds',0))
                     datum['total_q_shots'] = np.int64(datum.get('report',{}).get('total_q_shots',0))
                     datum['max_iterations'] = np.int64(datum.get('max_iterations',-1))
-                    datum['vendor'] = vendor
                     for key in index:
                         datum['_' + key] = datum[key]
                     datum['_ansatz_src'] = datum['ansatz_src']
@@ -166,7 +166,7 @@ def get_raw_data(i):
                             print(df_prev.index.levels)
                             print('[Info] as:')
         #                     df_curr.index = df_prev.index.copy() # TODO: increment repetition_id
-                            df_curr.index = pd.MultiIndex.from_tuples([(x[0],x[1],x[2],x[3],x[4],x[5],x[6]+1,x[7],x[8]) for x in df_prev.index])
+                            df_curr.index = pd.MultiIndex.from_tuples([(x[0],x[1],x[2],x[3],x[4],x[5],x[6]+1,x[7],x[8],x[9]) for x in df_prev.index])
                             print(df_curr.index.levels)
                             print
                         else:
@@ -224,7 +224,7 @@ def get_raw_data(i):
         'total_q_shots',
         'total_seconds',
         '_ansatz_method',
-        'vendor',
+        '_vendor',
         '_molecule',
     ]
 
