@@ -22,7 +22,7 @@ if hackathon_date:
     competition_tag         = 'vqe-hackathon-3'
 else:
     hackathon_tag           = 'hackathon-dev'
-    hackathon_remote_repo   = 'ck-quantum-hackathons'
+    hackathon_remote_repo   = 'ck-quantum-challenge-vqe'
     competition_tag         = 'vqe-open-challenge'
 
 import getpass
