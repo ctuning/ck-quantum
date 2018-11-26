@@ -1,15 +1,15 @@
 #
 # Collective Knowledge ()
 #
-# 
-# 
 #
-# Developer: 
+#
+#
+# Developer:
 #
 
 cfg={}  # Will be updated by CK (meta description of this module)
 work={} # Will be updated by CK (temporal data)
-ck=None # Will be updated by CK (initialized CK kernel) 
+ck=None # Will be updated by CK (initialized CK kernel)
 
 import os
 import sys
@@ -53,7 +53,7 @@ def get_raw_data(i):
             }
 
     """
-        
+
     repo_uoa = 'ck-quantum-hackathon-20181006'
 
     def get_experimental_results(repo_uoa, tags='qck', module_uoa='experiment'):
@@ -62,7 +62,7 @@ def get_raw_data(i):
             print('Error: %s' % r['error'])
             exit(1)
         experiments = r['lst']
-        
+
         dfs = []
         for experiment in experiments:
             data_uoa = experiment['data_uoa']
@@ -77,8 +77,8 @@ def get_raw_data(i):
             team        = mmeta.get('team', r['dict'].get('team', 'team-default') )
             molecule    = mmeta.get('hamiltonian', 'Hydrogen')
             vendor      = mmeta.get('provider', 'IBM')
-        
-            # For each point.    
+
+            # For each point.
             for point in r['points']:
                 point_file_path = os.path.join(r['path'], 'ckp-%s.0001.json' % point)
                 with open(point_file_path) as point_file:
@@ -110,7 +110,7 @@ def get_raw_data(i):
                     for (repetition_id, characteristics) in zip(range(num_repetitions), characteristics_list)
                     if len(characteristics['run']) > 0
                 ]
-                
+
                 index = [
                     'platform', 'team', 'minimizer_method', 'sample_number', 'max_iterations', 'point', 'repetition_id', 'molecule', 'ansatz_method', 'vendor'
                 ]
@@ -189,7 +189,7 @@ def get_raw_data(i):
         result = pd.concat(dfs)
         result.index.names = df.index.names
         result.sort_index(ascending=True, inplace=True)
-        
+
         return result
 
     # prepare table
@@ -202,7 +202,7 @@ def get_raw_data(i):
             return i.tolist()
 
         if isinstance(i, np.int64):
-            return int(i)  
+            return int(i)
 
         return i
 
@@ -271,7 +271,7 @@ def get_raw_data(i):
             run_t['vqe_input'] = run['vqe_input']
             run_t['vqe_output'] = run['vqe_output']
             runs.append(run_t)
-        
+
         data = {}
         data['runs'] = runs
         data['num_repetitions'] = len(group)
