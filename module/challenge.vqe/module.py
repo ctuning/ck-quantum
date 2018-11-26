@@ -13,7 +13,6 @@ ck=None # Will be updated by CK (initialized CK kernel)
 
 import os
 import sys
-import json
 import re
 
 import pandas as pd
@@ -54,10 +53,21 @@ def get_raw_data(i):
 
     """
         
-    repo_uoa = 'ck-quantum-challenge-vqe'
+    def get_experimental_results(repo_uoa, remote_repo_uoa, tags='qck', module_uoa='experiment'):
 
-    def get_experimental_results(repo_uoa, tags='qck', module_uoa='experiment'):
-        r = ck.access({'action':'search', 'repo_uoa':repo_uoa, 'module_uoa':module_uoa, 'tags':tags})
+        addr_part = {
+            'repo_uoa':repo_uoa,
+            'remote_repo_uoa':remote_repo_uoa,
+            'module_uoa':module_uoa,
+        }
+
+        search_adict = {
+            'action':'search',
+            'tags':tags,
+        }
+        search_adict.update( addr_part )
+
+        r = ck.access( search_adict )
         if r['return']>0:
             print('Error: %s' % r['error'])
             exit(1)
@@ -65,8 +75,13 @@ def get_raw_data(i):
         
         dfs = []
         for experiment in experiments:
-            data_uoa = experiment['data_uoa']
-            r = ck.access({'action':'list_points', 'repo_uoa':repo_uoa, 'module_uoa':module_uoa, 'data_uoa':data_uoa})
+
+            list_points_adict = {
+                'action':   'list_points',
+                'data_uoa': experiment['data_uoa'],
+            }
+            list_points_adict.update( addr_part )
+            r = ck.access( list_points_adict )
             if r['return']>0:
                 print('Error: %s' % r['error'])
                 exit(1)
@@ -80,13 +95,19 @@ def get_raw_data(i):
             vendor      = mmeta.get('provider', 'UNKNOWN_PROVIDER')
         
             # For each point.    
-            for point in r['points']:
-                point_file_path = os.path.join(r['path'], 'ckp-%s.0001.json' % point)
-                with open(point_file_path) as point_file:
-                    point_data_raw = json.load(point_file)
-                choices = point_data_raw['choices']
-                characteristics_list = point_data_raw['characteristics_list']
-                num_repetitions = len(characteristics_list)
+            for point_id in r['points']:
+                load_point_adict = {    'action':           'load_point',
+                                        'data_uoa':         experiment['data_uoa'],
+                                        'point':            point_id,
+                }
+                load_point_adict.update( addr_part )
+                r=ck.access( load_point_adict )
+                if r['return']>0: return r
+
+                point_data_raw          = r['dict']['0001']
+                choices                 = point_data_raw['choices']
+                characteristics_list    = point_data_raw['characteristics_list']
+                num_repetitions         = len(characteristics_list)
                 data = [
                     {
                         # features
@@ -118,7 +139,7 @@ def get_raw_data(i):
 
                 for datum in data:
                     datum['team'] = team
-                    datum['point'] = point
+                    datum['point'] = point_id
                     datum['success'] = datum.get('vqe_output',{}).get('success',False)
                     datum['nfev'] = np.int64(datum.get('vqe_output',{}).get('nfev',-1))
                     datum['nit'] = np.int64(datum.get('vqe_output',{}).get('nit',-1))
@@ -193,10 +214,15 @@ def get_raw_data(i):
         
         return result
 
-    # prepare table
-    df = get_experimental_results(repo_uoa=repo_uoa)
 
-    table = []
+    debug_output    = i.get('out')=='con'
+    repo_uoa        = i.get('repo_uoa', 'ck-quantum-challenge-vqe')
+    remote_repo_uoa = i.get('remote_repo_uoa', '')
+
+    # prepare table
+    df = get_experimental_results(repo_uoa=repo_uoa, remote_repo_uoa=remote_repo_uoa)
+
+    convergence_data = []
 
     def to_value(i):
         if type(i) is np.ndarray:
@@ -229,6 +255,9 @@ def get_raw_data(i):
         '_molecule',
     ]
 
+    if debug_output:
+        ck.out("Convergence data:")
+
     for record in df.to_dict(orient='records'):
         row = {}
         for prop in props:
@@ -255,13 +284,18 @@ def get_raw_data(i):
             'cmd': record['_minimizer_src']
            }
 
-        table.append(row)
+        convergence_data.append(row)
+        if debug_output:
+            ck.out(str(row))
 
     # prepare metrics data
     df_m = merge_experimental_results(df)
 
-    metrics_data = []
+    tts_data = []
     names_no_repetitions = [ n for n in df_m.index.names if n != 'repetition_id' ]
+
+    if debug_output:
+        ck.out("\nTime-to-solution data:")
 
     for index, group in df_m.groupby(level=names_no_repetitions):
         runs = []
@@ -285,9 +319,11 @@ def get_raw_data(i):
 
         data['##data_uid'] = to_value(meta['point'])
 
-        metrics_data.append(data)
+        tts_data.append(data)
+        if debug_output:
+            ck.out(str(data))
 
-    return {'return':0, 'full_table':table, 'metrics_table':metrics_data}
+    return {'return':0, 'full_table':convergence_data, 'metrics_table':tts_data}
 
 
 ##############################################################################
