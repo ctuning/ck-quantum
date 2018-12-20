@@ -107,20 +107,21 @@ $ ck search --tags=deployed
 
 ### Removing plugins
 
-#### Removing an optimizer plugin
+#### Removing all deployed plugins (unrestricted)
+```
+$ ck cleanup vqe
+```
+
+#### Removing all deployed optimizer plugins
 ```
 $ ck cleanup vqe --type=optimizer
 ```
 
-#### Removing an ansatz plugin
+#### Removing all deployed Rigetti's ansatz plugins
 ```
-$ ck cleanup vqe --type=ansatz
+$ ck cleanup vqe --provider=rigetti --type=ansatz
 ```
 
-#### Removing both optimizer and ansatz plugins
-```
-$ ck cleanup vqe
-```
 
 ### Working with optimizer plugins
 
