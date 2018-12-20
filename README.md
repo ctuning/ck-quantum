@@ -83,7 +83,7 @@ ck run program:visualize-convergence --env.VQE_QUANTUM_PROVIDER=rigetti
 
 ## Common: Easy VQE exploration via optimizer parameters
 ```
-$ ck run vqe --device=<device> --sample_size=<sample_size> --max_iterations=<max_iterations> --start_param_value=<start_param_value> --repetitions=<repetitions>
+$ ck run vqe --provider=<ibm|rigetti> --device=<device> --sample_size=<sample_size> --max_iterations=<max_iterations> --start_param_value=<start_param_value> --repetitions=<repetitions>
 ```
 where:
 - `device`: `local_qasm_simulator` (local simulator), `ibmq_qasm_simulator` (remote simulator), `ibmqx4` (remote hardware); by default, QCK will prompt to select one of these target quantum devices (0, 1, 2).
