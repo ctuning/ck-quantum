@@ -102,6 +102,7 @@ def deploy_ansatz(i):
     Specialization of deploy() method where type='qiskit.ansatz'.
     Input:  {
                 (value)             - which deployable to deploy
+                (provider)          - Ansatz function is provider-dependent. Pick "ibm" or "rigetti".
             }
 
     Output: {
