@@ -144,6 +144,7 @@ def deploy(i):
     ld_output           = list_deployables({ 'data_uoa': template_uoa })
     dir_names           = ld_output['dir_names']
     deployed_name_infix = ld_output['deployed_name_infix']
+    plugin_subtype      = plugin_type.split('.')[-1]
 
     if not selected_value:      # Acquire it interactively
         select_adict = {'action': 'select_string',
@@ -184,7 +185,7 @@ def deploy(i):
     update_adict = {'action':           'update',
                     'module_uoa':       'soft',
                     'data_uoa':         deployed_uoa,
-                    'tags':             'deployed',
+                    'tags':             [ 'deployed', '.'.join([plugin_subtype, selected_value]) ],
     }
     r=ck.access( update_adict )
     if r['return']>0: return r
@@ -276,7 +277,9 @@ def plugin_path(i):
 def cleanup(i):
     """
     Input:  {
+                (provider)          - 'ibm' or 'rigetti' . Only use for plugins that differ depending on provider.
                 (type)              - either 'optimizer' or 'ansatz' to only cleanup one plugin
+                (tags)              - any extra tags to narrow down the set of entries to be removed
             }
 
     Output: {
@@ -286,11 +289,21 @@ def cleanup(i):
             }
     """
 
-    plugin_type     = i.get('type')
     tags            = ['vqe', 'deployed']
 
+    if 'provider' in i:
+        library_name = {
+            'ibm':      'qiskit',
+            'rigetti':  'pyquil',
+        }[i.get('provider')]
+        tags.append( library_name )
+
+    plugin_type = i.get('type')
     if plugin_type:
         tags.append( plugin_type )
+
+    if 'tags' in i:
+        tags.extend( i.get('tags').split(',') )
 
     ## ck rm *:* --tags=vqe,deployed
     #
