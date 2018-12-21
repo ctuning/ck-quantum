@@ -277,8 +277,8 @@ def plugin_path(i):
 def cleanup(i):
     """
     Input:  {
-                (provider)          - 'ibm' or 'rigetti' . Only use for plugins that differ depending on provider.
-                (type)              - either 'optimizer' or 'ansatz' to only cleanup one plugin
+                (type)              - either 'optimizer' or 'ansatz' to only cleanup plugins of the given type
+                (provider)          - either 'ibm' or 'rigetti' (only for ansatz plugins)
                 (tags)              - any extra tags to narrow down the set of entries to be removed
             }
 
