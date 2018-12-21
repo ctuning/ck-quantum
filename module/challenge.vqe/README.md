@@ -72,11 +72,11 @@ $ ck run vqe \
 --repetitions=<repetitions>
 ```
 where:
-- consult the table above for the supported values of `provider` and `device`.
-- `sample_size`: the number of times to evaluate the Hamiltonian function on the quantum device ("sampling resolution") per optimizer iteration; by default, `100`.
-- `max_iterations`: the maximum number of optimizer iterations ("iteration limit"); by default, `80`.
-- `start_param_value`: the starting value of each optimizer's parameter (can be a float number or the word `random`); by default, `random`.
-- `repetitions`: the number of times to repeat the experiment with the same parameters; by default, `3`.
+- consult the table above for the supported values of `<provider>` and `<device>`.
+- `<sample_size>`: the number of times to evaluate the Hamiltonian function on the quantum device ("sampling resolution") per optimizer iteration; by default, `100`.
+- `<max_iterations>`: the maximum number of optimizer iterations ("iteration limit"); by default, `80`.
+- `<start_param_value>`: the starting value of each optimizer's parameter (can be a float number or the word `random`); by default, `random`.
+- `<repetitions>`: the number of times to repeat the experiment with the same parameters; by default, `3`.
 
 ## Check the Time-To-Solution metric
 
