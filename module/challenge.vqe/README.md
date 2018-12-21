@@ -41,11 +41,11 @@ thus making practical and scalable Quantum Computing a reality. Thank you so
 much for joining us and... best of luck!
 
 ### Small print
-- The 1st Open QCK challenged is brought to you by [dividiti](http://dividiti.com) and [Riverlane](http://riverlane.io), with generous support by [Innovate UK](http://innovateuk.org).
+- The 1st Open QCK challenged is brought to you by [dividiti](http://dividiti.com) and [Riverlane](http://riverlane.io), with generous support from [Innovate UK](http://innovateuk.org).
 - All contributions to QCK are accepted under the [standard CK licence](https://github.com/ctuning/ck/blob/master/LICENSE.txt) (3-clause BSD).
-- We gratefully acknowledge support of [IBM](https://quantumexperience.ng.bluemix.net/qx) and [Rigetti](https://www.rigetti.com/) in preparing and running this challenge.
-- You can use Rigetti's Forest SDK under their [terms](https://www.rigetti.com/sdk-terms) and Quantum Cloud Services under their [terms of service](https://www.rigetti.com/sites/default/files/2018-11/RigettiTermsOfService.pdf).
-- You can use IBM QX platforms under their terms.
+- We gratefully acknowledge support of [IBM](https://www.research.ibm.com/ibm-q/) and [Rigetti](https://www.rigetti.com/) in preparing and running this challenge.
+- You can use Rigetti's [Forest SDK](https://www.rigetti.com/forest) under their [terms](https://www.rigetti.com/sdk-terms) and [Quantum Cloud Services](https://www.rigetti.com/qcs) (QCS) under their [terms of service](https://www.rigetti.com/sites/default/files/2018-11/RigettiTermsOfService.pdf). In addition, Rigetti [kindly expand these terms](https://github.com/ctuning/ck-quantum/blob/master/module/challenge.vqe/Rigetti%20--%20Benchmarking%20License%20--%2018.12.16.pdf) to allow you to use QCK for the purpose of benchmarking and publicity in this challenge.
+- You can use IBM's [Qiskit SDK](https://qiskit.org/) and [QX platforms](https://quantumexperience.ng.bluemix.net/qx) under their respective terms.
 
 
 ## Getting started
