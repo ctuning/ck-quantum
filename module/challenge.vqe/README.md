@@ -10,20 +10,27 @@ modify or rewrite the **optimizer** (a classical component of VQE),
 modify or rewrite the **ansatz function** (a quantum component of VQE)
 and tune some parameters of the above.
 
-# Quantum platform providers
+## Getting started
 
-At the moment we are collaborating with IBM and Rigetti that provide us with their hardware and software platforms
-to run our experiments on. As the challenge goes on we may be able to add or remove providers.
+At the moment we are collaborating with IBM and Rigetti to provide access to their hardware and software platforms
+for your experiments. As the challenge goes on, we may be able to support more providers.
 
-----------------------------------------------------------------------------------------------------------
+### Installation instructions
+| IBM Quantum Experience | Rigetti Forest |
+|-|-|
+| [Sign up](https://quantumexperience.ng.bluemix.net/qx/signup) and copy your API token from the ["Advanced"](https://quantumexperience.ng.bluemix.net/qx/account/advanced) tab (click on the "Regenerate" button first). | [Download the Forest SDK](https://www.rigetti.com/forest). |
+| Follow [CK-Qiskit instructions](https://github.com/ctuning/ck-qiskit) to complete and test your setup. | Follow [CK-Rigetti instructions](https://github.com/ctuning/ck-rigetti) to complete and test your setup. Once you are done, do not kill the local QVM server - you will need it during VQE experiments as well! |
 
-## IBM: Getting started with Quantum Experience platform
+### Supported options
 
-1. Please register at [Quantum Experience](https://quantumexperience.ng.bluemix.net/qx/signup)
-1. Copy your API token from the ["Advanced"](https://quantumexperience.ng.bluemix.net/qx/account/advanced) tab (click on the "Regenerate" button first).
-1. Follow [CK-QISKit instructions](https://github.com/ctuning/ck-qiskit) to complete the setup and test it.
+| Option | IBM Quantum Experience | Rigetti Forest |
+|-|-|-|
+| `provider` | `ibm` | `rigetti` |
+| `device` | `qasm_simulator` (local simulator),<br> `ibmq_qasm_simulator` (remote simulator),<br> `ibmqx4` (remote device QX4),<br> `ibmq_16_melbourne` | `QVM` (local simulator) |
+| `ansatz` | `tiny1`, `tiny2`,<br> `universal3`, `universal4`,<br> `reduced_universal5`, `universal6`  | `tiny1`, `tiny2`<br> |
+| `optimizer` | `cobyla`, `nelder_mead`,<br> `random_sampler`, `custom` | `cobyla`, `nelder_mead`,<br> `random_sampler`, `custom` |
 
-## IBM: Run QISKit-VQE once
+## Run VQE once
 
 In order to run VQE we'll need point the system to one optimizer plugin and one ansatz plugin.
 While the optimizer (being a classical component of VQE) is provider-neutral,
@@ -31,57 +38,33 @@ the ansatz function has to be written with a specific provider in mind.
 
 Here is how to do deploy one plugin of each kind to get VQE running:
 ```
-$ ck deploy_optimizer vqe --value=optimizer.cobyla
-$ ck deploy_ansatz vqe --provider=ibm --value=ansatz.universal4
+$ ck deploy_ansatz vqe --provider=<provider> --value=<ansatz>
+$ ck deploy_optimizer vqe --value=<optimizer>
 ```
 
 Then, launch VQE with the deployed optimizer and ansatz:
 ```
-$ ck run vqe --provider=ibm --device=local_qasm_simulator --repetitions=1
+$ ck run vqe --provider=<provider> --device=<device> --repetitions=1
 ```
 
-## IBM: Monitor the convergence process (an ASCII-graphics program run in a separate Terminal window)
+For example, to run VQE on Rigetti's local simulator, try:
 ```
-ck run program:visualize-convergence --env.VQE_QUANTUM_PROVIDER=ibm
-```
-
-----------------------------------------------------------------------------------------------------------
-
-## Rigetti: Getting started with Rigetti Forest platform:
-
-1. Follow [CK-pyQuil instructions](https://github.com/ctuning/ck-rigetti) to set up the local Rigetti simulator and test it.
-1. Once you are done, do not kill the local QVM server - you will need it during VQE experiments as well!
-
-## Rigetti: Run pyQuil-VQE once
-
-In order to run VQE we'll need point the system to one optimizer plugin and one ansatz plugin.
-While the optimizer (being a classical component of VQE) is provider-neutral,
-the ansatz function has to be written with a specific provider in mind.
-
-Here is how to do deploy one plugin of each kind to get VQE running:
-```
-$ ck deploy_optimizer vqe --value=optimizer.cobyla
+$ ck deploy_optimizer vqe --value=cobyla
 $ ck deploy_ansatz vqe --provider=rigetti --value=tiny2
-```
-
-Then, launch VQE with the deployed optimizer and ansatz:
-```
 $ ck run vqe --provider=rigetti --device=QVM --repetitions=1
 ```
 
-## Rigetti: Monitor the convergence process (an ASCII-graphics program run in a separate Terminal window)
+## Monitor the convergence process (an ASCII-graphics program run in a separate Terminal window)
 ```
-ck run program:visualize-convergence --env.VQE_QUANTUM_PROVIDER=rigetti
+$ ck run program:visualize-convergence --env.VQE_QUANTUM_PROVIDER=<provider>
 ```
 
-----------------------------------------------------------------------------------------------------------
-
-## Common: Easy VQE exploration via optimizer parameters
+## Easy VQE exploration via optimizer parameters
 ```
 $ ck run vqe --provider=<ibm|rigetti> --device=<device> --sample_size=<sample_size> --max_iterations=<max_iterations> --start_param_value=<start_param_value> --repetitions=<repetitions>
 ```
 where:
-- `device`: `local_qasm_simulator` (local simulator), `ibmq_qasm_simulator` (remote simulator), `ibmqx4` (remote hardware); by default, QCK will prompt to select one of these target quantum devices (0, 1, 2).
+- consult the table above for the supported values of `provider` and `device`.
 - `sample_size`: the number of times to evaluate the Hamiltonian function on the quantum device ("sampling resolution") per optimizer iteration; by default, 100.
 - `max_iterations`: the maximum number of optimizer iterations ("iteration limit"); by default, 80.
 - `start_param_value`: the starting value of each optimizer's parameter (can be a float number or the word 'random')
