@@ -1,14 +1,49 @@
-# Open Quantum Collective Knowledge Challenge
+# 1st Open Quantum Collective Knowledge Challenge
 
-TL;DR:  In this competition the participants will try to find the closest approximation
-to the ground state energy of a chemical molecule by running the hybrid (quantum+classical) VQE algorithm
-on either a physical quantum device or a software quantum simulator.
+We are excited to announce the 1st Open Quantum Collective Knowledge (QCK)
+Challenge! In this challenge, you are invited to find the closest
+approximation to the ground state energy of a chemical molecule by running the
+hybrid (quantum+classical) VQE algorithm on either a physical device or a
+software simulator.  Please read our engaging [VQE and
+You](https://github.com/ctuning/ck-quantum/wiki/VQE-and-You) guide for more
+information on VQE!
 
-In each experiment the participant will be able to select the molecule to work with (the task),
-the target quantum device to run the experiment on,
-modify or rewrite the **optimizer** (a classical component of VQE),
-modify or rewrite the **ansatz function** (a quantum component of VQE)
-and tune some parameters of the above.
+In each experiment, you can select the **target quantum device** to run
+the experiment on, the **molecule** to work with (the task), the **optimizer
+method** (the classical component of VQE), the **ansatz function** (the quantum
+component of VQE), and tune some parameters of the above.
+
+Once your experiment is completed, you can check the [Time-To-Solution
+evaluation
+metric](https://github.com/ctuning/ck-quantum/tree/master/module/challenge.vqe#check-the-time-to-solution-metric)
+(the lower the better!), [upload your
+results](https://github.com/ctuning/ck-quantum/tree/master/module/challenge.vqe#upload-your-experimental-results-to-quantum-collective-knowledge)
+to the QCK server and finally view then on the [interactive QCK
+dashboard](http://cknowledge.org/dashboard/challenge.vqe)!
+
+Importantly, via the dashboard you can quickly check solutions provided by
+others and draw inspiration for further improvements. You may notice that
+someone else has made significant progress with e.g. an interesting quantum
+ansatz. You are invited, indeed encouraged, to combine that ansatz with your
+ideas e.g. on designing a classical optimizer! (Just please provide a reference
+if you build upon someone's solution.) That's what we mean by Quantum **Collective** Knowledge!
+
+To the best of our knowledge, the 1st QCK Challenge is indeed the **first** challenge of its kind.
+Therefore, please treat it as work in progress, where all comments and contributions are very
+welcome and valuable! If anything at all is unclear or you spot a clear opportunity for improvement,
+please please please open an [GitHub issue](https://github.com/ctuning/ck-quantum/issues) or join our [CK Slack](https://collective-knowledge.slack.com) workspace (channel `#quantum`) and ask your question there!
+
+We are thrilled about collaboratively solving this and future challenges, and
+thus making practical and scalable Quantum Computing a reality. Thank you so
+much for joining us and... best of luck!
+
+### Small print
+- The 1st Open QCK challenged is brought to you by [dividiti](http://dividiti.com) and [Riverlane](http://riverlane.io), with generous support by [Innovate UK](http://innovateuk.org).
+- All contributions to QCK are accepted under the [standard CK licence](https://github.com/ctuning/ck/blob/master/LICENSE.txt) (3-clause BSD).
+- We gratefully acknowledge support of [IBM](https://quantumexperience.ng.bluemix.net/qx) and [Rigetti](https://www.rigetti.com/) in preparing and running this challenge.
+- You can use Rigetti's Forest SDK under their [terms](https://www.rigetti.com/sdk-terms) and Quantum Cloud Services under their [terms of service](https://www.rigetti.com/sites/default/files/2018-11/RigettiTermsOfService.pdf).
+- You can use IBM QX platforms under their terms.
+
 
 ## Getting started
 
@@ -181,9 +216,13 @@ $ vi `ck plugin_path vqe --type=ansatz`
 It is expected to contain only one top-level function.
 If you need more, please define them within the top-level one.
 
+
 #### Visualize the ansatz circuit (use your favourite image viewer instead of `display`)
+
 **NB:** Currently only supported for IBM-compatible ansatz circuits.
+
 **NB:** If unsure about the image viewer, try `eog` or `eom` on Linux, `open` on macOS.
+
 ```
 $ ck run program:visualize-ansatz
 $ display `ck find program:visualize-ansatz`/ansatz_circuit.png
