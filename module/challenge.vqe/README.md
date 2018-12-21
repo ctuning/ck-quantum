@@ -36,11 +36,21 @@ The problem to be solved (Hydrogen or Helium) is defined by a Hamiltonian plugin
 You can pre-install one or both of them. If more than one is pre-installed, CK will interactively ask you to resolve the ambiguity
 when launching the experiments.
 
-To install a Hamiltonian, run
+Check which Hamiltonians are installed:
+```
+$ ck show env --tags=quantum,hamiltonian
+```
+
+To install a Hamiltonian, run:
 ```
 $ ck detect soft --tags=quantum,hamiltonian
 ```
 and interactively select from the menu.
+
+Remove a Hamiltonian (Helium in this case):
+```
+$ ck clean env --tags=quantum,hamiltonian.helium
+```
 
 
 ## Run VQE once
