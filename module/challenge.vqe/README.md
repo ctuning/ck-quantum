@@ -60,8 +60,11 @@ $ ck run program:visualize-convergence --env.VQE_QUANTUM_PROVIDER=<provider>
 ```
 
 ## Easy VQE exploration via optimizer parameters
+
+You can explore VQE by varying one or more of the following parameters:
 ```
-$ ck run vqe --provider=<provider> \
+$ ck run vqe \
+--provider=<provider> \
 --device=<device> \
 --sample_size=<sample_size> \
 --max_iterations=<max_iterations> \
@@ -70,20 +73,33 @@ $ ck run vqe --provider=<provider> \
 ```
 where:
 - consult the table above for the supported values of `provider` and `device`.
-- `sample_size`: the number of times to evaluate the Hamiltonian function on the quantum device ("sampling resolution") per optimizer iteration; by default, 100.
-- `max_iterations`: the maximum number of optimizer iterations ("iteration limit"); by default, 80.
-- `start_param_value`: the starting value of each optimizer's parameter (can be a float number or the word 'random')
-- `repetitions`: the number of times to repeat the experiment with the same parameters; by default, 3.
+- `sample_size`: the number of times to evaluate the Hamiltonian function on the quantum device ("sampling resolution") per optimizer iteration; by default, `100`.
+- `max_iterations`: the maximum number of optimizer iterations ("iteration limit"); by default, `80`.
+- `start_param_value`: the starting value of each optimizer's parameter (can be a float number or the word `random`); by default, `random`.
+- `repetitions`: the number of times to repeat the experiment with the same parameters; by default, `3`.
 
-**NB:** The aim is to minimize the [Time-To-Solution](https://nbviewer.jupyter.org/urls/dl.dropbox.com/s/d9iysrawnprjy2w/ck-quantum-hackathon-20180615.ipynb#Time-to-solution-metric) metric (TTS). As TTS is proportional to `sample_size`, exploring lower values of `sample_size` may be sensible.
+## Check the Time-To-Solution metric
 
-At the same time, a low number of `repetitions` may make it hard to demonstrate solution convergence with a high probability. For experiments to be uploaded, we recommend using at least 10 repetitions on the simulators and 3-5 repetitions on the hardware.
+The goal of the challenge is to minimize the [Time-To-Solution](https://github.com/ctuning/ck-quantum/wiki/Measuring-Performance) metric (TTS).
+As TTS is proportional to `sample_size`, exploring lower values of `sample_size` may be sensible.
+At the same time, a low number of `repetitions` may make it hard to demonstrate solution convergence with a high probability.
+For experiments to be uploaded, we recommend using at least 10 repetitions on the simulators and 3-5 repetitions on the hardware.
 
-----------------------------------------------------------------------------------------------------------
+Run the following and select an experiment entry to compute TTS for:
+```
+$ ck time_to_solution vqe --delta=0.015 --prob=0.95
+```
+
+To compute TTS for a particular experiment, supply its entry name e.g.:
+```
+$ ck time_to_solution vqe --delta=0.015 --prob=0.8 \
+local:experiment:anton-2018_10_05T12_18_19-local_qasm_simulator-ansatz.universal4-optimizer.cobyla-samples.100-repetitions.1
+```
+
 
 ## Advanced VQE exploration via plugins
 
-### See which plugins are deployed (both `soft` and `env` entries)
+### Check which plugins are deployed (both `soft` and `env` entries)
 ```
 $ ck search --tags=deployed
 ```
@@ -100,11 +116,15 @@ $ ck cleanup vqe
 $ ck cleanup vqe --type=optimizer
 ```
 
-#### Removing all deployed Rigetti's ansatz plugins
+#### Removing all deployed ansatz plugins
 ```
-$ ck cleanup vqe --provider=rigetti --type=ansatz
+$ ck cleanup vqe --type=ansatz
 ```
 
+#### Removing all deployed ansatz plugins for the given provider
+```
+$ ck cleanup vqe --type=ansatz --provider=<provider>
+```
 
 ### Working with optimizer plugins
 
@@ -134,18 +154,17 @@ $ ck deploy_ansatz vqe
 $ ck plugin_path vqe --type=ansatz
 $ vi `ck plugin_path vqe --type=ansatz`
 ```
-**NB:** The ansatz plugin is written in Python with QISKit.
+**NB:** The ansatz plugin is written in Python.
 It is expected to contain only one top-level function.
 If you need more, please define them within the top-level one.
 
 #### Visualize the ansatz circuit (use your favourite image viewer instead of `display`)
+**NB:** Currently only supported for IBM-compatible ansatz circuits.
+**NB:** If unsure about the image viewer, try `eog` or `eom` on Linux, `open` on macOS.
 ```
 $ ck run program:visualize-ansatz
 $ display `ck find program:visualize-ansatz`/ansatz_circuit.png
 ```
-**NB:** Only available for IBM-compatible ansatz circuits.
-**NB:** If unsure about the image viewer, try `eog` or `eom` on Linux, `open` on macOS.
-
 
 ## Locate the experimental results
 
@@ -153,18 +172,6 @@ You can list all your experimental entries and locate them on disk as follows:
 ```
 $ ck search local:experiment:* --tags=qck
 $ ck find local:experiment:*
-```
-
-## View the TTS metric
-
-Run the following and select an experiment entry to compute TTS for:
-```
-$ ck time_to_solution vqe --delta=0.015 --prob=0.95
-```
-
-To compute TTS for a particular experiment, supply its entry e.g.:
-```
-$ ck time_to_solution vqe --delta=0.015 --prob=0.8 local:experiment:anton-2018_10_05T12_18_19-local_qasm_simulator-ansatz.universal4-optimizer.cobyla-samples.100-repetitions.1
 ```
 
 ## Upload your experimental results to Quantum Collective Knowledge
@@ -177,5 +184,6 @@ and select the experiment from the list. We recommend uploading all experiments 
 
 Alternatively, upload one or more experiments by using their entries e.g.:
 ```
-$ ck upload vqe --team=bell-state-ringers local:experiment:my_experiment_5 local:experiment:my_experiment_13
+$ ck upload vqe --team=bell-state-ringers \
+local:experiment:my_experiment_5 local:experiment:my_experiment_13
 ```
