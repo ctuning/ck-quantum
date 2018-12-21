@@ -6,7 +6,7 @@ approximation to the ground state energy of a chemical molecule by running the
 hybrid (quantum+classical) VQE algorithm on either a physical device or a
 software simulator.  Please read our engaging [VQE and
 You](https://github.com/ctuning/ck-quantum/wiki/VQE-and-You) guide for more
-information on VQE!
+information on VQE.
 
 In each experiment, you can select the **target quantum device** to run
 the experiment on, the **molecule** to work with (the task), the **optimizer
@@ -18,20 +18,23 @@ evaluation
 metric](https://github.com/ctuning/ck-quantum/tree/master/module/challenge.vqe#check-the-time-to-solution-metric)
 (the lower the better!), [upload your
 results](https://github.com/ctuning/ck-quantum/tree/master/module/challenge.vqe#upload-your-experimental-results-to-quantum-collective-knowledge)
-to the QCK server and finally view then on the [interactive QCK
+to the QCK server and finally view them on the [interactive QCK
 dashboard](http://cknowledge.org/dashboard/challenge.vqe)!
 
-Importantly, via the dashboard you can quickly check solutions provided by
-others and draw inspiration for further improvements. You may notice that
-someone else has made significant progress with e.g. an interesting quantum
+Importantly, via the dashboard you can quickly check solutions contributed by
+others and draw inspiration for further improvements. For example, you may notice that
+someone else has made significant progress by using an interesting quantum
 ansatz. You are invited, indeed encouraged, to combine that ansatz with your
-ideas e.g. on designing a classical optimizer! (Just please provide a reference
-if you build upon someone's solution.) That's what we mean by Quantum **Collective** Knowledge!
+own ideas e.g. on designing a classical optimizer!  That's what we mean by Quantum **Collective** Knowledge! (Please just provide a reference
+if you build upon another solution.)
 
-To the best of our knowledge, the 1st QCK Challenge is indeed the **first** challenge of its kind.
-Therefore, please treat it as work in progress, where all comments and contributions are very
-welcome and valuable! If anything at all is unclear or you spot a clear opportunity for improvement,
-please please please open an [GitHub issue](https://github.com/ctuning/ck-quantum/issues) or join our [CK Slack](https://collective-knowledge.slack.com) workspace (channel `#quantum`) and ask your question there!
+To the best of our knowledge, the 1st QCK Challenge is indeed the **first**
+challenge of its kind.  Therefore, please treat it as work in progress, where
+all comments and contributions are very welcome and valuable! If anything at
+all is unclear or you spot a clear opportunity for improvement, please (please!
+please!!) open a [GitHub issue](https://github.com/ctuning/ck-quantum/issues), or
+join our [CK Slack workspace](https://collective-knowledge.slack.com)
+`#quantum` channel) and ask your question there!
 
 We are thrilled about collaboratively solving this and future challenges, and
 thus making practical and scalable Quantum Computing a reality. Thank you so
