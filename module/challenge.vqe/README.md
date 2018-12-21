@@ -21,14 +21,14 @@ for your experiments. As the challenge goes on, we may be able to support more p
 | [Sign up](https://quantumexperience.ng.bluemix.net/qx/signup) and copy your API token from the ["Advanced"](https://quantumexperience.ng.bluemix.net/qx/account/advanced) tab (click on the "Regenerate" button first). | [Download the Forest SDK](https://www.rigetti.com/forest). |
 | Follow [CK-Qiskit instructions](https://github.com/ctuning/ck-qiskit) to complete and test your setup. | Follow [CK-Rigetti instructions](https://github.com/ctuning/ck-rigetti) to complete and test your setup. Once you are done, do not kill the local QVM server - you will need it during VQE experiments as well! |
 
-### Supported options
+### Supported values
 
-| Option | IBM Quantum Experience | Rigetti Forest |
+| Choice | IBM Quantum Experience | Rigetti Forest |
 |-|-|-|
-| `provider` | `ibm` | `rigetti` |
-| `device` | `qasm_simulator` (local simulator),<br> `ibmq_qasm_simulator` (remote simulator),<br> `ibmqx4` (a 5-qubit remote device),<br> `ibmq_16_melbourne` (a 16-qubit remote device) | `QVM` (local simulator) |
-| `ansatz` | `tiny1`, `tiny2`,<br> `universal3`, `universal4`,<br> `reduced_universal5`, `universal6`  | `tiny1`, `tiny2`<br> |
-| `optimizer` | `cobyla`, `nelder_mead`,<br> `random_sampler`, `custom` | `cobyla`, `nelder_mead`,<br> `random_sampler`, `custom` |
+| `<provider>` | `ibm` | `rigetti` |
+| `<device>` | `qasm_simulator` (local simulator),<br> `ibmq_qasm_simulator` (remote simulator),<br> `ibmqx4` (a 5-qubit remote device),<br> `ibmq_16_melbourne` (a 16-qubit remote device) | `QVM` (local simulator) |
+| `<ansatz>` | `tiny1`, `tiny2`,<br> `universal3`, `universal4`,<br> `reduced_universal5`, `universal6`  | `tiny1`, `tiny2`<br> |
+| `<optimizer>` | `cobyla`, `nelder_mead`,<br> `random_sampler`, `custom` | `cobyla`, `nelder_mead`,<br> `random_sampler`, `custom` |
 
 ## Run VQE once
 
