@@ -617,7 +617,7 @@ def upload(i):
     team_name           = i.get('team')
 
     if len(cids)==0:
-        repo_uoa        = i.get('repo_uoa')
+        repo_uoa        = i.get('repo_uoa', '*')
         extra_tags      = i.get('extra_tags')
 
         pick_exp_adict  = { 'action':       'pick_an_experiment',
