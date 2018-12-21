@@ -30,6 +30,19 @@ for your experiments. As the challenge goes on, we may be able to support more p
 | `<ansatz>` | `tiny1`, `tiny2`,<br> `universal3`, `universal4`,<br> `reduced_universal5`, `universal6`  | `tiny1`, `tiny2`<br> |
 | `<optimizer>` | `cobyla`, `nelder_mead`,<br> `random_sampler`, `custom` | `cobyla`, `nelder_mead`,<br> `random_sampler`, `custom` |
 
+## Select the VQE problem to solve - the Hamiltonian
+
+The problem to be solved (Hydrogen or Helium) is defined by a Hamiltonian plugin, implemented as a standard CK environment.
+You can pre-install one or both of them. If more than one is pre-installed, CK will interactively ask you to resolve the ambiguity
+when launching the experiments.
+
+To install a Hamiltonian, run
+```
+$ ck detect soft --tags=quantum,hamiltonian
+```
+and interactively select from the menu.
+
+
 ## Run VQE once
 
 In order to run VQE we'll need point the system to one optimizer plugin and one ansatz plugin.
