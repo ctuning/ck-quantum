@@ -26,7 +26,7 @@ for your experiments. As the challenge goes on, we may be able to support more p
 | Option | IBM Quantum Experience | Rigetti Forest |
 |-|-|-|
 | `provider` | `ibm` | `rigetti` |
-| `device` | `qasm_simulator` (local simulator),<br> `ibmq_qasm_simulator` (remote simulator),<br> `ibmqx4` (remote device QX4),<br> `ibmq_16_melbourne` | `QVM` (local simulator) |
+| `device` | `qasm_simulator` (local simulator),<br> `ibmq_qasm_simulator` (remote simulator),<br> `ibmqx4` (a 5-qubit remote device),<br> `ibmq_16_melbourne` (a 16-qubit remote device) | `QVM` (local simulator) |
 | `ansatz` | `tiny1`, `tiny2`,<br> `universal3`, `universal4`,<br> `reduced_universal5`, `universal6`  | `tiny1`, `tiny2`<br> |
 | `optimizer` | `cobyla`, `nelder_mead`,<br> `random_sampler`, `custom` | `cobyla`, `nelder_mead`,<br> `random_sampler`, `custom` |
 
@@ -54,14 +54,19 @@ $ ck deploy_ansatz vqe --provider=rigetti --value=tiny2
 $ ck run vqe --provider=rigetti --device=QVM --repetitions=1
 ```
 
-## Monitor the convergence process (an ASCII-graphics program run in a separate Terminal window)
+## Monitor the convergence process (an ASCII-graphics program run in a separate terminal window)
 ```
 $ ck run program:visualize-convergence --env.VQE_QUANTUM_PROVIDER=<provider>
 ```
 
 ## Easy VQE exploration via optimizer parameters
 ```
-$ ck run vqe --provider=<ibm|rigetti> --device=<device> --sample_size=<sample_size> --max_iterations=<max_iterations> --start_param_value=<start_param_value> --repetitions=<repetitions>
+$ ck run vqe --provider=<provider> \
+--device=<device> \
+--sample_size=<sample_size> \
+--max_iterations=<max_iterations> \
+--start_param_value=<start_param_value> \
+--repetitions=<repetitions>
 ```
 where:
 - consult the table above for the supported values of `provider` and `device`.
@@ -124,13 +129,6 @@ If you need more, please define them within the top-level one.
 $ ck deploy_ansatz vqe
 ```
 
-#### IBM: Visualize the ansatz circuit (use your favourite image viewer instead of `display`)
-```
-$ ck run program:visualize-ansatz
-$ display `ck find program:visualize-ansatz`/ansatz_circuit.png
-```
-**NB:** If unsure about the image viewer, try `eog` or `eom` on Linux, `open` on macOS.
-
 #### Locate and edit the deployed ansatz plugin (use your favourite text editor instead of `vi`)
 ```
 $ ck plugin_path vqe --type=ansatz
@@ -139,6 +137,15 @@ $ vi `ck plugin_path vqe --type=ansatz`
 **NB:** The ansatz plugin is written in Python with QISKit.
 It is expected to contain only one top-level function.
 If you need more, please define them within the top-level one.
+
+#### Visualize the ansatz circuit (use your favourite image viewer instead of `display`)
+```
+$ ck run program:visualize-ansatz
+$ display `ck find program:visualize-ansatz`/ansatz_circuit.png
+```
+**NB:** Only available for IBM-compatible ansatz circuits.
+**NB:** If unsure about the image viewer, try `eog` or `eom` on Linux, `open` on macOS.
+
 
 ## Locate the experimental results
 
