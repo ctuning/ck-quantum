@@ -12,5 +12,5 @@ Here we keep the code to support (non-exclusively) the competitions in Quantum C
 1. [1st Open QCK Challenge](https://github.com/ctuning/ck-quantum/tree/master/module/challenge.vqe) (**upcoming!**)
 1. 3nd QCK Hackathon, Paris, 2019-01-27 (**upcoming!**)
 1. [2nd QCK Hackathon, London, 2018-10-06](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20181006)
-1. 1st QCK Hackathon, Cambridge, 2018-06-15
+1. [1st QCK Hackathon, Cambridge, 2018-06-15](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20180615)
 
