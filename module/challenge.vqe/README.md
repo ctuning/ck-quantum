@@ -115,10 +115,6 @@ $ ck deploy_ansatz vqe --provider=rigetti --value=tiny2
 $ ck run vqe --provider=rigetti --device=QVM --repetitions=1
 ```
 
-## Monitor the convergence process (an ASCII-graphics program run in a separate terminal window)
-```
-$ ck run program:visualize-convergence --env.VQE_QUANTUM_PROVIDER=<provider>
-```
 
 ## Easy VQE exploration via optimizer parameters
 
@@ -138,6 +134,21 @@ where:
 - `<max_iterations>`: the maximum number of optimizer iterations ("iteration limit"); by default, `80`.
 - `<start_param_value>`: the starting value of each optimizer's parameter (can be a float number or the word `random`); by default, `random`.
 - `<repetitions>`: the number of times to repeat the experiment with the same parameters; by default, `3`.
+
+Once you start you experiment you can [monitor the convergence process](#monitor).
+
+<a name="monitor"></a>
+## Monitor the convergence process
+
+To monitor the convergence process, run an ASCII-graphics program in a separate terminal window:
+```
+$ ck run program:visualize-convergence --env.VQE_QUANTUM_PROVIDER=<provider>
+```
+
+## Monitor the convergence process (an ASCII-graphics program run in a separate terminal window)
+```
+$ ck run program:visualize-convergence --env.VQE_QUANTUM_PROVIDER=<provider>
+```
 
 ## Check the Time-To-Solution metric
 
