@@ -22,11 +22,15 @@ to the QCK server and finally view them on the [interactive QCK
 dashboard](http://cknowledge.org/dashboard/challenge.vqe)!
 
 Importantly, via the dashboard you can quickly check solutions contributed by
-others and draw inspiration for further improvements. For example, you may notice that
-someone else has made significant progress by using an interesting quantum
-ansatz. You are invited, indeed encouraged, to combine that ansatz with your
-own ideas e.g. on designing a classical optimizer!  That's what we mean by Quantum **Collective** Knowledge! (Please just provide a reference
-if you build upon another solution.)
+others and draw inspiration for further improvements. For example, you may
+notice that someone else has made significant progress by using an interesting
+quantum ansatz. You are invited, indeed encouraged, to combine that ansatz with
+your own ideas e.g. on designing a classical optimizer!  That's what we mean by
+Quantum **Collective** Knowledge! (Please just provide a reference if you build
+upon another solution.)
+
+From our [QCK hackathon experience](https://riverlane.io/news/river-lane-research-and-dividiti-hold-western-europes-first-quantum-computing-hackathon/), you can start contributing in under an hour by [experimenting with VQE parameters](#explore_parameters) and make a valuable contribution in under a day by [experimenting with VQE plugins](#explore_plugins)!
+
 
 To the best of our knowledge, the 1st QCK Challenge is indeed the **first**
 challenge of its kind.  Therefore, please treat it as work in progress, where
@@ -89,7 +93,7 @@ Remove a Hamiltonian (Helium in this case):
 ```
 $ ck clean env --tags=quantum,hamiltonian.helium
 ```
-
+**NB:** Separate tags with commas, not spaces. Use dot in `hamiltoniam.helium` (a sigle tag).
 
 ## Run VQE once
 
@@ -115,10 +119,10 @@ $ ck deploy_ansatz vqe --provider=rigetti --value=tiny2
 $ ck run vqe --provider=rigetti --device=QVM --repetitions=1
 ```
 
+<a name="explore_parameters"></a>
+## Easy VQE exploration via parameters
 
-## Easy VQE exploration via optimizer parameters
-
-You can explore VQE by varying one or more of the following parameters:
+You can start exploring VQE by varying one or more of the following parameters:
 ```
 $ ck run vqe \
 --provider=<provider> \
@@ -165,7 +169,7 @@ $ ck time_to_solution vqe --delta=0.015 --prob=0.8 \
 local:experiment:anton-2018_10_05T12_18_19-local_qasm_simulator-ansatz.universal4-optimizer.cobyla-samples.100-repetitions.1
 ```
 
-
+<a name="explore_plugins"></a>
 ## Advanced VQE exploration via plugins
 
 ### Check which plugins are deployed (both `soft` and `env` entries)
