@@ -139,8 +139,12 @@ where:
 - `<start_param_value>`: the starting value of each optimizer's parameter (can be a float number or the word `random`); by default, `random`.
 - `<repetitions>`: the number of times to repeat the experiment with the same parameters; by default, `3`.
 
-Once you start you experiment, you can [monitor the convergence process](#monitor).
-When it completes, you can [measure the Time-To-Solution metric](#measure), [locate the experimenal results on disk](#locate) and [upload them to the QCK server](#upload).
+Once you start an experiment, you can [monitor its convergence](#monitor). (Check the [online dashboard](http://cknowledge.org/dashboard/challenge.vqe) for the exact ground state energy for your chosen molecule.)
+
+When it completes, you can [measure the Time-To-Solution metric](#measure),
+[locate the experimenal results on disk](#locate) and [upload them to the QCK server](#upload).
+
+**TODO:** We will soon provide instructions on how to launch the dashboard locally on your collected experimental data.
 
 <a name="monitor"></a>
 ## Monitor the convergence process
