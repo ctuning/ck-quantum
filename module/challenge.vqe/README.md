@@ -136,7 +136,7 @@ where:
 - `<repetitions>`: the number of times to repeat the experiment with the same parameters; by default, `3`.
 
 Once you start you experiment, you can [monitor the convergence process](#monitor).
-When it completes, you can [measure the Time-To-Solution metric](#measure)
+When it completes, you can [measure the Time-To-Solution metric](#measure), [locate the experimenal results on disk](#locate) and [upload them to the QCK server](#upload).
 
 <a name="monitor"></a>
 ## Monitor the convergence process
@@ -239,6 +239,7 @@ $ ck run program:visualize-ansatz
 $ display `ck find program:visualize-ansatz`/ansatz_circuit.png
 ```
 
+<a name="locate"></a>
 ## Locate the experimental results
 
 You can list all your experimental entries and locate them on disk as follows:
@@ -247,6 +248,7 @@ $ ck search local:experiment:* --tags=qck
 $ ck find local:experiment:*
 ```
 
+<a name="upload"></a>
 ## Upload your experimental results to Quantum Collective Knowledge
 
 When you have an experiment you would like to share, run:
