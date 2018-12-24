@@ -135,7 +135,8 @@ where:
 - `<start_param_value>`: the starting value of each optimizer's parameter (can be a float number or the word `random`); by default, `random`.
 - `<repetitions>`: the number of times to repeat the experiment with the same parameters; by default, `3`.
 
-Once you start you experiment you can [monitor the convergence process](#monitor).
+Once you start you experiment, you can [monitor the convergence process](#monitor).
+When it completes, you can [measure the Time-To-Solution metric](#measure)
 
 <a name="monitor"></a>
 ## Monitor the convergence process
@@ -145,12 +146,8 @@ To monitor the convergence process, run an ASCII-graphics program in a separate 
 $ ck run program:visualize-convergence --env.VQE_QUANTUM_PROVIDER=<provider>
 ```
 
-## Monitor the convergence process (an ASCII-graphics program run in a separate terminal window)
-```
-$ ck run program:visualize-convergence --env.VQE_QUANTUM_PROVIDER=<provider>
-```
-
-## Check the Time-To-Solution metric
+<a name="measure"></a>
+## Measure the Time-To-Solution metric
 
 The goal of the challenge is to minimize the [Time-To-Solution](https://github.com/ctuning/ck-quantum/wiki/Measuring-Performance) metric (TTS).
 As TTS is proportional to `sample_size`, exploring lower values of `sample_size` may be sensible.
