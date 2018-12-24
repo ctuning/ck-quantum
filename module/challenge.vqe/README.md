@@ -14,12 +14,9 @@ method** (the classical component of VQE), the **ansatz function** (the quantum
 component of VQE), and tune some parameters of the above.
 
 Once your experiment is completed, you can check the [Time-To-Solution
-evaluation
-metric](https://github.com/ctuning/ck-quantum/tree/master/module/challenge.vqe#check-the-time-to-solution-metric)
-(the lower the better!), [upload your
-results](https://github.com/ctuning/ck-quantum/tree/master/module/challenge.vqe#upload-your-experimental-results-to-quantum-collective-knowledge)
-to the QCK server and finally view them on the [interactive QCK
-dashboard](http://cknowledge.org/dashboard/challenge.vqe)!
+evaluation metric](#measure) (the lower the better), [upload your
+results](#upload) to the QCK server and finally view them on the [interactive
+QCK dashboard](http://cknowledge.org/dashboard/challenge.vqe)!
 
 Importantly, via the dashboard you can quickly check solutions contributed by
 others and draw inspiration for further improvements. For example, you may
