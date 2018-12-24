@@ -176,6 +176,9 @@ local:experiment:anton-2018_10_05T12_18_19-local_qasm_simulator-ansatz.universal
 <a name="explore_plugins"></a>
 ## Advanced VQE exploration via plugins
 
+Congratulations if you have reached this point in the challenge! Now that you know the basic mechanics, you may wish to design your own [classical optimizer](https://github.com/ctuning/ck-quantum/wiki/Classical-Optimisation) or [quantum ansatz circuit](https://github.com/ctuning/ck-quantum/wiki/Quantum-Ansatz-Circuits)! For this, you will need to learn a bit how to work with [plugins in general](#explore_plugins_basics), and then with [optimizer plugins](#explore_plugins_optimizer) and/or [ansatz plugins](#explore_plugins_ansatz), depending on your interests and available time.
+
+<a name="explore_plugins_basics"></a>
 ### Check which plugins are deployed (both `soft` and `env` entries)
 ```
 $ ck search --tags=deployed
@@ -203,6 +206,7 @@ $ ck cleanup vqe --type=ansatz
 $ ck cleanup vqe --type=ansatz --provider=<provider>
 ```
 
+<a name="explore_plugins_optimizer"></a>
 ### Working with optimizer plugins
 
 #### Select an optimizer plugin to deploy
@@ -219,6 +223,7 @@ $ vi `ck plugin_path vqe --type=optimizer`
 It is expected to contain only one top-level function.
 If you need more, please define them within the top-level one.
 
+<a name="explore_plugins_ansatz"></a>
 ### Working with ansatz plugins
 
 #### Select an ansatz plugin to deploy
@@ -235,6 +240,7 @@ $ vi `ck plugin_path vqe --type=ansatz`
 It is expected to contain only one top-level function.
 If you need more, please define them within the top-level one.
 
+**TODO:** The ansatz plugin is vendor-specific. We will shortly provide IBM- and Rigetti-specific circuit templates.
 
 #### Visualize the ansatz circuit (use your favourite image viewer instead of `display`)
 
