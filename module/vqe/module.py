@@ -404,6 +404,7 @@ def run(i):
                         'gpu_freq':                     '',
                         'no_state_check':               'yes',
                         'skip_print_timers':            'yes',
+
                         'out':                          'con',
                         'env':{
                             'VQE_SAMPLE_SIZE':          sample_size,
@@ -485,6 +486,8 @@ def run(i):
                         'repetitions':                  repetitions,
                         'record':                       'yes',
                         'skip_stat_analysis':           'yes',
+                        'process_multi_keys':           [ '##choices#env#*' ], # sic! If you leave it empty, you'll get too much data back.
+
                         'record_repo':                  'local',
                         'record_uoa':                   record_uoa,
                         'tags':                         ','.join( ['qck', 'quantum', hackathon_tag] + [ k+'.'+meta_attribs[k] for k in meta_attribs ] ),
