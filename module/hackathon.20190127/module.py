@@ -74,6 +74,7 @@ def get_raw_data(i):
             # For each point.
             for point in r['points']:
                 point_file_path = os.path.join(r['path'], 'ckp-%s.0001.json' % point)
+                print(point_file_path)
                 with open(point_file_path) as point_file:
                     point_data_raw = json.load(point_file)
                 choices = point_data_raw['choices']
@@ -102,6 +103,8 @@ def get_raw_data(i):
                 # Construct a DataFrame.
                 df = pd.DataFrame(data)
                 df = df.set_index(index)
+                print(df)
+                print
                 # Append to the list of similarly constructed DataFrames.
                 dfs.append(df)
         if dfs:
