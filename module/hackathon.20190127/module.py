@@ -54,7 +54,7 @@ def get_raw_data(i):
 
     """
 
-    repo_uoa = 'ck-quantum-hackathon-20190127'
+    repo_uoa = 'local' # 'ck-quantum-hackathon-20190127'
 
     def get_experimental_results(repo_uoa, tags='qck,hackathon-20190127', module_uoa='experiment'):
         r = ck.access({'action':'search', 'repo_uoa':repo_uoa, 'module_uoa':module_uoa, 'tags':tags})
