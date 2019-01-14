@@ -148,11 +148,11 @@ def get_raw_data(i):
     props = [
         'problem',
         'test_accuracy',
-        'source_code',
-        'circuit_str',
-        'success?',
+#        'source_code',
+#        'circuit_str',
+#        'success?',
         'timestamp_epoch_secs',
-        'timestamp_utc_human',
+#        'timestamp_utc_human',
     ]
 
     for record in df.to_dict(orient='records'):
@@ -188,7 +188,7 @@ def get_raw_config(i):
 
     """
 
-#    data_config = cfg['data_config']
+    data_config = cfg['data_config']
     data_config['return'] = 0
 
     return data_config
