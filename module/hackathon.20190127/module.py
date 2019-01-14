@@ -13,8 +13,7 @@ ck=None # Will be updated by CK (initialized CK kernel)
 
 import os
 import sys
-import json
-import re
+import time
 
 import pandas as pd
 import numpy as np
@@ -75,6 +74,10 @@ def get_raw_data(i):
                 print('Error: %s' % r['error'])
                 exit(1)
 
+            experiment_entry_path = r['path']
+            entry_modification_epoch_secs   = int( os.path.getmtime(experiment_entry_path) )
+            entry_modification_utc_human    = time.asctime(time.gmtime( entry_modification_epoch_secs ))
+
             point_ids = r['points']
 
             for point_id in point_ids:
@@ -103,6 +106,8 @@ def get_raw_data(i):
                         'source_code': characteristics['run'].get('source_code',''),
                         'test_accuracy': np.float64(characteristics['run'].get('test_accuracy',0.0)),
                         'success?': characteristics['run'].get('run_success','N/A'),
+                        'timestamp_epoch_secs': entry_modification_epoch_secs,
+                        'timestamp_utc_human': entry_modification_utc_human,
                     }
                     for (repetition_id, characteristics) in zip(range(num_repetitions), characteristics_list)
                     if len(characteristics['run']) > 0
@@ -146,6 +151,8 @@ def get_raw_data(i):
         'source_code',
         'circuit_str',
         'success?',
+        'timestamp_epoch_secs',
+        'timestamp_utc_human',
     ]
 
     for record in df.to_dict(orient='records'):
