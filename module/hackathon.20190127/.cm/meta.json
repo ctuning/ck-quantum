@@ -11,17 +11,17 @@
     },
     "desc": "Raw data access (json)",
     "data_config": {
-        "full_selector":    [],
-        "full_selector2":   [],
-        "full_selector3":   [],
+        "selector":    [],
+        "selector2":   [],
+        "selector3":   [],
 
-        "full_dimensions": [
+        "dimensions": [
             {"key":"problem",               "name":"Problem number",                    "view_key":"problem"},
             {"key":"timestamp_epoch_secs",  "name":"Timestamp (seconds since epoch)",   "view_key":"timestamp_epoch_secs"},
             {"key":"test_accuracy",         "name":"Test accuracy",                     "view_key":"test_accuracy"}
         ],
 
-        "full_table_view": [
+        "table_view": [
             {"key":"problem",               "name":"Problem number"},
             {"key":"timestamp_epoch_secs",  "name":"Timestamp (seconds since epoch)"},
             {"key":"test_accuracy",         "name":"Test accuracy",                         "format":"%.1f"}

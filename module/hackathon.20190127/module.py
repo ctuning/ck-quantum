@@ -172,7 +172,7 @@ def get_raw_data(i):
 
         table.append(row)
 
-    return {'return':0, 'full_table':table}
+    return {'return':0, 'table':table}
 
 
 ##############################################################################
