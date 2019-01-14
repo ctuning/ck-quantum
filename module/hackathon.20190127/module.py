@@ -143,6 +143,9 @@ def get_raw_data(i):
         if isinstance(i, np.int64):
             return int(i)
 
+        if isinstance(i, np.float64):
+            return float(i)
+
         return i
 
     props = [
@@ -169,7 +172,7 @@ def get_raw_data(i):
 
         table.append(row)
 
-    return {'return':0, 'table':table}
+    return {'return':0, 'full_table':table}
 
 
 ##############################################################################
