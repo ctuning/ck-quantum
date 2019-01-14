@@ -164,11 +164,6 @@ def get_raw_data(i):
             row[prop] = to_value(record.get(prop, ''))
 
 #        row['##data_uid'] = "{}:{}".format(record['_point'], record['_repetition_id'])
-#
-#        row['_minimizer_src'] = {
-#            'title': record.get('_minimizer_method','Show'),
-#            'cmd': record['_minimizer_src']
-#           }
 
         row['source_code'] = {
             'title': record.get('solution_function_name','Show source'),
