@@ -151,11 +151,11 @@ def get_raw_data(i):
     props = [
         'problem',
         'test_accuracy',
-#        'source_code',
-#        'circuit_str',
-#        'success?',
+        'source_code',
+        'circuit_str',
+        'success?',
         'timestamp_epoch_secs',
-#        'timestamp_utc_human',
+        'timestamp_utc_human',
     ]
 
     for record in df.to_dict(orient='records'):
@@ -169,6 +169,11 @@ def get_raw_data(i):
 #            'title': record.get('_minimizer_method','Show'),
 #            'cmd': record['_minimizer_src']
 #           }
+
+        row['source_code'] = {
+            'title': record.get('solution_function_name','Show'),
+            'cmd': record['source_code']
+        }
 
         table.append(row)
 
