@@ -63,6 +63,10 @@ def get_raw_data(i):
             exit(1)
         experiments = r['lst']
 
+        index = [
+            'problem'
+        ]
+
         dfs = []
         for experiment in experiments:
             data_uoa = experiment['data_uoa']
@@ -71,22 +75,30 @@ def get_raw_data(i):
                 print('Error: %s' % r['error'])
                 exit(1)
 
-            # For each point.
-            for point in r['points']:
-                point_file_path = os.path.join(r['path'], 'ckp-%s.0001.json' % point)
-                print(point_file_path)
-                with open(point_file_path) as point_file:
-                    point_data_raw = json.load(point_file)
+            point_ids = r['points']
+
+            for point_id in point_ids:
+                load_point_adict = {    'action':           'load_point',
+                                        'module_uoa':       module_uoa,
+                                        'data_uoa':         data_uoa,
+                                        'point':            point_id,
+                }
+                r=ck.access( load_point_adict )
+                if r['return']>0: return r
+
+                print("experiment_uoa={}, point_id={} :".format(data_uoa, point_id))
+                point_data_raw = r['dict']['0001']
                 choices = point_data_raw['choices']
                 characteristics_list = point_data_raw['characteristics_list']
                 num_repetitions = len(characteristics_list)
+
                 data = [
                     {
                         # statistical repetition
                         'repetition_id': repetition_id,
                         # runtime characteristics
                         'problem': characteristics['run'].get('problem',''),
-                        'circuit': characteristics['run'].get('circuit',''),
+                        'circuit_str': characteristics['run'].get('circuit_str',''),
                         'cost': np.float64(characteristics['run'].get('cost',1e6)),
                         'source_code': characteristics['run'].get('source_code',''),
                         'test_accuracy': np.float64(characteristics['run'].get('test_accuracy',0.0)),
@@ -96,15 +108,9 @@ def get_raw_data(i):
                     if len(characteristics['run']) > 0
                 ]
 
-                index = [
-                    'problem'
-                ]
-
                 # Construct a DataFrame.
                 df = pd.DataFrame(data)
-                df = df.set_index(index)
-                print(df)
-                print
+                df = df.set_index(index, drop=False)
                 # Append to the list of similarly constructed DataFrames.
                 dfs.append(df)
         if dfs:
@@ -114,6 +120,9 @@ def get_raw_data(i):
         else:
             # Construct a dummy DataFrame the success status of which can be safely checked.
             result = pd.DataFrame(columns=['success?'])
+
+        print(result)
+
         return result
 
 
@@ -132,7 +141,10 @@ def get_raw_data(i):
         return i
 
     props = [
-        '_problem',
+        'problem',
+        'test_accuracy',
+        'source_code',
+        'circuit_str',
         'success?',
     ]
 
