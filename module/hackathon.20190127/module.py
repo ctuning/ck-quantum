@@ -171,8 +171,13 @@ def get_raw_data(i):
 #           }
 
         row['source_code'] = {
-            'title': record.get('solution_function_name','Show'),
-            'cmd': record['source_code']
+            'title': record.get('solution_function_name','Show source'),
+            'cmd': record['source_code'],
+        }
+
+        row['circuit_str'] = {
+            'title': record.get('solution_circuit_name', 'Show circuit'),
+            'cmd': record['circuit_str'],
         }
 
         table.append(row)

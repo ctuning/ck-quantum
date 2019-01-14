@@ -25,7 +25,8 @@
             {"key":"problem",               "name":"Problem number"},
             {"key":"timestamp_epoch_secs",  "name":"Timestamp (seconds since epoch)"},
             {"key":"test_accuracy",         "name":"Test accuracy",                         "format":"%.1f"},
-            {"key":"source_code",           "name":"Source code"}
+            {"key":"source_code",           "name":"Source code"},
+            {"key":"circuit_str",           "name":"Quantum circuit"}
         ]
     }
 }
