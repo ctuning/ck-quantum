@@ -102,7 +102,7 @@ def get_raw_data(i):
                         # runtime characteristics
                         'problem_index': characteristics['run'].get('problem_index',-1),
                         'circuit_str': characteristics['run'].get('circuit_str',''),
-                        'solution_error': np.float64(characteristics['run'].get('solution_error',1e6)),
+                        'test_error': np.float64(characteristics['run'].get('test_error',1e6)),
                         'solution_function_name': characteristics['run'].get('solution_function_name',''),
                         'source_code': characteristics['run'].get('source_code',''),
                         'test_accuracy': np.float64(characteristics['run'].get('test_accuracy',0.0)),
@@ -156,7 +156,7 @@ def get_raw_data(i):
     props = [
         'problem_index',
         'circuit_str',
-        'solution_error',
+        'test_error',
         'solution_function_name',
         'source_code',
         'test_accuracy',
