@@ -63,7 +63,7 @@ def get_raw_data(i):
         experiments = r['lst']
 
         index = [
-            'problem'
+            'problem_index'
         ]
 
         dfs = []
@@ -100,14 +100,19 @@ def get_raw_data(i):
                         # statistical repetition
                         'repetition_id': repetition_id,
                         # runtime characteristics
-                        'problem': characteristics['run'].get('problem',''),
+                        'problem_index': characteristics['run'].get('problem_index',-1),
                         'circuit_str': characteristics['run'].get('circuit_str',''),
-                        'cost': np.float64(characteristics['run'].get('cost',1e6)),
+                        'solution_error': np.float64(characteristics['run'].get('solution_error',1e6)),
+                        'solution_function_name': characteristics['run'].get('solution_function_name',''),
                         'source_code': characteristics['run'].get('source_code',''),
                         'test_accuracy': np.float64(characteristics['run'].get('test_accuracy',0.0)),
-                        'success?': characteristics['run'].get('run_success','N/A'),
+                        'training_time': np.float64(characteristics['run'].get('training_time',0.0)),
+                        'training_vectors_limit': np.int64(characteristics['run'].get('training_vectors_limit',-1)),
+
                         'timestamp_epoch_secs': entry_modification_epoch_secs,
                         'timestamp_utc_human': entry_modification_utc_human,
+
+                        'success?': characteristics['run'].get('run_success','N/A'),
                     }
                     for (repetition_id, characteristics) in zip(range(num_repetitions), characteristics_list)
                     if len(characteristics['run']) > 0
@@ -149,13 +154,19 @@ def get_raw_data(i):
         return i
 
     props = [
-        'problem',
-        'test_accuracy',
-        'source_code',
+        'problem_index',
         'circuit_str',
-        'success?',
+        'solution_error',
+        'solution_function_name',
+        'source_code',
+        'test_accuracy',
+        'training_time',
+        'training_vectors_limit',
+
         'timestamp_epoch_secs',
         'timestamp_utc_human',
+
+        'success?',
     ]
 
     for record in df.to_dict(orient='records'):
