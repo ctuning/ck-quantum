@@ -65,9 +65,14 @@
     "full_selector": [], 
     "full_selector2": [
       {
+        "filter_by_all": false,
+        "key": "_molecule",
+        "name": "Molecule"
+      },
+      {
         "key": "_vendor", 
         "name": "Vendor"
-      }, 
+      },
       {
         "key": "_platform", 
         "name": "Device"
@@ -87,15 +92,18 @@
       {
         "key": "_point", 
         "name": "Point"
-      }, 
-      {
-        "filter_by_all": false, 
-        "key": "_molecule", 
-        "name": "Molecule"
       }
     ], 
     "full_selector3": [], 
     "full_table_view": [
+      {
+        "key": "_molecule",
+        "name": "Molecule"
+      },
+      {
+        "key": "_vendor",
+        "name": "Vendor"
+      },
       {
         "key": "_platform", 
         "name": "Device"
@@ -214,6 +222,11 @@
     "metrics_selector": [], 
     "metrics_selector2": [
       {
+        "filter_by_all": false, 
+        "key": "_molecule", 
+        "name": "Molecule"
+      },
+      {
         "key": "_vendor", 
         "name": "Vendor"
       }, 
@@ -236,11 +249,6 @@
       {
         "key": "_point", 
         "name": "Point"
-      }, 
-      {
-        "filter_by_all": false, 
-        "key": "_molecule", 
-        "name": "Molecule"
       }
     ], 
     "metrics_selector3": [], 
@@ -284,6 +292,14 @@
       }
     ], 
     "metrics_table_view": [
+      {
+        "key": "_molecule", 
+        "name": "Molecule"
+      },
+      {
+        "key": "_vendor", 
+        "name": "Vendor"
+      }, 
       {
         "key": "_platform", 
         "name": "Device"
