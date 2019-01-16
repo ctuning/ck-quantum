@@ -100,8 +100,10 @@ def get_raw_data(i):
                         # statistical repetition
                         'repetition_id': repetition_id,
                         # runtime characteristics
+                        'problem_name': characteristics['run'].get('problem_name','problem_x'),
                         'problem_index': characteristics['run'].get('problem_index',-1),
                         'circuit_str': characteristics['run'].get('circuit_str',''),
+                        'training_error': np.float64(characteristics['run'].get('training_error',1e6)),
                         'test_error': np.float64(characteristics['run'].get('test_error',1e6)),
                         'solution_function_name': characteristics['run'].get('solution_function_name',''),
                         'source_code': characteristics['run'].get('source_code',''),
@@ -154,14 +156,16 @@ def get_raw_data(i):
         return i
 
     props = [
+        'problem_name',
         'problem_index',
-        'circuit_str',
-        'test_error',
         'solution_function_name',
         'source_code',
-        'test_accuracy',
-        'training_time',
         'training_vectors_limit',
+        'circuit_str',
+        'training_time',
+        'training_error',
+        'test_accuracy',
+        'test_error',
 
         'timestamp_epoch_secs',
         'timestamp_utc_human',

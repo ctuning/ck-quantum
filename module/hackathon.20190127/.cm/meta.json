@@ -12,7 +12,9 @@
     "desc": "Raw data access (json)",
     "data_config": {
         "selector":    [],
-        "selector2":   [],
+        "selector2":   [
+            { "key": "problem_name", "name": "Which problem" }
+        ],
         "selector3":   [],
 
         "dimensions": [
@@ -20,6 +22,7 @@
             {"key":"timestamp_epoch_secs",  "name":"Timestamp (seconds since epoch)",   "view_key":"timestamp_epoch_secs"},
             {"key":"training_vectors_limit","name":"Training vectors limit",            "view_key":"training_vectors_limit"},
             {"key":"training_time",         "name":"Training time",                     "view_key":"training_time"},
+            {"key":"training_error",        "name":"Training error",                    "view_key":"training_error"},
             {"key":"test_error",            "name":"Test error",                        "view_key":"test_error"},
             {"key":"test_accuracy",         "name":"Test accuracy",                     "view_key":"test_accuracy"},
             {"key":"solution_function_name","name":"Solution function name",            "view_key":"solution_function_name"}
@@ -28,11 +31,12 @@
         "table_view": [
             {"key":"problem_index",         "name":"Problem index"},
             {"key":"timestamp_epoch_secs",  "name":"Timestamp (seconds since epoch)"},
-            {"key":"timestamp_utc_human",   "name":"Timestamp in UTC"},
+            {"key":"timestamp_utc_human",   "name":"Timestamp (UTC)"},
             {"key":"training_vectors_limit","name":"Training vectors limit"},
-            {"key":"training_time",         "name":"Training time"},
-            {"key":"test_error",            "name":"Test error"},
-            {"key":"test_accuracy",         "name":"Test accuracy",                      "format":"%.1f"},
+            {"key":"training_time",         "name":"Training time (sec)",               "format":"%.2f"},
+            {"key":"training_error",        "name":"Training error",                    "format":"%.2f"},
+            {"key":"test_error",            "name":"Test error",                        "format":"%.2f"},
+            {"key":"test_accuracy",         "name":"Test accuracy",                     "format":"%.2f"},
             {"key":"source_code",           "name":"Source code"},
             {"key":"circuit_str",           "name":"Quantum circuit"}
         ]
