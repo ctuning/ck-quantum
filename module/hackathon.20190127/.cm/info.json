@@ -1,16 +1,16 @@
 {
-  "backup_data_uid": "70fa4c547c1a1f1a", 
-  "backup_module_uid": "032630d041b4fd8a", 
-  "backup_module_uoa": "module", 
+  "backup_data_uid": "70fa4c547c1a1f1a",
+  "backup_module_uid": "032630d041b4fd8a",
+  "backup_module_uoa": "module",
   "control": {
-    "engine": "CK", 
-    "iso_datetime": "2018-12-21T12:11:33.612621", 
+    "engine": "CK",
+    "iso_datetime": "2018-12-21T12:11:33.612621",
     "version": [
-      "1", 
-      "9", 
-      "6", 
+      "1",
+      "9",
+      "6",
       "1"
     ]
-  }, 
+  },
   "data_name": "hackathon.20190127"
 }

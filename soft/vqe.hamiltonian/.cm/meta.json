@@ -3,13 +3,13 @@
   "customize": {
     "check_that_exists": "yes",
     "detect_in_soft_dir": "yes",
-    "unsplit_version_to_tags_prefixed_with": "hamiltonian.",
     "env_prefix": "CK_ENV_VQE_HAMILTONIAN",
     "limit_recursion_dir_search": {
       "linux": 2,
       "win": 2
     },
-    "soft_file_universal": "vqe_hamiltonian.py"
+    "soft_file_universal": "vqe_hamiltonian.py",
+    "unsplit_version_to_tags_prefixed_with": "hamiltonian."
   },
   "soft_name": "Hamiltonian for VQE",
   "tags": [

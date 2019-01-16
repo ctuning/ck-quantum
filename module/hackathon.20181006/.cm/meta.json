@@ -1,109 +1,350 @@
 {
-    "actions": {
-        "get_raw_config": {
-            "desc": "get raw config for repo widget",
-            "for_web": "yes"
-        },
-        "get_raw_data": {
-            "desc": "get raw data for repo-widget",
-            "for_web": "yes"
-        }
+  "actions": {
+    "get_raw_config": {
+      "desc": "get raw config for repo widget",
+      "for_web": "yes"
     },
-    "desc": "Raw data access (json)",
-    "data_config": {
-        "full_selector": [],
-
-        "full_selector2": [
-            {"key":"_vendor",           "name":"Vendor"},
-            {"key":"_platform",         "name":"Device"},
-            {"key":"_team",             "name":"Team"},
-            {"key":"_minimizer_method", "name":"Minimizer"},
-            {"key":"_ansatz_method",    "name":"Ansatz"},
-            {"key":"_point",            "name":"Point"},
-            {"key":"_molecule",         "name":"Molecule",              "filter_by_all":false }
-        ],
-
-        "full_selector3": [],
-
-        "full_dimensions": [
-            {"key":"experiment",        "name":"Experiment number",     "view_key":"__number"},
-            {"key":"__energies",        "name":"Energy convergence",    "view_key":"__energies"},
-            {"key":"__fevs",            "name":"Function evaluation",   "view_key":"__fevs"},
-            {"key":"_point",            "name":"Point",                 "view_key":"_point"},
-            {"key":"fun",               "name":"fun",                   "view_key":"fun"},
-            {"key":"fun_exact",         "name":"fun_exact",             "view_key":"fun_exact"},
-            {"key":"fun_validated",     "name":"fun_validated",         "view_key":"fun_validated"},
-            {"key":"total_q_seconds",   "name":"total_q_seconds",       "view_key":"total_q_seconds"},
-            {"key":"total_q_shots",     "name":"total_q_shots",         "view_key":"total_q_shots"},
-            {"key":"total_seconds",     "name":"total_seconds",         "view_key":"total_seconds"}
-        ],
-
-        "full_table_view": [
-            {"key":"_platform",         "name":"Device"},
-            {"key":"_team",             "name":"Team"},
-            {"key":"_minimizer_method", "name":"Minimizer"},
-            {"key":"_sample_number",    "name":"Sample number"},
-            {"key":"_max_iterations",   "name":"Max iterations"},
-            {"key":"_point",            "name":"Point"},
-            {"key":"_repetition_id",    "name":"Repetition ID"},
-            {"key":"fun",               "name":"fun",                   "format":"%.3f"},
-            {"key":"fun_exact",         "name":"fun_exact",             "format":"%.3f"},
-            {"key":"fun_validated",     "name":"fun_validated",         "format":"%.3f"},
-            {"key":"nfev",              "name":"nfev"},
-            {"key":"nit",               "name":"nit"},
-            {"key":"success",           "name":"success"},
-            {"key":"total_q_seconds",   "name":"total_q_seconds",       "format":"%.3f"},
-            {"key":"total_q_shots",     "name":"total_q_shots"},
-            {"key":"total_seconds",     "name":"total_seconds",         "format":"%.3f"},
-            {"key":"_ansatz_src",       "name":"Ansatz source"},
-            {"key":"_minimizer_src",    "name":"Minimizer source"}
-        ],
-
-        "metrics_selector": [],
-
-        "metrics_selector2": [
-            {"key":"_vendor",           "name":"Vendor"},
-            {"key":"_platform",         "name":"Device"},
-            {"key":"_team",             "name":"Team"},
-            {"key":"_minimizer_method", "name":"Minimizer"},
-            {"key":"_ansatz_method",    "name":"Ansatz"},
-            {"key":"_point",            "name":"Point"},
-            {"key":"_molecule",         "name":"Molecule",              "filter_by_all":false }
-        ],
-
-        "metrics_selector3": [],
-
-        "metrics_selector_s": [
-            {"key":"__fun_key",         "name":"Fun Key",               "values":["fun","fun_exact","fun_validated"]},
-            {"key":"__time_key",        "name":"Time Key",              "values":["total_q_shots","total_q_seconds","total_seconds"]},
-            {"key":"__delta",           "name":"Delta",                 "config":{"type":"number","min":0,"step":0.01}},
-            {"key":"__prob",            "name":"Prob",                  "config":{"type":"number","min":0,"max":1,"step":0.1}}
-        ],
-
-        "metrics_dimensions": [
-            {"key":"experiment",        "name":"Experiment number",     "view_key":"__number"},
-            {"key":"_point",            "name":"Point",                 "view_key":"_point"},
-            {"key":"__energies",        "name":"Energy",                "view_key":"__energies"},
-            {"key":"T_ave",             "name":"T_ave",                 "view_key":"T_ave"},
-            {"key":"_sample_number",    "name":"Sample number",         "view_key":"_sample_number"},
-            {"key":"__times",           "name":"Time",                  "view_key":"__times"},
-            {"key":"t_ave",             "name":"t_ave",                 "view_key":"t_ave"}
-        ],
-
-        "metrics_table_view": [
-            {"key":"_platform",         "name":"Device"},
-            {"key":"_team",             "name":"Team"},
-            {"key":"_minimizer_method", "name":"Minimizer"},
-            {"key":"_sample_number",    "name":"Sample number"},
-            {"key":"_max_iterations",   "name":"Max iterations"},
-            {"key":"_point",            "name":"Point"},
-            {"key":"num_repetitions",   "name":"Repetitions"},
-            {"key":"T_ave",             "name":"T_ave",                 "format":"%.3f"},
-            {"key":"T_err",             "name":"T_err",                 "format":"%.3f"},
-            {"key":"s",                 "name":"s",                     "format":"%.3f"},
-            {"key":"s_err",             "name":"s_err",                 "format":"%.3f"},
-            {"key":"t_ave",             "name":"t_ave",                 "format":"%.3f"},
-            {"key":"t_err",             "name":"t_err",                 "format":"%.3f"}
-        ]
+    "get_raw_data": {
+      "desc": "get raw data for repo-widget",
+      "for_web": "yes"
     }
+  },
+  "data_config": {
+    "full_dimensions": [
+      {
+        "key": "experiment",
+        "name": "Experiment number",
+        "view_key": "__number"
+      },
+      {
+        "key": "__energies",
+        "name": "Energy convergence",
+        "view_key": "__energies"
+      },
+      {
+        "key": "__fevs",
+        "name": "Function evaluation",
+        "view_key": "__fevs"
+      },
+      {
+        "key": "_point",
+        "name": "Point",
+        "view_key": "_point"
+      },
+      {
+        "key": "fun",
+        "name": "fun",
+        "view_key": "fun"
+      },
+      {
+        "key": "fun_exact",
+        "name": "fun_exact",
+        "view_key": "fun_exact"
+      },
+      {
+        "key": "fun_validated",
+        "name": "fun_validated",
+        "view_key": "fun_validated"
+      },
+      {
+        "key": "total_q_seconds",
+        "name": "total_q_seconds",
+        "view_key": "total_q_seconds"
+      },
+      {
+        "key": "total_q_shots",
+        "name": "total_q_shots",
+        "view_key": "total_q_shots"
+      },
+      {
+        "key": "total_seconds",
+        "name": "total_seconds",
+        "view_key": "total_seconds"
+      }
+    ],
+    "full_selector": [],
+    "full_selector2": [
+      {
+        "key": "_vendor",
+        "name": "Vendor"
+      },
+      {
+        "key": "_platform",
+        "name": "Device"
+      },
+      {
+        "key": "_team",
+        "name": "Team"
+      },
+      {
+        "key": "_minimizer_method",
+        "name": "Minimizer"
+      },
+      {
+        "key": "_ansatz_method",
+        "name": "Ansatz"
+      },
+      {
+        "key": "_point",
+        "name": "Point"
+      },
+      {
+        "filter_by_all": false,
+        "key": "_molecule",
+        "name": "Molecule"
+      }
+    ],
+    "full_selector3": [],
+    "full_table_view": [
+      {
+        "key": "_platform",
+        "name": "Device"
+      },
+      {
+        "key": "_team",
+        "name": "Team"
+      },
+      {
+        "key": "_minimizer_method",
+        "name": "Minimizer"
+      },
+      {
+        "key": "_sample_number",
+        "name": "Sample number"
+      },
+      {
+        "key": "_max_iterations",
+        "name": "Max iterations"
+      },
+      {
+        "key": "_point",
+        "name": "Point"
+      },
+      {
+        "key": "_repetition_id",
+        "name": "Repetition ID"
+      },
+      {
+        "format": "%.3f",
+        "key": "fun",
+        "name": "fun"
+      },
+      {
+        "format": "%.3f",
+        "key": "fun_exact",
+        "name": "fun_exact"
+      },
+      {
+        "format": "%.3f",
+        "key": "fun_validated",
+        "name": "fun_validated"
+      },
+      {
+        "key": "nfev",
+        "name": "nfev"
+      },
+      {
+        "key": "nit",
+        "name": "nit"
+      },
+      {
+        "key": "success",
+        "name": "success"
+      },
+      {
+        "format": "%.3f",
+        "key": "total_q_seconds",
+        "name": "total_q_seconds"
+      },
+      {
+        "key": "total_q_shots",
+        "name": "total_q_shots"
+      },
+      {
+        "format": "%.3f",
+        "key": "total_seconds",
+        "name": "total_seconds"
+      },
+      {
+        "key": "_ansatz_src",
+        "name": "Ansatz source"
+      },
+      {
+        "key": "_minimizer_src",
+        "name": "Minimizer source"
+      }
+    ],
+    "metrics_dimensions": [
+      {
+        "key": "experiment",
+        "name": "Experiment number",
+        "view_key": "__number"
+      },
+      {
+        "key": "_point",
+        "name": "Point",
+        "view_key": "_point"
+      },
+      {
+        "key": "__energies",
+        "name": "Energy",
+        "view_key": "__energies"
+      },
+      {
+        "key": "T_ave",
+        "name": "T_ave",
+        "view_key": "T_ave"
+      },
+      {
+        "key": "_sample_number",
+        "name": "Sample number",
+        "view_key": "_sample_number"
+      },
+      {
+        "key": "__times",
+        "name": "Time",
+        "view_key": "__times"
+      },
+      {
+        "key": "t_ave",
+        "name": "t_ave",
+        "view_key": "t_ave"
+      }
+    ],
+    "metrics_selector": [],
+    "metrics_selector2": [
+      {
+        "key": "_vendor",
+        "name": "Vendor"
+      },
+      {
+        "key": "_platform",
+        "name": "Device"
+      },
+      {
+        "key": "_team",
+        "name": "Team"
+      },
+      {
+        "key": "_minimizer_method",
+        "name": "Minimizer"
+      },
+      {
+        "key": "_ansatz_method",
+        "name": "Ansatz"
+      },
+      {
+        "key": "_point",
+        "name": "Point"
+      },
+      {
+        "filter_by_all": false,
+        "key": "_molecule",
+        "name": "Molecule"
+      }
+    ],
+    "metrics_selector3": [],
+    "metrics_selector_s": [
+      {
+        "key": "__fun_key",
+        "name": "Fun Key",
+        "values": [
+          "fun",
+          "fun_exact",
+          "fun_validated"
+        ]
+      },
+      {
+        "key": "__time_key",
+        "name": "Time Key",
+        "values": [
+          "total_q_shots",
+          "total_q_seconds",
+          "total_seconds"
+        ]
+      },
+      {
+        "config": {
+          "min": 0,
+          "step": 0.01,
+          "type": "number"
+        },
+        "key": "__delta",
+        "name": "Delta"
+      },
+      {
+        "config": {
+          "max": 1,
+          "min": 0,
+          "step": 0.1,
+          "type": "number"
+        },
+        "key": "__prob",
+        "name": "Prob"
+      }
+    ],
+    "metrics_table_view": [
+      {
+        "key": "_platform",
+        "name": "Device"
+      },
+      {
+        "key": "_team",
+        "name": "Team"
+      },
+      {
+        "key": "_minimizer_method",
+        "name": "Minimizer"
+      },
+      {
+        "key": "_sample_number",
+        "name": "Sample number"
+      },
+      {
+        "key": "_max_iterations",
+        "name": "Max iterations"
+      },
+      {
+        "key": "_point",
+        "name": "Point"
+      },
+      {
+        "key": "num_repetitions",
+        "name": "Repetitions"
+      },
+      {
+        "format": "%.3f",
+        "key": "T_ave",
+        "name": "T_ave"
+      },
+      {
+        "format": "%.3f",
+        "key": "T_err",
+        "name": "T_err"
+      },
+      {
+        "format": "%.3f",
+        "key": "s",
+        "name": "s"
+      },
+      {
+        "format": "%.3f",
+        "key": "s_err",
+        "name": "s_err"
+      },
+      {
+        "format": "%.3f",
+        "key": "t_ave",
+        "name": "t_ave"
+      },
+      {
+        "format": "%.3f",
+        "key": "t_err",
+        "name": "t_err"
+      }
+    ]
+  },
+  "desc": "Raw data access (json)",
+  "workflow": "yes",
+  "workflow_type": "quantum hackathon workflow"
 }
