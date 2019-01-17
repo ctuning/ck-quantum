@@ -74,7 +74,11 @@ def get_raw_data(i):
                 print('Error: %s' % r['error'])
                 exit(1)
 
-            experiment_entry_path = r['path']
+            # Get all the parameters from meta.json -> "meta"
+            mmeta                   = r['dict']['meta']
+            team                    = mmeta.get('team', 'UNKNOWN_TEAM')
+
+            experiment_entry_path   = r['path']
             entry_modification_epoch_secs   = int( os.path.getmtime(experiment_entry_path) )
             entry_modification_utc_human    = time.asctime(time.gmtime( entry_modification_epoch_secs ))
 
@@ -111,6 +115,7 @@ def get_raw_data(i):
                         'training_time': np.float64(characteristics['run'].get('training_time',0.0)),
                         'training_vectors_limit': np.int64(characteristics['run'].get('training_vectors_limit',-1)),
 
+                        'team': team,
                         'timestamp_epoch_secs': entry_modification_epoch_secs,
                         'timestamp_utc_human': entry_modification_utc_human,
 
@@ -167,6 +172,7 @@ def get_raw_data(i):
         'test_accuracy',
         'test_error',
 
+        'team',
         'timestamp_epoch_secs',
         'timestamp_utc_human',
 
