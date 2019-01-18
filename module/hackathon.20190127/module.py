@@ -63,7 +63,7 @@ def get_raw_data(i):
         experiments = r['lst']
 
         index = [
-            'problem_index'
+            'team', 'problem_index'
         ]
 
         dfs = []
@@ -138,13 +138,17 @@ def get_raw_data(i):
             # Construct a dummy DataFrame the success status of which can be safely checked.
             result = pd.DataFrame(columns=['success?'])
 
-        print(result)
-
         return result
 
 
     # prepare table
     df = get_experimental_results(repo_uoa=repo_uoa)
+
+    df['score'] = 3.14
+    from IPython.display import display
+    pd.options.display.max_columns = len(df.columns)
+    pd.options.display.max_rows = len(df.index)
+    display(df)
 
     table = []
 
