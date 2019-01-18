@@ -14,7 +14,8 @@
         "selector":    [],
         "selector2":   [
             { "key": "problem_name", "name": "Which problem" },
-            { "key": "team", "name": "Which team" }
+            { "key": "team", "name": "Which team" },
+            { "key": "solution_function_name", "name": "Which method" }
         ],
         "selector3":   [],
 
