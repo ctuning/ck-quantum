@@ -191,10 +191,13 @@ def get_raw_data(i):
             'cmd': record['source_code'],
         }
 
-        row['circuit_str'] = {
-            'title': record.get('solution_circuit_name', 'Show circuit'),
-            'cmd': record['circuit_str'],
-        }
+        if record['circuit_str']:
+            row['circuit_str'] = {
+                'title': record.get('solution_circuit_name', 'Show circuit'),
+                'cmd': record['circuit_str'],
+            }
+        else:
+            row['circuit_str']='N/A'
 
         table.append(row)
 
