@@ -145,10 +145,10 @@ def get_raw_data(i):
     df = get_experimental_results(repo_uoa=repo_uoa)
 
     df['score'] = 3.14
-    from IPython.display import display
+#    from IPython.display import display
     pd.options.display.max_columns = len(df.columns)
     pd.options.display.max_rows = len(df.index)
-    display(df)
+#    display(df)
 
     table = []
 
