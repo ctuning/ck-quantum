@@ -2,7 +2,7 @@
 
 * [Meetup](https://www.meetup.com/Paris-Quantum-Computing-Technologies/events/256367871) (**upcoming!**)
 * Slides (link to Riverlane's slides) - Dropbox shared for reading?
-* Location of Riverlane's "paris" repository with pickled problems and solution code examples - Dropbox shared for reading?
+* [Task Repository](https://github.com/riverlane/paris)
 
 ## Getting started (ideally done BEFORE the day of the Hackathon to save the precious competition time - feedback welcome)
 
@@ -15,9 +15,24 @@
 
 ### Running evaluate.py (insert multiple examples)
 
-...
+The task repository contains a number of files specifying each problem to solve. Each of these contains a set of
+training data - quantum state vectors labelled by a parity. It is your job to compose a quantum circuit which, when
+applied to each state vector in a test set, can accurately obtain the correct parity label.
 
-...
+### Running evaluate.py (insert multiple examples)
+
+In the first session of the day we will prepare your computers and walk through problem D0. The function manual_solver
+is related to this, and can be found in the
+[example_solutions](https://github.com/riverlane/paris/tree/master/example_solutions) directory.
+
+Next you will be free to attempt the discrete (D#) and continuous (C#) problem sets. We recommend starting with the
+`discrete_solver` and `continuous_solver` functions, repsectively.
+
+In order to test your solutions, use `evaluate.py`. A example use is `python evaluate.py --fun discrete_solver --stats
+--problem problem1 --n 4`. This runs your function `discrete_solver` on problem 1, using 4 vectors for the training set.
+
+If you use the non-quantum solutions like `train_svm` you may want to use more training examples. the parameter --n
+controls this.
 
 ## Using CK (Collective Knowledge framework) for viewing and sharing the solutions
 
