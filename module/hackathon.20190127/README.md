@@ -19,8 +19,6 @@ The task repository contains a number of files specifying each problem to solve.
 training data - quantum state vectors labelled by a parity. It is your job to compose a quantum circuit which, when
 applied to each state vector in a test set, can accurately obtain the correct parity label.
 
-### Running evaluate.py (insert multiple examples)
-
 In the first session of the day we will prepare your computers and walk through problem D0. The function manual_solver
 is related to this, and can be found in the
 [example_solutions](https://github.com/riverlane/paris/tree/master/example_solutions) directory.
