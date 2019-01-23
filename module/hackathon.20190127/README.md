@@ -16,7 +16,7 @@
 ### Running evaluate.py (insert multiple examples)
 
 The task repository contains a number of files specifying each problem to solve. Each of these contains a set of
-training data - quantum state vectors labelled by a parity. It is your job to compose a quantum circuit which, when
+training data - quantum state vectors labelled by a parity (-1 or 1). It is your job to compose a quantum circuit which, when
 applied to each state vector in a test set, can accurately obtain the correct parity label.
 
 In the first session of the day we will prepare your computers and walk through problem D0. The function manual_solver
@@ -26,11 +26,10 @@ is related to this, and can be found in the
 Next you will be free to attempt the discrete (D#) and continuous (C#) problem sets. We recommend starting with the
 `discrete_solver` and `continuous_solver` functions, repsectively.
 
-In order to test your solutions, use `evaluate.py`. A example use is `python evaluate.py --fun discrete_solver --stats
---problem problem1 --n 4`. This runs your function `discrete_solver` on problem 1, using 4 vectors for the training set.
+In order to test your solutions, use `evaluate.py`. A example use is `python3 evaluate.py --fun discrete_solver --stats
+--problem discrete_problem1 -n 4`. This runs your function `discrete_solver` on discrete problem 1, using 4 vectors for the training set.
 
-If you use the non-quantum solutions like `train_svm` you may want to use more training examples. the parameter --n
-controls this.
+If you use the non-quantum solutions like `classical_svm` you may want to use more training examples. The parameter -n controls this.
 
 ## Using CK (Collective Knowledge framework) for viewing and sharing the solutions
 
