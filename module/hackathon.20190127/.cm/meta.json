@@ -25,22 +25,18 @@
             {"key":"team",                  "name":"Team name",                         "view_key":"team"},
             {"key":"training_vectors_limit","name":"Training vectors limit",            "view_key":"training_vectors_limit"},
             {"key":"training_time",         "name":"Training time",                     "view_key":"training_time"},
-            {"key":"training_error",        "name":"Training error",                    "view_key":"training_error"},
-            {"key":"test_error",            "name":"Test error",                        "view_key":"test_error"},
+            {"key":"training_accuracy",     "name":"Training accuracy",                 "view_key":"training_accuracy"},
             {"key":"test_accuracy",         "name":"Test accuracy",                     "view_key":"test_accuracy"},
             {"key":"solution_function_name","name":"Solution function name",            "view_key":"solution_function_name"}
         ],
 
         "table_view": [
             {"key":"problem_index",         "name":"Problem index"},
-            {"key":"timestamp_epoch_secs",  "name":"Timestamp (seconds since epoch)"},
             {"key":"timestamp_utc_human",   "name":"Timestamp (UTC)"},
             {"key":"team",                  "name":"Team name"},
-            {"key":"training_vectors_limit","name":"Training vectors limit"},
             {"key":"training_time",         "name":"Training time (sec)",               "format":"%.2f"},
-            {"key":"training_error",        "name":"Training error",                    "format":"%.2f"},
-            {"key":"test_error",            "name":"Test error",                        "format":"%.2f"},
-            {"key":"test_accuracy",         "name":"Test accuracy",                     "format":"%.2f"},
+            {"key":"training_accuracy",     "name":"Training accuracy",                 "format":"%.1f"},
+            {"key":"test_accuracy",         "name":"Test accuracy",                     "format":"%.1f"},
             {"key":"source_code",           "name":"Source code"},
             {"key":"circuit_str",           "name":"Quantum circuit"}
         ]

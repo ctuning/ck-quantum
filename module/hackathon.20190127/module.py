@@ -53,7 +53,7 @@ def get_raw_data(i):
 
     """
 
-    repo_uoa = 'ck-quantum-hackathon-20190127' # 'local'
+    repo_uoa = '' # 'ck-quantum-hackathon-20190127' # 'local'
 
     def get_experimental_results(repo_uoa, tags='qck,hackathon-20190127', module_uoa='experiment'):
         r = ck.access({'action':'search', 'repo_uoa':repo_uoa, 'module_uoa':module_uoa, 'tags':tags})
@@ -106,14 +106,13 @@ def get_raw_data(i):
                         # runtime characteristics
                         'problem_name': characteristics['run'].get('problem_name','problem_x'),
                         'problem_index': characteristics['run'].get('problem_index',-1),
-                        'circuit_str': characteristics['run'].get('circuit_str',''),
-                        'training_error': np.float64(characteristics['run'].get('training_error',1e6)),
-                        'test_error': np.float64(characteristics['run'].get('test_error',1e6)),
-                        'solution_function_name': characteristics['run'].get('solution_function_name',''),
-                        'source_code': characteristics['run'].get('source_code',''),
-                        'test_accuracy': np.float64(characteristics['run'].get('test_accuracy',0.0)),
+                        'training_accuracy': np.float64(characteristics['run'].get('training_accuracy',1e6)),
                         'training_time': np.float64(characteristics['run'].get('training_time',0.0)),
                         'training_vectors_limit': np.int64(characteristics['run'].get('training_vectors_limit',-1)),
+                        'solution_function_name': characteristics['run'].get('solution_function_name',''),
+                        'source_code': characteristics['run'].get('source_code',''),
+                        'circuit_str': characteristics['run'].get('circuit_str',''),
+                        'test_accuracy': np.float64(characteristics['run'].get('test_accuracy',0.0)),
 
                         'team': team,
                         'timestamp_epoch_secs': entry_modification_epoch_secs,
@@ -167,14 +166,13 @@ def get_raw_data(i):
     props = [
         'problem_name',
         'problem_index',
+        'training_vectors_limit',
+        'training_time',
+        'training_accuracy',
         'solution_function_name',
         'source_code',
-        'training_vectors_limit',
         'circuit_str',
-        'training_time',
-        'training_error',
         'test_accuracy',
-        'test_error',
 
         'team',
         'timestamp_epoch_secs',
