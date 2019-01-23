@@ -18,6 +18,10 @@ import time
 import pandas as pd
 import numpy as np
 
+default_repo_uoa = ''
+#default_repo_uoa = 'local'
+#default_repo_uoa = 'ck-quantum-hackathon-20190127'
+
 
 ##############################################################################
 # Initialize module
@@ -53,9 +57,9 @@ def get_raw_data(i):
 
     """
 
-    repo_uoa = '' # 'ck-quantum-hackathon-20190127' # 'local'
+    selected_repo_uoa = i.get('repo_uoa', default_repo_uoa)
 
-    def get_experimental_results(repo_uoa, tags='qck,hackathon-20190127', module_uoa='experiment'):
+    def get_experimental_results(repo_uoa=selected_repo_uoa, tags='qck,hackathon-20190127', module_uoa='experiment'):
         r = ck.access({'action':'search', 'repo_uoa':repo_uoa, 'module_uoa':module_uoa, 'tags':tags})
         if r['return']>0:
             print('Error: %s' % r['error'])
@@ -141,7 +145,7 @@ def get_raw_data(i):
 
 
     # prepare table
-    df = get_experimental_results(repo_uoa=repo_uoa)
+    df = get_experimental_results()
 
     df['score'] = 3.14
 #    from IPython.display import display
