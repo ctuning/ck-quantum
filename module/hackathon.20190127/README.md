@@ -14,7 +14,7 @@ $ sudo apt-get install python3 python3-pip
 
 On a Mac:
 
-[Install *brew* if it is missing](https://brew.sh)
+Install [brew](https://brew.sh) if it is missing
 
 ```
 $ brew update
@@ -28,12 +28,11 @@ $ export PATH=/usr/local/opt/python/bin:$PATH   # we suggest to put this into yo
 $ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 --user
 ```
 
-### Install [Collective Knowledge](http://cknowledge.org)
+### Install [Collective Knowledge](http://cknowledge.org) framework
 
 Follow [these instructions](https://github.com/ctuning/ck#installation)
 
-### Clone our Task repository
-
+### Clone Riverlane's task repository
 ```
 $ git clone https://github.com/riverlane/paris
 ```
@@ -105,4 +104,4 @@ Please note that your competition points will depend on who uploads their soluti
 
 ### Viewing the remotely shared experiments
 
-Visit [Shared dashboard page](http://cknowledge.org/dashboard/hackathon.20190127) (**upcoming!**)
+Visit the [Shared Dashboard page](http://cknowledge.org/dashboard/hackathon.20190127)
