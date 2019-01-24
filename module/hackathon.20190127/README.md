@@ -24,9 +24,9 @@ $ brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/f2a764ef
 $ export PATH=/usr/local/opt/python/bin:$PATH   # we suggest to put this into your .bashrc config file to avoid repeating in every terminal window
 ```
 
-### Install qiskit and its dependencies (reinstall marshmallow 2.15.0 on OSX to avoid being drowned in warnings)
+### Install qiskit and its dependencies
 ```
-$ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 --user
+$ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 sklearn --user
 ```
 
 ### Install [Collective Knowledge](http://cknowledge.org) framework
