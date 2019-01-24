@@ -149,7 +149,7 @@ def get_raw_data(i):
 
     df.reset_index(inplace=True, drop=True)     # remove the index as it is in the way of complex grouping
 
-    df['rank'] = df.sort_values(['problem_name', 'test_accuracy'], ascending=False).groupby('problem_name').cumcount()+1
+    df['rank'] = df.sort_values(['problem_name', 'test_accuracy', 'timestamp_epoch_secs'], ascending=[True, False, True]).groupby('problem_name').cumcount()+1
 
 
 #    from IPython.display import display
