@@ -2,35 +2,68 @@
 
 * [Meetup](https://www.meetup.com/Paris-Quantum-Computing-Technologies/events/256367871) (**upcoming!**)
 * Slides (link to Riverlane's slides) - Dropbox shared for reading?
-* [Task Repository](https://github.com/riverlane/paris)
 
 ## Getting started (ideally done BEFORE the day of the Hackathon to save the precious competition time - feedback welcome)
 
-1. Install python3
-1. Install qiskit and its dependencies (reinstall marshmallow 2.15.0 on OSX to avoid being drowned in warnings)
-1. A quick test to see that qiskit simulator works
-1. Install CK
+### Install Python 3.6 if it's missing
+
+On Ubuntu:
+```
+$ sudo apt-get install python3 python3-pip
+```
+
+On a Mac:
+
+Install [brew](https://brew.sh) if it is missing.
+Then use **brew** to install Python 3.6:
+
+```
+$ brew update
+$ brew unlink python
+$ brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/f2a764ef944b1080be64bd88dca9a1d80130c558/Formula/python.rb
+$ export PATH=/usr/local/opt/python/bin:$PATH   # we suggest to put this into your .bashrc config file to avoid repeating in every terminal window
+```
+
+### Install qiskit and its dependencies
+```
+$ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 sklearn --user
+```
+
+### Install [Collective Knowledge](http://cknowledge.org) framework and the Quantum CK repository for it
+
+1. Follow [these instructions](https://github.com/ctuning/ck#installation)
+2. Pull the ck-quantum repository and its depenencies:
+```
+$ ck pull repo:ck-quantum
+```
+
+### Clone Riverlane's task repository
+```
+$ git clone https://github.com/riverlane/paris
+```
 
 ## The hackathon workflow
 
 ### Running evaluate.py (insert multiple examples)
 
 The task repository contains a number of files specifying each problem to solve. Each of these contains a set of
-training data - quantum state vectors labelled by a parity. It is your job to compose a quantum circuit which, when
+training data - quantum state vectors labelled by a parity (-1 or 1). It is your job to compose a quantum circuit which, when
 applied to each state vector in a test set, can accurately obtain the correct parity label.
 
-In the first session of the day we will prepare your computers and walk through problem D0. The function manual_solver
+In the first session of the day we will prepare your computers and walk through problem D0. The function `manual_solver`
 is related to this, and can be found in the
 [example_solutions](https://github.com/riverlane/paris/tree/master/example_solutions) directory.
 
 Next you will be free to attempt the discrete (D#) and continuous (C#) problem sets. We recommend starting with the
-`discrete_solver` and `continuous_solver` functions, repsectively.
+`discrete_solver` and `continuous_solver` functions, respectively.
 
-In order to test your solutions, use `evaluate.py`. A example use is `python evaluate.py --fun discrete_solver --stats
---problem problem1 --n 4`. This runs your function `discrete_solver` on problem 1, using 4 vectors for the training set.
+In order to test your solutions, use `evaluate.py`. A usage example is:
+```
+python3 evaluate.py --fun discrete_solver --stats --problem discrete_problem1 -n 4
+```
+This runs your function `discrete_solver` on discrete problem 1, using 4 vectors for the training set.
 
-If you use the non-quantum solutions like `train_svm` you may want to use more training examples. the parameter --n
-controls this.
+If you use the non-quantum solutions like `classical_svm` you may want to use more training examples. The parameter -n controls this.
 
 ### Problem 0
 
@@ -173,4 +206,4 @@ Please note that your competition points will depend on who uploads their soluti
 
 ### Viewing the remotely shared experiments
 
-Visit [Shared dashboard page](http://cknowledge.org/dashboard/hackathon.20190127) (**upcoming!**)
+Visit the [Shared Dashboard page](http://cknowledge.org/dashboard/hackathon.20190127)

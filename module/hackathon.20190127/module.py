@@ -18,6 +18,10 @@ import time
 import pandas as pd
 import numpy as np
 
+default_repo_uoa = ''
+#default_repo_uoa = 'local'
+#default_repo_uoa = 'ck-quantum-hackathon-20190127'
+
 
 ##############################################################################
 # Initialize module
@@ -53,9 +57,9 @@ def get_raw_data(i):
 
     """
 
-    repo_uoa = 'ck-quantum-hackathon-20190127' # 'local'
+    selected_repo_uoa = i.get('repo_uoa', default_repo_uoa)
 
-    def get_experimental_results(repo_uoa, tags='qck,hackathon-20190127', module_uoa='experiment'):
+    def get_experimental_results(repo_uoa=selected_repo_uoa, tags='qck,hackathon-20190127', module_uoa='experiment'):
         r = ck.access({'action':'search', 'repo_uoa':repo_uoa, 'module_uoa':module_uoa, 'tags':tags})
         if r['return']>0:
             print('Error: %s' % r['error'])
@@ -106,14 +110,13 @@ def get_raw_data(i):
                         # runtime characteristics
                         'problem_name': characteristics['run'].get('problem_name','problem_x'),
                         'problem_index': characteristics['run'].get('problem_index',-1),
-                        'circuit_str': characteristics['run'].get('circuit_str',''),
-                        'training_error': np.float64(characteristics['run'].get('training_error',1e6)),
-                        'test_error': np.float64(characteristics['run'].get('test_error',1e6)),
-                        'solution_function_name': characteristics['run'].get('solution_function_name',''),
-                        'source_code': characteristics['run'].get('source_code',''),
-                        'test_accuracy': np.float64(characteristics['run'].get('test_accuracy',0.0)),
+                        'training_accuracy': np.float64(characteristics['run'].get('training_accuracy',1e6)),
                         'training_time': np.float64(characteristics['run'].get('training_time',0.0)),
                         'training_vectors_limit': np.int64(characteristics['run'].get('training_vectors_limit',-1)),
+                        'solution_function_name': characteristics['run'].get('solution_function_name',''),
+                        'source_code': characteristics['run'].get('source_code',''),
+                        'circuit_str': characteristics['run'].get('circuit_str',''),
+                        'test_accuracy': np.float64(characteristics['run'].get('test_accuracy',0.0)),
 
                         'team': team,
                         'timestamp_epoch_secs': entry_modification_epoch_secs,
@@ -142,9 +145,16 @@ def get_raw_data(i):
 
 
     # prepare table
-    df = get_experimental_results(repo_uoa=repo_uoa)
+    df = get_experimental_results()
 
-    df['score'] = 3.14
+    df.reset_index(inplace=True, drop=True)     # remove the index as it is in the way of complex grouping
+
+    ## Sorting in place allows us to preserve this order as the initial order in the output
+    df.sort_values(['problem_name', 'test_accuracy', 'timestamp_epoch_secs'], ascending=[True, False, True], inplace=True)
+    df['rank'] = df.groupby('problem_name').cumcount()+1
+
+    df['seconds_since_start'] = df['timestamp_epoch_secs']-df['timestamp_epoch_secs'].min()
+
 #    from IPython.display import display
     pd.options.display.max_columns = len(df.columns)
     pd.options.display.max_rows = len(df.index)
@@ -167,18 +177,19 @@ def get_raw_data(i):
     props = [
         'problem_name',
         'problem_index',
+        'training_vectors_limit',
+        'training_time',
+        'training_accuracy',
         'solution_function_name',
         'source_code',
-        'training_vectors_limit',
         'circuit_str',
-        'training_time',
-        'training_error',
         'test_accuracy',
-        'test_error',
+        'rank',
 
         'team',
         'timestamp_epoch_secs',
         'timestamp_utc_human',
+        'seconds_since_start',
 
         'success?',
     ]

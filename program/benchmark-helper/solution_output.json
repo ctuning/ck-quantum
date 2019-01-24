@@ -1,0 +1,11 @@
+{
+  "problem_name": "discrete_problem1",
+  "problem_index": 1,
+  "training_vectors_limit": 45,
+  "solution_function_name": "classical_svm",
+  "source_code": "def classical_svm(training_example_wfns):\n    \"\"\"This is a train function for any circuit ignoring all quantum properties.\n    This will work given enough examples, but well be very slow!\n    \"\"\"\n    clf = svm.SVC(gamma='auto', C=8)\n    vecs, actual_labels = tuple(zip(*training_example_wfns))\n    vecs = np.array(vecs);\n    vecs = np.concatenate([vecs.real, vecs.imag], axis=1)\n\n    clf.fit(vecs, actual_labels)\n\n    # now we create the inference function. This should take a state and produce a prediction.\n    def infer(wavefunction):\n        wavefunction = np.array(wavefunction).reshape(1, -1)\n        test_vec = np.concatenate([wavefunction.real, wavefunction.imag], axis=1)\n        test_prediction = clf.predict( test_vec )[0]\n\n        return test_prediction\n\n\n    return inference_retval(\n        infer_fun = infer\n    )\n",
+  "circuit_str": null,
+  "training_time": 0.0022499561309814453,
+  "training_accuracy": 97.77777777777779,
+  "test_accuracy": 75.0
+}
