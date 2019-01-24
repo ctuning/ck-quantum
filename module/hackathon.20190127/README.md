@@ -32,6 +32,100 @@ In order to test your solutions, use `evaluate.py`. A example use is `python eva
 If you use the non-quantum solutions like `train_svm` you may want to use more training examples. the parameter --n
 controls this.
 
+### Problem 0
+
+Number of qubits: 1
+
+This is a single qubit problem.
+There are 2 state vectors labelled by 1 and -1. We need to apply a quantum circuit to each qubit which transforms their
+state to one which retrieves the correct labels when measured.
+Applying a Hadamard gate to each state should do this.
+
+You can look at `manual_solver.py` and try to come up with a circuit which does this.
+To run the solver type the command: `python3 evaluate.py --fun manual_solver --stats --problem discrete_problem0`
+
+### Problem 1
+
+Number of qubits: 2
+
+Now we have two qubits!
+The circuit consists of only 2 gates, one gate for each qubit.
+We promise the gates are combinations of X and H - it's your job to work out which ones.
+
+You can look at `manual_solver.py` and try to come up with a circuit which does this.
+To run the solver type the command: `python3 evaluate.py --fun manual_solver --stats --problem discrete_problem1`
+
+Alternatively you could look at `discrete_solver.py`, which can help automate the decision.
+To run this solver type the command: `python3 evaluate.py --fun discrete_solver --stats --problem discrete_problem1`
+
+### Problem 2
+
+Number of qubits: 2
+
+Now there are multiple gates for each qubit. You will need to try interacting the qubits with one another using
+CNOT gates.
+CNOT gates are only applied to neighbouring qubits, e.g. qubit_0 -> qubit_1, qubit_1 -> qubit_2.
+Other gate combinations you can use: H, X, Y.
+
+You can look at `manual_solver.py` and try to come up with a circuit which does this.
+To run the solver type the command: `python3 evaluate.py --fun manual_solver --stats --problem discrete_problem2`
+
+It will probably be too annoying and difficult to manually try all combinations. Try modifying `discrete_solver.py`.
+To run this solver type the command: `python3 evaluate.py --fun discrete_solver --stats --problem discrete_problem2`
+
+### Problem 3
+
+Number of qubits: 4
+
+A larger problem with a 2 qubit gate.
+There is a single 1-qubit gate (H, X, or Y) on each qubit to start, and then a single CNOT gate linking 2
+neighbouring qubits.
+
+You will need to restrict the search to only circuits with 5 gates that have this structure.
+
+You can modify `discrete_solver.py` to begin, but you will notice that this will not be optimal, so you should create
+your own function.
+To run this solver type the command: `python3 evaluate.py --fun <SOLVER_FUNCTION> --stats --problem discrete_problem3`,
+substituting <SOLVER_FUNCTION> for your own.
+
+### Problem 4
+
+Number of qubits: 4
+
+This problem is based on a "state preperation circuit" for VQE - used in quantum chemistry.
+The circuit is called the Hardware Efficent Ansatz and you can see it in `continuous_solver.py`.
+You should use the `continuous_solver.py` for this and larger continuous problems.
+You can try to optimise some parameters, i.e. circuit depth and minimize parameters.
+
+To run this solver type the command: `python3 evaluate.py --fun continuous_solver --stats --problem continuous_problem4`
+
+### Problem 5
+
+Number of qubits: 6
+
+In order to solve this problem you will need to invert the circuit we are giving explicitly:
+
+                                                      ┌───────┐┌───┐
+qr_0: |0>─────────────────────────────────────────────┤ Ry(0) ├┤ H ├
+                                             ┌───────┐└───────┘└─┬─┘
+qr_1: |0>────────────────────────────────────┤ Rx(0) ├───────────┼──
+                                    ┌───────┐└───────┘           │
+qr_2: |0>───────────────────────────┤ Rx(0) ├────────────────────┼──
+                           ┌───────┐└───────┘                    │
+qr_3: |0>──────────────────┤ Rz(0) ├─────────────────────────────┼──
+                  ┌───────┐└───────┘                             │
+qr_4: |0>─────────┤ Rx(0) ├──────────────────────────────────────┼──
+         ┌───────┐└───────┘                                      │
+qr_5: |0>┤ Rz(0) ├───────────────────────────────────────────────■──
+         └───────┘
+
+You need to optimise the rotation parameters. The angles are given above as 0, but it can be anything from 0 to 2pi.
+You can try and use `continuous_solver.py` but it will not be very efficient. You should make your own function.
+
+To run this solver type the command: To run this solver type the command: `python3 evaluate.py --fun <SOLVER_FUNCTION>
+--stats --problem continuous_problem5`, substituting <SOLVER_FUNCTION> for your own.
+
+
 ## Using CK (Collective Knowledge framework) for viewing and sharing the solutions
 
 The main type of object that CK works with is called a "CK entry".
