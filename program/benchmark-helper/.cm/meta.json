@@ -1,0 +1,49 @@
+{
+  "backup_data_uid": "89983c43e0ad01ac", 
+  "build_compiler_vars": {}, 
+  "compile_deps": {
+    "python": {
+      "local": "yes", 
+      "name": "Python v3", 
+      "tags": "compiler,lang-python", 
+      "version_from": [
+        3, 
+        6, 
+        0
+      ]
+    }
+  }, 
+  "data_name": "benchmark-helper", 
+  "main_language": "python", 
+  "no_compile": "yes", 
+  "no_target_file": "yes", 
+  "print_files_after_run": [
+    "stderr.log", 
+    "stdout.log"
+  ], 
+  "process_in_tmp": "yes", 
+  "program": "yes", 
+  "run_cmds": {
+    "default": {
+      "ignore_return_code": "no", 
+      "run_time": {
+        "fine_grain_timer_file": "../solution_output.json", 
+        "run_cmd_main": "$<<CK_ENV_COMPILER_PYTHON_FILE>>$ ..$#dir_sep#$run.py", 
+        "run_cmd_out1": "stdout.log", 
+        "run_cmd_out2": "stderr.log", 
+        "run_output_files": [
+          "stdout.log", 
+          "stderr.log"
+        ]
+      }
+    }
+  }, 
+  "run_vars": {
+    "CK_QUANTUM_PARIS_DIR": "$<<HOME>>$/projects/qck-paris", 
+    "CK_QUANTUM_PARIS_OUTPUT": "../solution_output.json"
+  }, 
+  "tags": [
+    "program", 
+    "lang-python"
+  ]
+}
