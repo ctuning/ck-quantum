@@ -147,7 +147,11 @@ def get_raw_data(i):
     # prepare table
     df = get_experimental_results()
 
-    df['score'] = 3.14
+    df.reset_index(inplace=True, drop=True)     # remove the index as it is in the way of complex grouping
+
+    df['rank'] = df.sort_values(['problem_name', 'test_accuracy'], ascending=False).groupby('problem_name').cumcount()+1
+
+
 #    from IPython.display import display
     pd.options.display.max_columns = len(df.columns)
     pd.options.display.max_rows = len(df.index)
@@ -177,6 +181,7 @@ def get_raw_data(i):
         'source_code',
         'circuit_str',
         'test_accuracy',
+        'rank',
 
         'team',
         'timestamp_epoch_secs',
