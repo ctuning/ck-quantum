@@ -72,7 +72,7 @@ def store_experiment(i):
 
     load_adict = {  'action':           'load',
                     'module_uoa':       'program',
-                    'data_uoa':         'benchmark_helper',
+                    'data_uoa':         'benchmark-helper',
     }
     r=ck.access( load_adict )
     if r['return']>0: return r
@@ -87,7 +87,7 @@ def store_experiment(i):
 
     r = ck.access({ 'action':                   'benchmark',
                     'module_uoa':               'program',
-                    'data_uoa':                 'benchmark_helper',
+                    'data_uoa':                 'benchmark-helper',
                     'cmd_key':                  'default',
 
                     'repetitions':              1,
