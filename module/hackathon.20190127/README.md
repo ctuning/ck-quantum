@@ -9,7 +9,7 @@
 1. Install python3
 1. Install qiskit and its dependencies (reinstall marshmallow 2.15.0 on OSX to avoid being drowned in warnings)
 1. A quick test to see that qiskit simulator works
-1. Install CK
+1. [Install CK](https://github.com/ctuning/ck#installation)
 
 ## The hackathon workflow
 
