@@ -15,7 +15,9 @@ RUN apt-get install -y libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev pyth
 ENV CK_ROOT=/ck-master \
     CK_REPOS=/CK \
     CK_TOOLS=/CK-TOOLS \
-    PATH=${CK_ROOT}/bin:${PATH}
+    PATH=${CK_ROOT}/bin:${PATH} \
+    PARIS=/paris \
+    LANG=C.UTF-8
 
 RUN mkdir -p ${CK_ROOT} ${CK_REPOS} ${CK_TOOLS}
 RUN git clone https://github.com/ctuning/ck.git ${CK_ROOT}
@@ -23,6 +25,10 @@ RUN cd ${CK_ROOT} && python setup.py install && python -c "import ck.kernel as c
 
 # Install other CK modules.
 RUN ck pull repo:ck-quantum
+
+# Dependencies of this particular Hackathon:
+RUN python3 -m pip install marshmallow==2.15.0 qiskit==0.7 sklearn
+RUN git clone https://github.com/riverlane/paris ${PARIS}
 
 # Set the CK web service defaults.
 #ENV CK_PORT=3344 \
@@ -41,4 +47,5 @@ RUN ck pull repo:ck-quantum
 #    --host=${CK_HOST} --port=${CK_PORT} \
 #    --wfe_host=${WFE_HOST} --wfe_port=${WFE_PORT}
 
-CMD bash
+WORKDIR ${PARIS}
+CMD [ "/bin/bash" ]
