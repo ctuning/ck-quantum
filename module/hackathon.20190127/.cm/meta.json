@@ -21,7 +21,7 @@
 
         "dimensions": [
             {"key":"problem_index",         "name":"Problem index",                     "view_key":"problem_index"},
-            {"key":"timestamp_epoch_secs",  "name":"Timestamp (seconds since epoch)",   "view_key":"timestamp_epoch_secs"},
+            {"key":"seconds_since_start",   "name":"Seconds since start",               "view_key":"seconds_since_start"},
             {"key":"team",                  "name":"Team name",                         "view_key":"team"},
             {"key":"training_vectors_limit","name":"Training vectors limit",            "view_key":"training_vectors_limit"},
             {"key":"training_time",         "name":"Training time",                     "view_key":"training_time"},

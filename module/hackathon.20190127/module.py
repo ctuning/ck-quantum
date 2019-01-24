@@ -153,6 +153,8 @@ def get_raw_data(i):
     df.sort_values(['problem_name', 'test_accuracy', 'timestamp_epoch_secs'], ascending=[True, False, True], inplace=True)
     df['rank'] = df.groupby('problem_name').cumcount()+1
 
+    df['seconds_since_start'] = df['timestamp_epoch_secs']-df['timestamp_epoch_secs'].min()
+
 #    from IPython.display import display
     pd.options.display.max_columns = len(df.columns)
     pd.options.display.max_rows = len(df.index)
@@ -187,6 +189,7 @@ def get_raw_data(i):
         'team',
         'timestamp_epoch_secs',
         'timestamp_utc_human',
+        'seconds_since_start',
 
         'success?',
     ]
