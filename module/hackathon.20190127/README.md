@@ -6,7 +6,7 @@
 
 ## Getting started (ideally done BEFORE the day of the Hackathon to save the precious competition time - feedback welcome)
 
-1. Install Python 3.6
+### Install Python 3.6
 
 On Linux:
 ```
@@ -24,12 +24,13 @@ $ brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/f2a764ef
 $ export PATH=/usr/local/opt/python/bin:$PATH   # we suggest to put this into your .bashrc config file to avoid repeating in every terminal window
 ```
 
-1. Install qiskit and its dependencies (reinstall marshmallow 2.15.0 on OSX to avoid being drowned in warnings)
+### Install qiskit and its dependencies (reinstall marshmallow 2.15.0 on OSX to avoid being drowned in warnings)
 ```
 $ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 --user
 ```
 
-1. [Install CK](https://github.com/ctuning/ck#installation)
+### [Install CK](https://github.com/ctuning/ck#installation)
+
 
 ## The hackathon workflow
 
