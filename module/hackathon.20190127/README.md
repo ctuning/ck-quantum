@@ -29,8 +29,12 @@ $ export PATH=/usr/local/opt/python/bin:$PATH   # we suggest to put this into yo
 $ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 --user
 ```
 
-### [Install CK](https://github.com/ctuning/ck#installation)
-
+### Install [CK](https://github.com/ctuning/ck#installation)
+```
+$ git clone http://github.com/ctuning/ck
+$ export PATH=$PWD/ck/bin:$PATH
+$ export PYTHONPATH=$PWD/ck:$PYTHONPATH
+```
 
 ## The hackathon workflow
 
