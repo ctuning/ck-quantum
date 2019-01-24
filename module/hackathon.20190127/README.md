@@ -138,19 +138,7 @@ Number of qubits: 6
 
 In order to solve this problem you will need to invert the circuit we are giving explicitly:
 
-                                                      ┌───────┐┌───┐
-qr_0: |0>─────────────────────────────────────────────┤ Ry(0) ├┤ H ├
-                                             ┌───────┐└───────┘└─┬─┘
-qr_1: |0>────────────────────────────────────┤ Rx(0) ├───────────┼──
-                                    ┌───────┐└───────┘           │
-qr_2: |0>───────────────────────────┤ Rx(0) ├────────────────────┼──
-                           ┌───────┐└───────┘                    │
-qr_3: |0>──────────────────┤ Rz(0) ├─────────────────────────────┼──
-                  ┌───────┐└───────┘                             │
-qr_4: |0>─────────┤ Rx(0) ├──────────────────────────────────────┼──
-         ┌───────┐└───────┘                                      │
-qr_5: |0>┤ Rz(0) ├───────────────────────────────────────────────■──
-         └───────┘
+![problem 5 circuit](https://i.ibb.co/DDLJcF8/Screen-Shot-2019-01-24-at-18-00-17.png)
 
 You need to optimise the rotation parameters. The angles are given above as 0, but it can be anything from 0 to 2pi.
 You can try and use `continuous_solver.py` but it will not be very efficient. You should make your own function.
