@@ -24,7 +24,7 @@ is related to this, and can be found in the
 [example_solutions](https://github.com/riverlane/paris/tree/master/example_solutions) directory.
 
 Next you will be free to attempt the discrete (D#) and continuous (C#) problem sets. We recommend starting with the
-`discrete_solver` and `continuous_solver` functions, repsectively.
+`discrete_solver` and `continuous_solver` functions, respectively.
 
 In order to test your solutions, use `evaluate.py`. A example use is `python3 evaluate.py --fun discrete_solver --stats
 --problem discrete_problem1 -n 4`. This runs your function `discrete_solver` on discrete problem 1, using 4 vectors for the training set.
