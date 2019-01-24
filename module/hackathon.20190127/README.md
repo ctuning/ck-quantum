@@ -6,9 +6,29 @@
 
 ## Getting started (ideally done BEFORE the day of the Hackathon to save the precious competition time - feedback welcome)
 
-1. Install python3
+1. Install Python 3.6
+
+On Linux:
+```
+$ sudo apt-get install python3 python3-pip
+```
+
+On a Mac:
+
+[Install *brew* if it is missing](https://brew.sh)
+
+```
+$ brew update
+$ brew unlink python
+$ brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/f2a764ef944b1080be64bd88dca9a1d80130c558/Formula/python.rb
+$ export PATH=/usr/local/opt/python/bin:$PATH   # we suggest to put this into your .bashrc config file to avoid repeating in every terminal window
+```
+
 1. Install qiskit and its dependencies (reinstall marshmallow 2.15.0 on OSX to avoid being drowned in warnings)
-1. A quick test to see that qiskit simulator works
+```
+$ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 --user
+```
+
 1. [Install CK](https://github.com/ctuning/ck#installation)
 
 ## The hackathon workflow
