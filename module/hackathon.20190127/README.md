@@ -2,13 +2,12 @@
 
 * [Meetup](https://www.meetup.com/Paris-Quantum-Computing-Technologies/events/256367871) (**upcoming!**)
 * Slides (link to Riverlane's slides) - Dropbox shared for reading?
-* [Task Repository](https://github.com/riverlane/paris)
 
 ## Getting started (ideally done BEFORE the day of the Hackathon to save the precious competition time - feedback welcome)
 
-### Install Python 3.6
+### Install Python 3.6 if it's missing
 
-On Linux:
+On Ubuntu:
 ```
 $ sudo apt-get install python3 python3-pip
 ```
@@ -29,11 +28,14 @@ $ export PATH=/usr/local/opt/python/bin:$PATH   # we suggest to put this into yo
 $ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 --user
 ```
 
-### Install [CK](https://github.com/ctuning/ck#installation)
+### Install [Collective Knowledge](http://cknowledge.org)
+
+Follow [these instructions](https://github.com/ctuning/ck#installation)
+
+### Clone our Task repository
+
 ```
-$ git clone http://github.com/ctuning/ck
-$ export PATH=$PWD/ck/bin:$PATH
-$ export PYTHONPATH=$PWD/ck:$PYTHONPATH
+$ git clone https://github.com/riverlane/paris
 ```
 
 ## The hackathon workflow
