@@ -14,7 +14,8 @@ $ sudo apt-get install python3 python3-pip
 
 On a Mac:
 
-Install [brew](https://brew.sh) if it is missing
+Install [brew](https://brew.sh) if it is missing.
+Then use **brew** to install Python 3.6:
 
 ```
 $ brew update
