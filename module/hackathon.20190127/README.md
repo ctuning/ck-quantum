@@ -29,9 +29,13 @@ $ export PATH=/usr/local/opt/python/bin:$PATH   # we suggest to put this into yo
 $ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 sklearn --user
 ```
 
-### Install [Collective Knowledge](http://cknowledge.org) framework
+### Install [Collective Knowledge](http://cknowledge.org) framework and the Quantum CK repository for it
 
-Follow [these instructions](https://github.com/ctuning/ck#installation)
+1. Follow [these instructions](https://github.com/ctuning/ck#installation)
+2. Pull the ck-quantum repository and its depenencies:
+```
+$ ck pull repo:ck-quantum
+```
 
 ### Clone Riverlane's task repository
 ```
