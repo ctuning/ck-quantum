@@ -18,9 +18,9 @@ import time
 import pandas as pd
 import numpy as np
 
-default_repo_uoa = ''
+#default_repo_uoa = ''
 #default_repo_uoa = 'local'
-#default_repo_uoa = 'ck-quantum-hackathon-20190127'
+default_repo_uoa = 'ck-quantum-hackathon-20190127'
 
 
 ##############################################################################
