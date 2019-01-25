@@ -2,13 +2,13 @@ FROM ubuntu:18.04
 MAINTAINER Leo Gordon <leo@dividiti.com>
 MAINTAINER Anton Lokhmotov <anton@dividiti.com>
 
-# Install standard packages.
-RUN apt-get update && apt-get install -y \
-    python3 python3-pip \
-    git zip bzip2 sudo wget daemonize
-
-# Install extra deps for imaging
-RUN apt-get install -y libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev python-pillow build-essential
+## Install all packages and immediately clean up to make the image smaller
+#
+RUN apt-get update -y \
+    && apt-get install -y python3 python3-pip git zip bzip2 sudo wget daemonize \
+    libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev python-pillow build-essential \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install the core Collective Knowledge (CK) module.
 ENV CK_ROOT=/ck-master \
@@ -43,11 +43,6 @@ RUN git clone https://github.com/riverlane/paris ${PARIS}
 # docker run -it --publish 3355:3344 hackathon.20190127
 
 
-## This is how to run the dashboard visualization server (inside the container):
-#
-# ck display dashboard --scenario=hackathon.20190127 --host=0.0.0.0 --wfe_host=localhost --wfe_port=3355
-
-
 ## This is where to point your browser to connect to the dashboard visualization server (host machine) :
 #
 # http://localhost:3355/?template=dashboard&scenario=hackathon.20190127
@@ -57,4 +52,7 @@ RUN git clone https://github.com/riverlane/paris ${PARIS}
 
 WORKDIR ${PARIS}
 
+## This command spawns the server in background (daemon) mode
+## and also brings up an interactive shell in the same container
+#
 CMD daemonize -o ${HOME}/ck_server.out -e ${HOME}/ck_server.err /usr/local/bin/ck display dashboard --scenario=hackathon.20190127 --host=0.0.0.0 --wfe_host=localhost --wfe_port=3355 && /bin/bash
