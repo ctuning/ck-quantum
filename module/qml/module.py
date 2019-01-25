@@ -191,6 +191,41 @@ def list_experiments(i):
     return {'return':0, 'lst': list_of_experiments, 'repo_to_names_list': repo_to_names_list}
 
 
+def pick_a_filename(i):
+    """
+    Input:  {
+                (directory)         - the directory name from which to pick a filename (defaults to '.' - current directory)
+                (file_suffix)       - the file type (defaults to '' - none)
+            }
+
+    Output: {
+                return              - return code =  0, if successful
+                                                  >  0, if error
+                (error)             - error text if return > 0
+            }
+    """
+
+    directory   = i.get('directory', '.')
+    file_suffix = i.get('file_suffix', '')
+
+
+    filenames = [f for f in os.listdir(directory) if os.path.isfile(os.path.join(directory, f)) and f.endswith(file_suffix)]
+
+    select_adict = {'action': 'select_string',
+                    'module_uoa': 'misc',
+                    'options': filenames,
+                    'question': 'Please select a filename',
+    }
+    r=ck.access( select_adict )
+    if r['return']>0:
+        return r
+    else:
+        filename = r['selected_value']
+        filepath = os.path.join(directory, filename)
+
+    return {'return':0, 'filename': filename, 'filepath': filepath}
+
+
 def pick_an_experiment(i):
     """
     Input:  {

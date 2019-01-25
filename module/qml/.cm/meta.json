@@ -2,10 +2,13 @@
   "actions": {
     "list_experiments": {
       "desc": "Returns a list of all VQE-relevant CK experiment entries"
-    }, 
+    },
+    "pick_a_filename": {
+      "desc": "Select a filename from the given directory (interactive helper function)"
+    },
     "pick_an_experiment": {
       "desc": "Select an experiment from the list (interactive helper function)"
-    }, 
+    },
     "store_experiment": {
       "desc": "Store the JSON output in a CK experiment entry for further analysis and upload"
     }, 
