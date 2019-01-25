@@ -9,6 +9,7 @@
 1. [Problems](#problems)
     1. [Problem 0](#problem0)
     1. [Problem 1](#problem1)
+1. [Sharing solutions](#sharing_solutions)
 
 <a name="getting_started"></a>
 ## Getting started
@@ -89,10 +90,9 @@ single qubit a quantum circuit that will transform its state to one that will
 retrieve the correct labels when measured.
 
 You can look at `manual_solver.py` in the
-`[example_solutions](https://github.com/riverlane/paris/tree/master/example_solutions)`
-directory, and try to come up with a circuit that does this. (**Hint:**
-Applying a [Hadamard
-gate](https://en.wikipedia.org/wiki/Quantum_logic_gate#Hadamard_(H)_gate) to
+[`example_solutions`](https://github.com/riverlane/paris/tree/master/example_solutions)
+directory, and try to come up with a circuit that does this.
+(**Hint:** Applying a [Hadamard gate](https://en.wikipedia.org/wiki/Quantum_logic_gate#Hadamard_(H)_gate) to
 each state should do this.)
 
 To run the solver, type the command:
@@ -183,51 +183,53 @@ To run this solver type the command: To run this solver type the command: `pytho
 --stats --problem continuous_problem5`, substituting `<SOLVER_FUNCTION>` for your own.
 
 
-## Using CK (Collective Knowledge framework) for viewing and sharing the solutions
+<a name="sharing_solutions"></a>
+## Using Collective Knowledge (CK) for viewing and sharing solutions
 
-The main type of object that CK works with is called a "CK entry".
-A "CK entry" is a directory with meta-data, optional data and optional code.
+The main type of objects that CK works with is called a "CK entry".
+A "CK entry" is a directory with metadata, optional data and optional code.
 
-You will use CK tools to:
-1. convert your solutions into CK experiment entries
-1. look at your own entries using "CK Dashboard" in local mode
-1. upload your CK experiment entries to the shared server and
-1. view everybody's results using a shared CK dashboard on the server.
+You will use CK to:
+1. Convert your solutions into CK experiment entries.
+1. View your own experiment entries using "the CK dashboard" in the local mode.
+1. Upload your CK experiment entries to the [cKnowledge.org](http://cKnowledge.org) server.
+1. View everyone's solutions on the common CK dashboard on the server.
 
 ### Storing an experiment entry locally
 
-Each run of evaluate.py leaves a .JSON output file in the current directory.
-In order to be counted as a solution, viewed in context of others and uploaded
-it will have to be first "stored" as a CK entry:
-
+Each run of `evaluate.py` creates a `.json` output file in the current directory.
+In order to be counted as a solution, it will have to be first "stored" as a CK entry:
 ```
 $ ck store_experiment qml --json_file=<json_file_name> [--team=<schroedinger-cat-herders>]
 ```
 
-A CK experiment entry is stored together with the team name.
-You can either supply it from the command line or enter it interactively at a prompt.
+An experiment entry is stored together with the team name.
+You can either supply the team name from the command line using the `--team` flag or enter it interactively when prompted.
 
-### Viewing the locally stored experiments
+### Viewing your solutions stored locally
 
-To see the local experimental entries on a diagram:
+To view your local experiment entries on a dashboard:
 ```
 $ ck display dashboard --scenario=hackathon.20190127
 ```
-This command will open a browser page and will turn itself into a server to that page.
+This command will open a browser page and turn itself into a server to that page.
 You can leave this server command running in its own terminal and open a new one.
-Or you can kill it when the page loads and reclaim the terminal - your choice.
+Or you can kill it when the page loads and reclaim the terminal - it's up to you.
 
-### Uploading the results to the common shared server
+### Uploading your solutions to the server
 
 In order for your solution to count in the competition, you will have to upload
 your best results to the server:
 ```
 $ ck upload qml [ <experiment entries> ]
 ```
-If you don't specify the entries to upload, this command will prompt you to choose one from a list.
-Please note that your competition points will depend on who uploads their solution to the server faster
-(the uploading timestamp counts, not the running timestamp). So upload as soon as you are ready.
 
-### Viewing the remotely shared experiments
+If you do not specify the entries to upload, this command will prompt you to
+choose one from a list.  Please note that your competition points will depend
+on who uploads their solution to the server faster.  (It is the time on the
+server during the upload that counts, not the local time during the run on your
+machine.) So please upload as soon as you are ready.
 
-Visit the [Shared Dashboard page](http://cknowledge.org/dashboard/hackathon.20190127)
+### Viewing all the shared solutions on the server
+
+Visit the [common dashboard dashboard](http://cknowledge.org/dashboard/hackathon.20190127).
