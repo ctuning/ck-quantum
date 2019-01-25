@@ -67,7 +67,8 @@ labelled by a parity (-1 or 1).  For each problem, you are asked to compose a
 quantum circuit which, when applied to each state vector in a test set, can
 predict the correct parity label as accurately as possible.
 
-In the first session of the day, we will prepare your computers and walk through [Problem 0](#problem0).
+In the first session of the day, we will help you set up your computers and walk through solving [Problem 0](#problem0).
+We will also show you how to [share your solutions](#sharing_solutions) by using [Collective Knowledge](http://cknowledge.org).
 Next, you will be free to attempt the remaining Problems 1-5 on your own. Each problem is outlined below.
 
 To test your solutions, use `evaluate.py` e.g. as follows:
