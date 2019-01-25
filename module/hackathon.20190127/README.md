@@ -4,7 +4,9 @@
 * [ Presentation slides](https://docs.google.com/presentation/d/1DGyu1EGJn8d3xS2VcgQlvthQGF7ytx9VoGV5xUmGlyk/edit?usp=sharing)
 
 
-1. [Getting started](#getting_started)
+1. Getting started
+    1. [Option A : Dockerless installation](#getting_started)
+    1. [Option B : using a Docker container](#getting_started_docker)
 1. [Workflow overview](#workflow_overview)
 1. [Problems](#problems)
     1. [Problem 0](#problem0)
@@ -16,7 +18,7 @@
 1. [Sharing solutions](#sharing_solutions)
 
 <a name="getting_started"></a>
-## Getting started
+## Getting started - option A (directly installing software on your computer)
 
 ### Installing Python (>=3.6)
 
@@ -69,6 +71,20 @@ Feel free to modify it to study the effects of applying quantum circuits to init
 ```
 $ ck pull repo:ck-quantum
 ```
+
+<a name="getting_started_docker"></a>
+## Getting started - option B (using a Docker container tailor-made for this hackathon)
+
+### Build the Docker image:
+```
+$ docker build --tag hackathon.20190127 https://raw.githubusercontent.com/ctuning/ck-quantum/master/docker/hackathon.20190127/Dockerfile
+```
+
+### Run a Docker container from this image:
+```
+$ docker run -it --publish 3355:3344 hackathon.20190127
+```
+
 
 <a name="workflow_overview"></a>
 ## Workflow overview
@@ -249,15 +265,30 @@ $ ck store_experiment qml --json_file=<json_file_name> [--team=<schroedinger-cat
 An experiment entry is stored together with the team name.
 You can either supply the team name from the command line using the `--team` option or enter it interactively when prompted.
 
-### Viewing your solutions stored locally
+### Viewing your solutions stored locally (WITHOUT DOCKER)
 
-To view your local experiment entries on a dashboard:
+To view your local experiment entries on a local dashboard:
 ```
 $ ck display dashboard --scenario=hackathon.20190127
 ```
 This command will open a browser page and turn itself into a server to that page.
 You can leave this server command running in its own terminal and open a new one.
 Or you can kill it when the page loads and reclaim the terminal - it's up to you.
+
+### Viewing your solutions stored locally (WITH DOCKER)
+
+To view your local experiment entries on a local dashboard,
+first run the dashboard server **in your Docker container**:
+```
+ck display dashboard --scenario=hackathon.20190127 --host=0.0.0.0 --wfe_host=localhost --wfe_port=3355 &
+```
+This command will run until you Control-C it.
+
+Now, **in your local browser** go to the following address:
+```
+http://localhost:3355/?template=dashboard&scenario=hackathon.20190127
+```
+After some loading time you should see your local experiments displayed as data points.
 
 ### Uploading your solutions to the server
 
