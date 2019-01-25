@@ -49,8 +49,17 @@ def store_experiment(i):
 
     json_input_filepath = i.get('json_file')
     if not json_input_filepath:
-        r = ck.inp({'text': "Please provide the path to the experimental JSON output to be stored: "})
-        json_input_filepath = r['string']
+        pick_filepath_adict  = {    'action':       'pick_a_filename',
+                                    'module_uoa':   work['self_module_uoa'],
+                                    'directory':    '.',
+                                    'file_suffix':  '.json',
+        }
+        r=ck.access( pick_filepath_adict )
+        if r['return']==0:
+            json_input_filepath = r['filepath']
+        else:
+            r = ck.inp({'text': "Please provide the path to the experimental JSON output to be stored: "})
+            json_input_filepath = r['string']
 
     team_name           = i.get('team')
     if not team_name:

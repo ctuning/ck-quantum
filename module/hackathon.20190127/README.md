@@ -261,10 +261,11 @@ You will use CK to:
 Each run of `evaluate.py` creates a `.json` output file in the current directory.
 In order to be counted as a solution, it will have to be first "stored" as a CK entry:
 ```
-$ ck store_experiment qml --json_file=<json_file_name> [--team=<schroedinger-cat-herders>]
+$ ck store_experiment qml [--json_file=<json_file_name>] [--team=<schroedinger-cat-herders>]
 ```
 
 An experiment entry is stored together with the team name.
+If you do not specify the JSON file to upload, this command will prompt you to choose one from the current directory.
 You can either supply the team name from the command line using the `--team` option or enter it interactively when prompted.
 
 ### Viewing your solutions stored locally (WITHOUT DOCKER)
