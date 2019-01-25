@@ -34,9 +34,9 @@ $ export PATH=/usr/local/opt/python/bin:$PATH # we suggest to put this into your
 Use [the official downloads and instructions](https://www.python.org/downloads/windows).
 
 
-### Installing Qiskit and its dependencies to userspace
+### Installing Qiskit and other dependencies to userspace
 ```
-$ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 sklearn --user
+$ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 pandas==0.23.4 sklearn --user
 ```
 
 ### Cloning the hackathon task repository
@@ -232,4 +232,4 @@ machine.) So please upload as soon as you are ready.
 
 ### Viewing all the shared solutions on the server
 
-Visit the [common dashboard dashboard](http://cknowledge.org/dashboard/hackathon.20190127).
+Visit the [common dashboard](http://cknowledge.org/dashboard/hackathon.20190127).
