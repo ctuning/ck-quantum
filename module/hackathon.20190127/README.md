@@ -44,26 +44,30 @@ $ git clone https://github.com/riverlane/paris
 
 ## The hackathon workflow
 
-### Running evaluate.py (insert multiple examples)
+The task repository contains a number of files specifying each problem to solve.
+Each of these contains a set of training data - quantum state vectors labelled by a parity (-1 or 1).
+For each problem, it is your job to compose a quantum circuit which, when applied to each state vector in a test set,
+can accurately obtain the correct parity label.
 
-The task repository contains a number of files specifying each problem to solve. Each of these contains a set of
-training data - quantum state vectors labelled by a parity (-1 or 1). It is your job to compose a quantum circuit which, when
-applied to each state vector in a test set, can accurately obtain the correct parity label.
-
-In the first session of the day we will prepare your computers and walk through problem D0. The function `manual_solver`
+In the first session of the day we will prepare your computers and walk through problem 0. The function `manual_solver`
 is related to this, and can be found in the
 [example_solutions](https://github.com/riverlane/paris/tree/master/example_solutions) directory.
 
-Next you will be free to attempt the discrete (D#) and continuous (C#) problem sets. We recommend starting with the
-`discrete_solver` and `continuous_solver` functions, respectively.
+Next you will be free to attempt the remaining problem sets. Below each problem is outlined.
 
 In order to test your solutions, use `evaluate.py`. A usage example is:
 ```
 python3 evaluate.py --fun discrete_solver --stats --problem discrete_problem1 -n 4
 ```
-This runs your function `discrete_solver` on discrete problem 1, using 4 vectors for the training set.
+This runs your function `discrete_solver` on `discrete problem 1`, using 4 vectors for the training set.
+Specific details are outlined below for each problem.
 
-If you use the non-quantum solutions like `classical_svm` you may want to use more training examples. The parameter -n controls this.
+If you use the non-quantum solutions like `classical_svm` you may want to use more training examples.
+The parameter -n controls this.
+
+You will need to use the Qiskit simulator in order to build quantum circuits. Documentation and examples can be found
+here:
+[https://qiskit.org/documentation/summary_of_quantum_operations.html](https://qiskit.org/documentation/summary_of_quantum_operations.html)
 
 ### Problem 0
 
@@ -119,7 +123,7 @@ You will need to restrict the search to only circuits with 5 gates that have thi
 You can modify `discrete_solver.py` to begin, but you will notice that this will not be optimal, so you should create
 your own function.
 To run this solver type the command: `python3 evaluate.py --fun <SOLVER_FUNCTION> --stats --problem discrete_problem3`,
-substituting <SOLVER_FUNCTION> for your own.
+substituting `<SOLVER_FUNCTION>` for your own.
 
 ### Problem 4
 
@@ -144,7 +148,7 @@ You need to optimise the rotation parameters. The angles are given above as 0, b
 You can try and use `continuous_solver.py` but it will not be very efficient. You should make your own function.
 
 To run this solver type the command: To run this solver type the command: `python3 evaluate.py --fun <SOLVER_FUNCTION>
---stats --problem continuous_problem5`, substituting <SOLVER_FUNCTION> for your own.
+--stats --problem continuous_problem5`, substituting `<SOLVER_FUNCTION>` for your own.
 
 
 ## Using CK (Collective Knowledge framework) for viewing and sharing the solutions
