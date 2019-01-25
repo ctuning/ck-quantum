@@ -1,7 +1,7 @@
 # 3rd Quantum Collective Knowledge Hackathon, Paris, 27 January 2019
 
 * [Meetup](https://www.meetup.com/Paris-Quantum-Computing-Technologies/events/256367871) (**upcoming!**)
-* Slides (link to Riverlane's slides) - Dropbox shared for reading?
+* [ Presentation slides](https://docs.google.com/presentation/d/1DGyu1EGJn8d3xS2VcgQlvthQGF7ytx9VoGV5xUmGlyk/edit?usp=sharing)
 
 
 1. [Getting started](#getting_started)
@@ -95,6 +95,9 @@ The parameter `-n` controls this.
 
 To build quantum circuits, we will use the [Qiskit](https://qiskit.org/) simulator.
 Further documentation and examples can be found [here](https://qiskit.org/documentation/summary_of_quantum_operations.html).
+
+For a good overview of quantum circuits and logic gates, check this
+[wikipedia page](https://en.wikipedia.org/wiki/Quantum_logic_gate).
 
 <a name="problems"></a>
 ## Problems
