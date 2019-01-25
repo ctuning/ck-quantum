@@ -79,7 +79,7 @@ state to one which retrieves the correct labels when measured.
 Applying a Hadamard gate to each state should do this.
 
 You can look at `manual_solver.py` and try to come up with a circuit which does this.
-To run the solver type the command: `python3 evaluate.py --fun manual_solver --stats --problem discrete_problem0`
+To run the solver type the command: `python3 evaluate.py --fun manual_solver --problem discrete_problem0`
 
 ### Problem 1
 
@@ -90,10 +90,10 @@ The circuit consists of only 2 gates, one gate for each qubit.
 We promise the gates are combinations of X and H - it's your job to work out which ones.
 
 You can look at `manual_solver.py` and try to come up with a circuit which does this.
-To run the solver type the command: `python3 evaluate.py --fun manual_solver --stats --problem discrete_problem1`
+To run the solver type the command: `python3 evaluate.py --fun manual_solver --problem discrete_problem1`
 
 Alternatively you could look at `discrete_solver.py`, which can help automate the decision.
-To run this solver type the command: `python3 evaluate.py --fun discrete_solver --stats --problem discrete_problem1`
+To run this solver type the command: `python3 evaluate.py --fun discrete_solver --problem discrete_problem1`
 
 ### Problem 2
 
@@ -105,10 +105,10 @@ CNOT gates are only applied to neighbouring qubits, e.g. qubit_0 -> qubit_1, qub
 Other gate combinations you can use: H, X, Y.
 
 You can look at `manual_solver.py` and try to come up with a circuit which does this.
-To run the solver type the command: `python3 evaluate.py --fun manual_solver --stats --problem discrete_problem2`
+To run the solver type the command: `python3 evaluate.py --fun manual_solver --problem discrete_problem2`
 
-It will probably be too annoying and difficult to manually try all combinations. Try modifying `discrete_solver.py`.
-To run this solver type the command: `python3 evaluate.py --fun discrete_solver --stats --problem discrete_problem2`
+It will probably be too annoying and difficult to manually try all combinations. Try modifying `discrete_solver.py` to include the extra gates needed.
+To run this solver type the command: `python3 evaluate.py --fun discrete_solver --problem discrete_problem2`
 
 ### Problem 3
 
@@ -120,21 +120,27 @@ neighbouring qubits.
 
 You will need to restrict the search to only circuits with 5 gates that have this structure.
 
-You can modify `discrete_solver.py` to begin, but you will notice that this will not be optimal, so you should create
-your own function.
-To run this solver type the command: `python3 evaluate.py --fun <SOLVER_FUNCTION> --stats --problem discrete_problem3`,
+You can modify `discrete_solver.py` to begin, but you will notice that the number of combinations is extremely large and so the solver will take a very long time to run. You should write your own solver which exploits the structure given above to reduce the number of circuit possibilities.
+
+In order to do so, you will need to know how we have produced the training and test data. We began with a quantum state on which we made a measurement. For the initial states we have chosen, this measurement is always equal to +/-1, and so this gives us a label. We then applied some quantum circuit to the original state to give the quantum state that we are giving you as data.
+
+Therefore, the circuits you have been finding so far are 'undoing' the effect of the circuit we applied in order to get back to the original state. You can now use the information above about the circuit we applied to construct the inverse circuit. You will find it useful to know that all of H, X, Y and CNOT are self-inverse - the effect of each can be 'undone' by applying the same gate again. You will need to think carefully about how to invert a circuit which consists of multiple gates - in which order should the inverse gates be applied? 
+
+To run this solver type the command: `python3 evaluate.py --fun <SOLVER_FUNCTION> --problem discrete_problem3`,
 substituting `<SOLVER_FUNCTION>` for your own.
 
 ### Problem 4
 
 Number of qubits: 4
 
+In this problem, we have used gates that we have not considered before – rotation gates. Each gate is parameterised by an angle, which can have any value from 0 to 2 pi. These gates perform rotations of the qubit state in the Bloch sphere.
+
 This problem is based on a "state preperation circuit" for VQE - used in quantum chemistry.
 The circuit is called the Hardware Efficent Ansatz and you can see it in `continuous_solver.py`.
-You should use the `continuous_solver.py` for this and larger continuous problems.
+You should use the `continuous_solver.py` for this and larger continuous problems as we are now trying to find a circuit which is a function of continuously varying parameters and not just discrete combinations of fixed gates.
 You can try to optimise some parameters, i.e. circuit depth and minimize parameters.
 
-To run this solver type the command: `python3 evaluate.py --fun continuous_solver --stats --problem continuous_problem4`
+To run this solver type the command: `python3 evaluate.py --fun continuous_solver --problem continuous_problem4`
 
 ### Problem 5
 
@@ -145,7 +151,7 @@ In order to solve this problem you will need to invert the circuit we are giving
 ![problem 5 circuit](https://i.ibb.co/DDLJcF8/Screen-Shot-2019-01-24-at-18-00-17.png)
 
 You need to optimise the rotation parameters. The angles are given above as 0, but it can be anything from 0 to 2pi.
-You can try and use `continuous_solver.py` but it will not be very efficient. You should make your own function.
+You can try and use `continuous_solver.py` but it will not be very efficient. You should make your own function that exploits the structure shown above.
 
 To run this solver type the command: To run this solver type the command: `python3 evaluate.py --fun <SOLVER_FUNCTION>
 --stats --problem continuous_problem5`, substituting `<SOLVER_FUNCTION>` for your own.
