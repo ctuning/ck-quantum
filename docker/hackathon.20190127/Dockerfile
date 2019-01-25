@@ -4,9 +4,8 @@ MAINTAINER Anton Lokhmotov <anton@dividiti.com>
 
 # Install standard packages.
 RUN apt-get update && apt-get install -y \
-    python3 \
-    python3-pip \
-    git zip bzip2 sudo wget
+    python3 python3-pip \
+    git zip bzip2 sudo wget daemonize
 
 # Install extra deps for imaging
 RUN apt-get install -y libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev python-pillow build-essential
@@ -57,4 +56,5 @@ RUN git clone https://github.com/riverlane/paris ${PARIS}
 
 
 WORKDIR ${PARIS}
-CMD [ "/bin/bash" ]
+
+CMD daemonize -o ${HOME}/ck_server.out -e ${HOME}/ck_server.err /usr/local/bin/ck display dashboard --scenario=hackathon.20190127 --host=0.0.0.0 --wfe_host=localhost --wfe_port=3355 && /bin/bash

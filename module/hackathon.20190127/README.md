@@ -279,17 +279,10 @@ Or you can kill it when the page loads and reclaim the terminal - it's up to you
 
 ### Viewing your solutions stored locally (WITH DOCKER)
 
-To view your local experiment entries on a local dashboard,
-first run the dashboard server **in your Docker container**:
-```
-ck display dashboard --scenario=hackathon.20190127 --host=0.0.0.0 --wfe_host=localhost --wfe_port=3355
-```
-Leave this command running in the container, then follow
+To view your local experiment entries on a local dashboard, just follow
 [the link to the local dashboard](http://localhost:3355/?template=dashboard&scenario=hackathon.20190127) .
 
-After some loading time you should see your local experiments displayed as data points **in your browser**.
-
-You can then ^C the dashboard server **in your container** and continue using this container.
+After some loading time you should see your local experiments displayed as data points in your browser.
 
 ### Uploading your solutions to the server
 
