@@ -39,10 +39,16 @@ Use [the official downloads and instructions](https://www.python.org/downloads/w
 $ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 pandas==0.23.4 sklearn --user
 ```
 
-### Cloning the hackathon task repository
+### Obtaining the hackathon repository
+
+Choose a directory where you would like to place the hackathon repository, change to that directory and run:
 ```
 $ git clone https://github.com/riverlane/paris
 ```
+In what follows, we refer to files in this repository (e.g. `evaluate.py`), so make sure you stay in that directory.
+
+Alternatively, you can download this repository as a [zip](https://github.com/riverlane/paris/archive/master.zip) file. 
+We suggest sticking to using `Git`, however, as we may need to provide updates during the hackathon (which can be obtained via `git pull`).
 
 ### Installing the [Collective Knowledge](http://cknowledge.org) framework (CK) with the Quantum CK repository
 
