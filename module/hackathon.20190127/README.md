@@ -1,47 +1,54 @@
-# Paris Quantum Computing Hackathon, 27 January 2019
+# 3rd Quantum Collective Knowledge Hackathon, Paris, 27 January 2019
 
 * [Meetup](https://www.meetup.com/Paris-Quantum-Computing-Technologies/events/256367871) (**upcoming!**)
 * Slides (link to Riverlane's slides) - Dropbox shared for reading?
 
-## Getting started (ideally done BEFORE the day of the Hackathon to save the precious competition time - feedback welcome)
 
-### Install Python 3.6 if it's missing
+1. [Getting started](#getting_started)
+1. [Hackathon workflow](#hackathon_workflow)
 
-On Ubuntu:
+<a name="getting_started"></a>
+## Getting started
+
+### Install Python (>=3.6)
+
+#### Ubuntu/Debian
 ```
 $ sudo apt-get install python3 python3-pip
 ```
 
-On a Mac:
-
-Install [brew](https://brew.sh) if it is missing.
-Then use **brew** to install Python 3.6:
-
+#### MacOS X
+First, install **[brew](https://brew.sh)** if missing. Then:
 ```
 $ brew update
 $ brew unlink python
 $ brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/f2a764ef944b1080be64bd88dca9a1d80130c558/Formula/python.rb
-$ export PATH=/usr/local/opt/python/bin:$PATH   # we suggest to put this into your .bashrc config file to avoid repeating in every terminal window
+$ export PATH=/usr/local/opt/python/bin:$PATH # we suggest to put this into your .bashrc config file to avoid repeating in every terminal window
 ```
 
-### Install qiskit and its dependencies
+#### Windows
+Use [official downloads and instructions](https://www.python.org/downloads/windows).
+
+
+### Install Qiskit and its dependencies to userspace
 ```
 $ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 sklearn --user
 ```
 
-### Install [Collective Knowledge](http://cknowledge.org) framework and the Quantum CK repository for it
-
-1. Follow [these instructions](https://github.com/ctuning/ck#installation)
-2. Pull the ck-quantum repository and its depenencies:
-```
-$ ck pull repo:ck-quantum
-```
-
-### Clone Riverlane's task repository
+### Clone the hackathon task repository
 ```
 $ git clone https://github.com/riverlane/paris
 ```
 
+### Install the [Collective Knowledge](http://cknowledge.org) framework (CK) with the Quantum CK repository
+
+1. Follow [these instructions](https://github.com/ctuning/ck#installation).
+2. Pull the `ck-quantum` repository and its dependencies:
+```
+$ ck pull repo:ck-quantum
+```
+
+<a name="hackathon_workflow"></a>
 ## The hackathon workflow
 
 The task repository contains a number of files specifying each problem to solve.
