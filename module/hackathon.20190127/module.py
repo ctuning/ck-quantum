@@ -98,7 +98,7 @@ def get_raw_data(i):
                 if r['return']>0: return r
 
                 if i.get('out')=='con':
-                    print("Loading  {}:experiment:{}  point_id={} (recorded {})".format(repo_uoa, data_uoa, point_id, entry_modification_utc_human))
+                    ck.out( "Loading  {}:experiment:{}  point_id={} (recorded {})".format(repo_uoa, data_uoa, point_id, entry_modification_utc_human) )
 
                 point_data_raw = r['dict']['0001']
                 choices = point_data_raw['choices']
