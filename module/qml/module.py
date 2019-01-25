@@ -15,6 +15,7 @@ hackathon_date          = '20190127'
 
 hackathon_tag           = 'hackathon-{}'.format(hackathon_date)
 hackathon_remote_repo   = 'ck-quantum-hackathon-{}'.format(hackathon_date)
+hackathon_local_repo    = hackathon_remote_repo     # to simplify hackathon.20190127.get_raw_data()
 competition_tag         = 'quantum-ml-hackathon-3'
 
 
@@ -83,8 +84,25 @@ def store_experiment(i):
 
     shutil.copyfile(json_input_filepath, json_output_filepath)
 
-    record_cid  = 'local:experiment:{}'.format(experiment_name)
 
+    ## Making sure hackathon_local_repo exists before we start recording there:
+    #
+    load_adict = {  'action':           'load',
+                    'module_uoa':       'repo',
+                    'data_uoa':         hackathon_local_repo,
+    }
+    r=ck.access( load_adict )
+    if r['return']==16:     # No hackathon_local_repo ?  Create it then!
+        add_adict = {   'action':           'add',
+                        'module_uoa':       'repo',
+                        'data_uoa':         hackathon_local_repo,
+                        'quiet':            'yes',
+        }
+        r=ck.access( add_adict )
+        if r['return']>0: return r
+
+    ## The actual JSON data recording:
+    #
     r = ck.access({ 'action':                   'benchmark',
                     'module_uoa':               'program',
                     'data_uoa':                 'benchmark-helper',
@@ -111,11 +129,12 @@ def store_experiment(i):
                         'competition':      competition_tag,
                     },
                     'record':                   'yes',
-                    'record_repo':              'local',
+                    'record_repo':              hackathon_local_repo,
                     'record_uoa':               experiment_name,
     })
     if r['return']>0: return r
 
+    record_cid  = '{}:experiment:{}'.format(hackathon_local_repo, experiment_name)
     ck.out('The results have been recorded into {}\n'.format(record_cid))
 
     return r
@@ -175,7 +194,7 @@ def list_experiments(i):
 def pick_an_experiment(i):
     """
     Input:  {
-                (repo_uoa)          - experiment repository name (defaults to 'local', but can be overridden by '*')
+                (repo_uoa)          - experiment repository name (defaults to hackathon_local_repo, but can be overridden by '*')
                 (extra_tags)        - extra tags to filter
             }
 
@@ -186,7 +205,7 @@ def pick_an_experiment(i):
             }
     """
 
-    repo_uoa        = i.get('repo_uoa', 'local')
+    repo_uoa        = i.get('repo_uoa', hackathon_local_repo)
     extra_tags      = i.get('extra_tags')
 
     list_exp_adict  = { 'action':       'list_experiments',
@@ -223,7 +242,7 @@ def upload(i):
     Input:  {
                 (cids[])            - CIDs of entries to upload (interactive by default)
                 OR
-                (repo_uoa)          - experiment repository name (defaults to 'local', but can be overridden by '*')
+                (repo_uoa)          - experiment repository name (defaults to hackathon_local_repo, but can be overridden by '*')
                 (extra_tags)        - extra tags to filter
             }
 
@@ -237,7 +256,7 @@ def upload(i):
     cids                = i.get('cids')
 
     if len(cids)==0:
-        repo_uoa        = i.get('repo_uoa', 'local')
+        repo_uoa        = i.get('repo_uoa', hackathon_local_repo)
         extra_tags      = i.get('extra_tags')
 
         pick_exp_adict  = { 'action':       'pick_an_experiment',
