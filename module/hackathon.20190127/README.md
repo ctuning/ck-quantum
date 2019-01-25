@@ -9,6 +9,8 @@
 1. [Problems](#problems)
     1. [Problem 0](#problem0)
     1. [Problem 1](#problem1)
+    1. [Problem 2](#problem2)
+    1. [Problem 3](#problem3)
 1. [Sharing solutions](#sharing_solutions)
 
 <a name="getting_started"></a>
@@ -81,7 +83,7 @@ Next, you will be free to attempt the remaining Problems 1-5 on your own. Each p
 
 To test your solutions, use `evaluate.py` e.g. as follows:
 ```
-python3 evaluate.py --fun discrete_solver --stats --problem discrete_problem1 -n 4
+$ python3 evaluate.py --fun discrete_solver --stats --problem discrete_problem1 -n 4
 ```
 This runs your function `discrete_solver` on `discrete_problem1`, using 4 vectors for the training set.
 Specific details are outlined below for each problem.
@@ -112,7 +114,7 @@ each state should do this.)
 
 To run the solver, type the command:
 ```
-python3 evaluate.py --fun manual_solver --problem discrete_problem0
+$ python3 evaluate.py --fun manual_solver --problem discrete_problem0
 ```
 
 <a name="problem1"></a>
@@ -127,31 +129,40 @@ We promise the gates are combinations of [X](https://en.wikipedia.org/wiki/Quant
 You can look at `manual_solver.py`, and try to come up with a circuit that does this.
 To run this solver, type the command:
 ```
-python3 evaluate.py --fun manual_solver --problem discrete_problem1
+$ python3 evaluate.py --fun manual_solver --problem discrete_problem1
 ```
 
 Alternatively, you could look at `discrete_solver.py`, which can help automate the decision.
 To run this solver, type the command:
 ```
-python3 evaluate.py --fun discrete_solver --problem discrete_problem1
+$ python3 evaluate.py --fun discrete_solver --problem discrete_problem1
 ```
 
-### Problem 2
+<a name="problem2"></a>
+### Problem 2 (`discrete_problem2`)
 
 Number of qubits: 2
 
 Now there are multiple gates for each qubit. You will need to try interacting the qubits with one another using
-CNOT gates.
-CNOT gates are only applied to neighbouring qubits, e.g. qubit_0 -> qubit_1, qubit_1 -> qubit_2.
-Other gate combinations you can use: H, X, Y.
+[CNOT gates](https://en.wikipedia.org/wiki/Controlled_NOT_gate).
+CNOT gates are only applied to neighbouring qubits, e.g. `qubit_0` -> `qubit_1`, `qubit_1` -> `qubit_2`.
+You can also use H, X and Y gates.
 
 You can look at `manual_solver.py` and try to come up with a circuit which does this.
-To run the solver type the command: `python3 evaluate.py --fun manual_solver --problem discrete_problem2`
+To run the solver, type the command:
+```
+$ python3 evaluate.py --fun manual_solver --problem discrete_problem2
+```
 
-It will probably be too annoying and difficult to manually try all combinations. Try modifying `discrete_solver.py` to include the extra gates needed.
-To run this solver type the command: `python3 evaluate.py --fun discrete_solver --problem discrete_problem2`
+It will probably be too annoying and difficult to manually try all combinations.
+Try modifying `discrete_solver.py` to include the extra gates needed.
+To run this solver, type the command:
+```
+$ python3 evaluate.py --fun discrete_solver --problem discrete_problem2
+```
 
-### Problem 3
+<a name="problem3"></a>
+### Problem 3 (`discrete_problem3`)
 
 Number of qubits: 4
 
@@ -163,11 +174,14 @@ You will need to restrict the search to only circuits with 5 gates that have thi
 
 You can modify `discrete_solver.py` to begin, but you will notice that the number of combinations is extremely large and so the solver will take a very long time to run. You should write your own solver which exploits the structure given above to reduce the number of circuit possibilities.
 
-In order to do so, you will need to know how we have produced the training and test data. We began with a quantum state on which we made a measurement. For the initial states we have chosen, this measurement is always equal to +/-1, and so this gives us a label. We then applied some quantum circuit to the original state to give the quantum state that we are giving you as data.
+In order to do so, you need to know how we have produced the training and test data. We began with a quantum state on which we made a measurement. For the initial states we have chosen, this measurement is always equal to +/-1, and so this gave us a label. We then applied some quantum circuit to the original state to give the quantum state that we are giving you as data.
 
 Therefore, the circuits you have been finding so far are 'undoing' the effect of the circuit we applied in order to get back to the original state. You can now use the information above about the circuit we applied to construct the inverse circuit. You will find it useful to know that all of H, X, Y and CNOT are self-inverse - the effect of each can be 'undone' by applying the same gate again. You will need to think carefully about how to invert a circuit which consists of multiple gates - in which order should the inverse gates be applied? 
 
-To run this solver type the command: `python3 evaluate.py --fun <SOLVER_FUNCTION> --problem discrete_problem3`,
+To run this solver, type the command:
+```
+$ python3 evaluate.py --fun <SOLVER_FUNCTION> --problem discrete_problem3
+```
 substituting `<SOLVER_FUNCTION>` for your own.
 
 ### Problem 4
