@@ -7,8 +7,8 @@
 1. [Getting started](#getting_started)
 1. [Workflow overview](#workflow_overview)
 1. [Problems](#problems)
-  1. [Problem 0](#problem0)
-  1. [Problem 1](#problem1)
+    1. [Problem 0](#problem0)
+    1. [Problem 1](#problem1)
 
 <a name="getting_started"></a>
 ## Getting started
