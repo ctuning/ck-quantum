@@ -85,6 +85,8 @@ $ docker build --tag hackathon.20190127 https://raw.githubusercontent.com/ctunin
 $ docker run -it --publish 3355:3344 hackathon.20190127
 ```
 
+Please note that some functions will have to be run differently if you are using a Docker container.
+
 
 <a name="workflow_overview"></a>
 ## Workflow overview
@@ -280,15 +282,14 @@ Or you can kill it when the page loads and reclaim the terminal - it's up to you
 To view your local experiment entries on a local dashboard,
 first run the dashboard server **in your Docker container**:
 ```
-ck display dashboard --scenario=hackathon.20190127 --host=0.0.0.0 --wfe_host=localhost --wfe_port=3355 &
+ck display dashboard --scenario=hackathon.20190127 --host=0.0.0.0 --wfe_host=localhost --wfe_port=3355
 ```
-This command will run until you Control-C it.
+Leave this command running in the container, then follow
+[the link to the local dashboard](http://localhost:3355/?template=dashboard&scenario=hackathon.20190127) .
 
-Now, **in your local browser** go to the following address:
-```
-http://localhost:3355/?template=dashboard&scenario=hackathon.20190127
-```
-After some loading time you should see your local experiments displayed as data points.
+After some loading time you should see your local experiments displayed as data points **in your browser**.
+
+You can then ^C the dashboard server **in your container** and continue using this container.
 
 ### Uploading your solutions to the server
 
