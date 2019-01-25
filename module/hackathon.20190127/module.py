@@ -97,7 +97,7 @@ def get_raw_data(i):
                 r=ck.access( load_point_adict )
                 if r['return']>0: return r
 
-                print("experiment_uoa={}, point_id={} :".format(data_uoa, point_id))
+                print("Loading  {}:experiment:{}  point_id={} (recorded {})".format(repo_uoa, data_uoa, point_id, entry_modification_utc_human))
                 point_data_raw = r['dict']['0001']
                 choices = point_data_raw['choices']
                 characteristics_list = point_data_raw['characteristics_list']
