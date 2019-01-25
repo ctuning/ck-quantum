@@ -5,12 +5,15 @@
 
 
 1. [Getting started](#getting_started)
-1. [Hackathon workflow](#hackathon_workflow)
+1. [Workflow overview](#workflow_overview)
+1. [Problems](#problems)
+  1. [Problem 0](#problem0)
+  1. [Problem 1](#problem1)
 
 <a name="getting_started"></a>
 ## Getting started
 
-### Install Python (>=3.6)
+### Installing Python (>=3.6)
 
 #### Ubuntu/Debian
 ```
@@ -27,20 +30,20 @@ $ export PATH=/usr/local/opt/python/bin:$PATH # we suggest to put this into your
 ```
 
 #### Windows
-Use [official downloads and instructions](https://www.python.org/downloads/windows).
+Use [the official downloads and instructions](https://www.python.org/downloads/windows).
 
 
-### Install Qiskit and its dependencies to userspace
+### Installing Qiskit and its dependencies to userspace
 ```
 $ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 sklearn --user
 ```
 
-### Clone the hackathon task repository
+### Cloning the hackathon task repository
 ```
 $ git clone https://github.com/riverlane/paris
 ```
 
-### Install the [Collective Knowledge](http://cknowledge.org) framework (CK) with the Quantum CK repository
+### Installing the [Collective Knowledge](http://cknowledge.org) framework (CK) with the Quantum CK repository
 
 1. Follow [these instructions](https://github.com/ctuning/ck#installation).
 2. Pull the `ck-quantum` repository and its dependencies:
@@ -48,59 +51,75 @@ $ git clone https://github.com/riverlane/paris
 $ ck pull repo:ck-quantum
 ```
 
-<a name="hackathon_workflow"></a>
-## The hackathon workflow
+<a name="workflow_overview"></a>
+## Workflow overview
 
-The task repository contains a number of files specifying each problem to solve.
-Each of these contains a set of training data - quantum state vectors labelled by a parity (-1 or 1).
-For each problem, it is your job to compose a quantum circuit which, when applied to each state vector in a test set,
-can accurately obtain the correct parity label.
+The task repository contains several `*.pyz` files specifying each problem to
+solve.  Each of these contains a set of training data - quantum state vectors
+labelled by a parity (-1 or 1).  For each problem, you are asked to compose a
+quantum circuit which, when applied to each state vector in a test set, can
+predict the correct parity label as accurately as possible.
 
-In the first session of the day we will prepare your computers and walk through problem 0. The function `manual_solver`
-is related to this, and can be found in the
-[example_solutions](https://github.com/riverlane/paris/tree/master/example_solutions) directory.
+In the first session of the day, we will prepare your computers and walk through [Problem 0](#problem0).
+Next, you will be free to attempt the remaining Problems 1-5 on your own. Each problem is outlined below.
 
-Next you will be free to attempt the remaining problem sets. Below each problem is outlined.
-
-In order to test your solutions, use `evaluate.py`. A usage example is:
+To test your solutions, use `evaluate.py` e.g. as follows:
 ```
 python3 evaluate.py --fun discrete_solver --stats --problem discrete_problem1 -n 4
 ```
-This runs your function `discrete_solver` on `discrete problem 1`, using 4 vectors for the training set.
+This runs your function `discrete_solver` on `discrete_problem1`, using 4 vectors for the training set.
 Specific details are outlined below for each problem.
 
-If you use the non-quantum solutions like `classical_svm` you may want to use more training examples.
-The parameter -n controls this.
+If you use the non-quantum solutions like `classical_svm`, you may want to use more training examples.
+The parameter `-n` controls this.
 
-You will need to use the Qiskit simulator in order to build quantum circuits. Documentation and examples can be found
-here:
-[https://qiskit.org/documentation/summary_of_quantum_operations.html](https://qiskit.org/documentation/summary_of_quantum_operations.html)
+To build quantum circuits, we will use the [Qiskit](https://qiskit.org/) simulator.
+Further documentation and examples can be found [here](https://qiskit.org/documentation/summary_of_quantum_operations.html).
 
-### Problem 0
+<a name="problems"></a>
+## Problems
+
+<a name="problem0"></a>
+### Problem 0 (`discrete_problem0`)
 
 Number of qubits: 1
 
-This is a single qubit problem.
-There are 2 state vectors labelled by 1 and -1. We need to apply a quantum circuit to each qubit which transforms their
-state to one which retrieves the correct labels when measured.
-Applying a Hadamard gate to each state should do this.
+There are two state vectors labelled by `1` and `-1`. We need to apply to the
+single qubit a quantum circuit that will transform its state to one that will
+retrieve the correct labels when measured.
 
-You can look at `manual_solver.py` and try to come up with a circuit which does this.
-To run the solver type the command: `python3 evaluate.py --fun manual_solver --problem discrete_problem0`
+You can look at `manual_solver.py` in the
+`[example_solutions](https://github.com/riverlane/paris/tree/master/example_solutions)`
+directory, and try to come up with a circuit that does this. (**Hint:**
+Applying a [Hadamard
+gate](https://en.wikipedia.org/wiki/Quantum_logic_gate#Hadamard_(H)_gate) to
+each state should do this.)
 
-### Problem 1
+To run the solver, type the command:
+```
+python3 evaluate.py --fun manual_solver --problem discrete_problem0
+```
+
+<a name="problem1"></a>
+### Problem 1 (`discrete_problem1`)
 
 Number of qubits: 2
 
 Now we have two qubits!
-The circuit consists of only 2 gates, one gate for each qubit.
-We promise the gates are combinations of X and H - it's your job to work out which ones.
+The circuit consists of only two gates, one gate for each qubit.
+We promise the gates are combinations of [X](https://en.wikipedia.org/wiki/Quantum_logic_gate#Pauli-X_gate) and [H](https://en.wikipedia.org/wiki/Quantum_logic_gate#Hadamard_(H)_gate). Your job is to work out which ones.
 
-You can look at `manual_solver.py` and try to come up with a circuit which does this.
-To run the solver type the command: `python3 evaluate.py --fun manual_solver --problem discrete_problem1`
+You can look at `manual_solver.py`, and try to come up with a circuit that does this.
+To run this solver, type the command:
+```
+python3 evaluate.py --fun manual_solver --problem discrete_problem1
+```
 
-Alternatively you could look at `discrete_solver.py`, which can help automate the decision.
-To run this solver type the command: `python3 evaluate.py --fun discrete_solver --problem discrete_problem1`
+Alternatively, you could look at `discrete_solver.py`, which can help automate the decision.
+To run this solver, type the command:
+```
+python3 evaluate.py --fun discrete_solver --problem discrete_problem1
+```
 
 ### Problem 2
 
