@@ -11,6 +11,8 @@
     1. [Problem 1](#problem1)
     1. [Problem 2](#problem2)
     1. [Problem 3](#problem3)
+    1. [Problem 4](#problem4)
+    1. [Problem 5](#problem5)
 1. [Sharing solutions](#sharing_solutions)
 
 <a name="getting_started"></a>
@@ -49,7 +51,7 @@ $ git clone https://github.com/riverlane/paris
 ```
 In what follows, we refer to files in this repository (e.g. `evaluate.py`), so make sure you stay in that directory.
 
-Alternatively, you can download this repository as a [zip](https://github.com/riverlane/paris/archive/master.zip) file. 
+Alternatively, you can download this repository as a [zip](https://github.com/riverlane/paris/archive/master.zip) file.
 We suggest sticking to using `Git`, however, as we may need to provide updates during the hackathon (which you will then be able to obtain via `git pull`).
 
 ### Playing with quantum circuit design
@@ -176,7 +178,7 @@ You can modify `discrete_solver.py` to begin, but you will notice that the numbe
 
 In order to do so, you need to know how we have produced the training and test data. We began with a quantum state on which we made a measurement. For the initial states we have chosen, this measurement is always equal to +/-1, and so this gave us a label. We then applied some quantum circuit to the original state to give the quantum state that we are giving you as data.
 
-Therefore, the circuits you have been finding so far are 'undoing' the effect of the circuit we applied in order to get back to the original state. You can now use the information above about the circuit we applied to construct the inverse circuit. You will find it useful to know that all of H, X, Y and CNOT are self-inverse - the effect of each can be 'undone' by applying the same gate again. You will need to think carefully about how to invert a circuit which consists of multiple gates - in which order should the inverse gates be applied? 
+Therefore, the circuits you have been finding so far are 'undoing' the effect of the circuit we applied in order to get back to the original state. You can now use the information above about the circuit we applied to construct the inverse circuit. You will find it useful to know that all of H, X, Y and CNOT are self-inverse - the effect of each can be 'undone' by applying the same gate again. You will need to think carefully about how to invert a circuit which consists of multiple gates - in which order should the inverse gates be applied?
 
 To run this solver, type the command:
 ```
@@ -184,20 +186,26 @@ $ python3 evaluate.py --fun <SOLVER_FUNCTION> --problem discrete_problem3
 ```
 substituting `<SOLVER_FUNCTION>` for your own.
 
-### Problem 4
+
+<a name="problem4"></a>
+### Problem 4 (`continuous_problem4`)
 
 Number of qubits: 4
 
 In this problem, we have used gates that we have not considered before – rotation gates. Each gate is parameterised by an angle, which can have any value from 0 to 2 pi. These gates perform rotations of the qubit state in the Bloch sphere.
 
-This problem is based on a "state preperation circuit" for VQE - used in quantum chemistry.
-The circuit is called the Hardware Efficent Ansatz and you can see it in `continuous_solver.py`.
-You should use the `continuous_solver.py` for this and larger continuous problems as we are now trying to find a circuit which is a function of continuously varying parameters and not just discrete combinations of fixed gates.
+This problem is based on a "state preperation circuit" for [VQE](https://github.com/ctuning/ck-quantum/wiki/VQE-and-You) used in quantum chemistry.
+The circuit is called the [Hardware Efficient Ansatz](https://github.com/ctuning/ck-quantum/wiki/Quantum-Ansatz-Circuits#research-proposal-investigate-the-hardware-efficient-ansatz).
+You should use `continuous_solver.py` for this and larger continuous problems, since we are now trying to find a circuit which is a function of continuously varying parameters and not just discrete combinations of fixed gates.
 You can try to optimise some parameters, i.e. circuit depth and minimize parameters.
 
-To run this solver type the command: `python3 evaluate.py --fun continuous_solver --problem continuous_problem4`
+To run this solver, type the command:
+```
+$ python3 evaluate.py --fun continuous_solver --problem continuous_problem4
+```
 
-### Problem 5
+<a name="problem5"></a>
+### Problem 5 (`continuous_problem5`)
 
 Number of qubits: 6
 
@@ -208,8 +216,11 @@ In order to solve this problem you will need to invert the circuit we are giving
 You need to optimise the rotation parameters. The angles are given above as 0, but it can be anything from 0 to 2pi.
 You can try and use `continuous_solver.py` but it will not be very efficient. You should make your own function that exploits the structure shown above.
 
-To run this solver type the command: To run this solver type the command: `python3 evaluate.py --fun <SOLVER_FUNCTION>
---stats --problem continuous_problem5`, substituting `<SOLVER_FUNCTION>` for your own.
+To run this solver, type the command:
+```
+$ python3 evaluate.py --fun <SOLVER_FUNCTION> --stats --problem continuous_problem5
+```
+substituting `<SOLVER_FUNCTION>` for your own.
 
 
 <a name="sharing_solutions"></a>
@@ -233,7 +244,7 @@ $ ck store_experiment qml --json_file=<json_file_name> [--team=<schroedinger-cat
 ```
 
 An experiment entry is stored together with the team name.
-You can either supply the team name from the command line using the `--team` flag or enter it interactively when prompted.
+You can either supply the team name from the command line using the `--team` option or enter it interactively when prompted.
 
 ### Viewing your solutions stored locally
 
@@ -262,3 +273,5 @@ machine.) So please upload as soon as you are ready.
 ### Viewing all the shared solutions on the server
 
 Visit the [common dashboard](http://cknowledge.org/dashboard/hackathon.20190127).
+
+## That's all folks! (for now)
