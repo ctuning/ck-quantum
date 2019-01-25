@@ -48,7 +48,15 @@ $ git clone https://github.com/riverlane/paris
 In what follows, we refer to files in this repository (e.g. `evaluate.py`), so make sure you stay in that directory.
 
 Alternatively, you can download this repository as a [zip](https://github.com/riverlane/paris/archive/master.zip) file. 
-We suggest sticking to using `Git`, however, as we may need to provide updates during the hackathon (which can be obtained via `git pull`).
+We suggest sticking to using `Git`, however, as we may need to provide updates during the hackathon (which you will then be able to obtain via `git pull`).
+
+### Playing with quantum circuit design
+
+To help you learn how quantum circuits work, we have provided a primer Qiskit program:
+```
+$ python3 qiskit_primer.py
+```
+Feel free to modify it to study the effects of applying quantum circuits to initial states.
 
 ### Installing the [Collective Knowledge](http://cknowledge.org) framework (CK) with the Quantum CK repository
 
