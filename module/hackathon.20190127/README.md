@@ -20,7 +20,11 @@
 <a name="getting_started"></a>
 ## Getting started - option A (directly installing software on your computer)
 
-### Installing Python (>=3.6)
+### Installing Python 3.6
+
+```
+$ python3 --version         # skip the following session if Python 3.6.x is already installed
+```
 
 #### Ubuntu/Debian
 ```
