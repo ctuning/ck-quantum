@@ -112,7 +112,7 @@ def get_raw_data(i):
                         'problem_index': characteristics['run'].get('problem_index',-1),
                         'training_accuracy': np.float64(characteristics['run'].get('training_accuracy',1e6)),
                         'training_time': np.float64(characteristics['run'].get('training_time',0.0)),
-                        'training_vectors_limit': np.int64(characteristics['run'].get('training_vectors_limit',-1)),
+                        'training_vectors_limit': np.int64(characteristics['run'].get('training_vectors_limit') or -1),
                         'solution_function_name': characteristics['run'].get('solution_function_name',''),
                         'source_code': characteristics['run'].get('source_code',''),
                         'circuit_str': characteristics['run'].get('circuit_str',''),
