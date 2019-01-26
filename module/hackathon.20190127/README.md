@@ -53,18 +53,18 @@ $ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 pandas==0.23.4 sklearn 
 
 Choose a directory where you would like to place the hackathon repository, change to that directory and run:
 ```
-$ git clone https://github.com/riverlane/paris
+$ git clone [https://github.com/riverlane/paris](https://github.com/riverlane/paris)
 ```
 In what follows, we refer to files in this repository (e.g. `evaluate.py`), so make sure you stay in that directory.
 
 Alternatively, you can download this repository as a [zip](https://github.com/riverlane/paris/archive/master.zip) file.
-We suggest sticking to using `Git`, however, as we may need to provide updates during the hackathon (which you will then be able to obtain via `git pull`).
+We suggest sticking to using `git`, however, as we may need to provide updates during the hackathon (which you will then be able to obtain via `git pull`).
 
 ### Playing with quantum circuit design
 
 To help you learn how quantum circuits work, we have provided a primer Qiskit program:
 ```
-$ python3 qiskit_primer.py
+$ python3 [qiskit_primer.py](https://github.com/riverlane/paris/blob/master/qiskit_primer.py)
 ```
 Feel free to modify it to study the effects of applying quantum circuits to initial states.
 
