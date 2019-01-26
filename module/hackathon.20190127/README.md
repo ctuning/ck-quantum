@@ -81,7 +81,14 @@ $ ck pull repo:ck-quantum
 <a name="getting_started_docker"></a>
 ## Getting started - option B (using a Docker container tailor-made for this hackathon)
 
-### Build the Docker image:
+You can check how to install Docker on your system [here](https://docs.docker.com/install).
+
+### Run a Docker container from the cTuning Docker Hub:
+```
+$ docker run -it --publish 3355:3344 ctuning/cqk-hackathon.20190127
+```
+
+### Build your own Docker image:
 ```
 $ docker build --tag hackathon.20190127 https://raw.githubusercontent.com/ctuning/ck-quantum/master/docker/hackathon.20190127/Dockerfile
 ```
