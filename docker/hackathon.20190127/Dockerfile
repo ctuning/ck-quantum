@@ -5,10 +5,8 @@ MAINTAINER Anton Lokhmotov <anton@dividiti.com>
 ## Install all packages and immediately clean up to make the image smaller
 #
 RUN apt-get update -y \
-    && apt-get install -y python3 python3-pip git zip bzip2 sudo wget daemonize \
-    libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev python-pillow build-essential \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && apt-get install -y python3 python3-pip git zip bzip2 sudo wget vi daemonize \
+    libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev python-pillow build-essential
 
 # Install the core Collective Knowledge (CK) module.
 ENV CK_ROOT=/ck-master \
