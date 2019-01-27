@@ -85,7 +85,7 @@ You can check how to install Docker on your system [here](https://docs.docker.co
 
 ### Run a Docker container from the cTuning Docker Hub:
 ```
-$ docker run -it --publish 3355:3344 ctuning/cqk-hackathon.20190127
+$ docker run -it --publish 3355:3344 ctuning/qck-hackathon.20190127
 ```
 
 ### Build your own Docker image:
