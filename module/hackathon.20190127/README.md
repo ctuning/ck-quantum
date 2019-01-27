@@ -1,6 +1,6 @@
 # 3rd Quantum Collective Knowledge Hackathon, Paris, 27 January 2019
 
-* [Meetup](https://www.meetup.com/Paris-Quantum-Computing-Technologies/events/256367871) (**upcoming!**)
+* [Meetup](https://www.meetup.com/Paris-Quantum-Computing-Technologies/events/256367871) (**TODAY!**)
 * [ Presentation slides](https://docs.google.com/presentation/d/1DGyu1EGJn8d3xS2VcgQlvthQGF7ytx9VoGV5xUmGlyk/edit?usp=sharing)
 
 
