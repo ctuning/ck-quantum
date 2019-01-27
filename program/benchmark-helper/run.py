@@ -18,8 +18,7 @@ def run():
     output_path = os.environ.get('CK_QUANTUM_PARIS_OUTPUT')
     print("CK_QUANTUM_PARIS_OUTPUT=" + output_path)
     with open(output_path) as output_file:
-        output_raw = json.load(output_file)
-        print(str(output_raw))
+        print(output_file.read())
 
     return 0
 
