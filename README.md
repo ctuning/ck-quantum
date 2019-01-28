@@ -9,10 +9,14 @@
 
 ## Hackathons
 
-- [3nd QCK Hackathon, Paris, 2019-01-27](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20190127) (**less than two days away!**)
+- [3nd QCK Hackathon, Paris, 2019-01-27](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20190127) (see the [common dashboard](http://cknowledge.org/dashboard/hackathon.20190127))
 - [2nd QCK Hackathon, London, 2018-10-06](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20181006)
 - [1st QCK Hackathon, Cambridge, 2018-06-15](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20180615)
 
 ## Competitions
 
 - [1st Open QCK Challenge](https://github.com/ctuning/ck-quantum/tree/master/module/challenge.vqe) (**get involved!**)
+
+
+
+*Powered by [Collective Knowledge platform](https://github.com/ctuning/ck)*
