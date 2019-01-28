@@ -7,16 +7,15 @@
 
 # Quantum Collective Knowledge (QCK) repository
 
-## Hackathons
-
-- [3nd QCK Hackathon, Paris, 2019-01-27](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20190127) (see the [common dashboard](http://cknowledge.org/dashboard/hackathon.20190127))
-- [2nd QCK Hackathon, London, 2018-10-06](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20181006)
-- [1st QCK Hackathon, Cambridge, 2018-06-15](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20180615)
+*Powered by the [Collective Knowledge](https://github.com/ctuning/ck) platform.*
 
 ## Competitions
 
 - [1st Open QCK Challenge](https://github.com/ctuning/ck-quantum/tree/master/module/challenge.vqe) (**get involved!**)
 
+## Hackathons
 
-
-*Powered by the [Collective Knowledge platform](https://github.com/ctuning/ck)*
+- [4th QCK Hackathon, Oxford, 2019-03-15](https://www.eventbrite.com/e/quantum-computing-hackathon-for-the-space-sector-tickets-53387460331) (**upcoming!**)
+- [3nd QCK Hackathon, Paris, 2019-01-27](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20190127)
+- [2nd QCK Hackathon, London, 2018-10-06](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20181006)
+- [1st QCK Hackathon, Cambridge, 2018-06-15](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20180615)
