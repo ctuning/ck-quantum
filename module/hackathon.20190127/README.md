@@ -1,6 +1,6 @@
 # 3rd Quantum Collective Knowledge Hackathon, Paris, 27 January 2019
 
-* [Meetup](https://www.meetup.com/Paris-Quantum-Computing-Technologies/events/256367871) (**TODAY!**)
+* [Meetup page](https://www.meetup.com/Paris-Quantum-Computing-Technologies/events/256367871)
 * [ Presentation slides](https://docs.google.com/presentation/d/1DGyu1EGJn8d3xS2VcgQlvthQGF7ytx9VoGV5xUmGlyk/edit?usp=sharing)
 
 
@@ -316,4 +316,6 @@ machine.) So please upload as soon as you are ready.
 
 Visit the [common dashboard](http://cknowledge.org/dashboard/hackathon.20190127).
 
-## That's all folks! (for now)
+## That's all folks!
+
+... but you are more than welcome to try our [1st open QCK challenge](https://www.linkedin.com/pulse/first-open-quantum-collective-knowledge-challenge-anton-lokhmotov/)!
