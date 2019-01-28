@@ -19,4 +19,4 @@
 
 
 
-*Powered by [Collective Knowledge platform](https://github.com/ctuning/ck)*
+*Powered by the [Collective Knowledge platform](https://github.com/ctuning/ck)*
