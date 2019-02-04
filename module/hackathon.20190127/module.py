@@ -153,8 +153,8 @@ def get_raw_data(i):
         df.reset_index(inplace=True, drop=True)     # remove the index as it is in the way of complex grouping
 
         ## Sorting in place allows us to preserve this order as the initial order in the output
-        df.sort_values(['problem_name', 'test_accuracy', 'timestamp_epoch_secs'], ascending=[True, False, True], inplace=True)
-        df['rank'] = df.groupby('problem_name').cumcount()+1
+        df.sort_values(['problem_index', 'test_accuracy', 'timestamp_epoch_secs'], ascending=[True, False, True], inplace=True)
+        df['rank'] = df.groupby('problem_index').cumcount()+1
 
         df['seconds_since_start']   = df['timestamp_epoch_secs']-df['timestamp_epoch_secs'].min()
         df['hours_since_start']     = df['seconds_since_start'] / 3600.0
