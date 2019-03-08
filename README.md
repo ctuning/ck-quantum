@@ -15,7 +15,8 @@
 
 ## Hackathons
 
-- [4th QCK Hackathon, Oxford, 2019-03-15](https://www.eventbrite.com/e/quantum-computing-hackathon-for-the-space-sector-tickets-53387460331) (**upcoming!**)
-- [3nd QCK Hackathon, Paris, 2019-01-27](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20190127)
+- 5th QCK Hackathon, London, 2019-05-04 (**TBC**)
+- [4th QCK Hackathon, Oxford, 2019-03-15](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20190315) (**upcoming!**)
+- [3nd QCK Hackathon, Paris,  2019-01-27](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20190127)
 - [2nd QCK Hackathon, London, 2018-10-06](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20181006)
 - [1st QCK Hackathon, Cambridge, 2018-06-15](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20180615)
