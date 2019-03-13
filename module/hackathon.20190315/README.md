@@ -188,7 +188,7 @@ Number of qubits: 2
 
 Now there are multiple gates for each qubit. You will need to try interacting the qubits with one another using
 [CNOT gates](https://en.wikipedia.org/wiki/Controlled_NOT_gate).
-CNOT gates are only applied to neighbouring qubits, e.g. `qubit_0` -> `qubit_1`, `qubit_1` -> `qubit_2`.
+CNOT gates are only applied to neighbouring qubits, e.g. `qubit_0` -> `qubit_1`, `qubit_1` -> `qubit_0`, `qubit_1` -> `qubit_2`.
 You can also use H, X and Y gates.
 
 You can look at `manual_solver.py` and try to come up with a circuit which does this.
@@ -197,7 +197,7 @@ To run the solver, type the command:
 $ python3 evaluate.py --fun manual_solver --problem discrete_problem2
 ```
 
-It will probably be too annoying and difficult to manually try all combinations.
+It will probably be too annoying and difficult to try all combinations manually.
 Try modifying `discrete_solver.py` to include the extra gates needed.
 To run this solver, type the command:
 ```
@@ -238,7 +238,7 @@ In this problem, we have used gates that we have not considered before – rotat
 This problem is based on a "state preperation circuit" for [VQE](https://github.com/ctuning/ck-quantum/wiki/VQE-and-You) used in quantum chemistry.
 The circuit is called the [Hardware Efficient Ansatz](https://github.com/ctuning/ck-quantum/wiki/Quantum-Ansatz-Circuits#research-proposal-investigate-the-hardware-efficient-ansatz).
 You should use `continuous_solver.py` for this and larger continuous problems, since we are now trying to find a circuit which is a function of continuously varying parameters and not just discrete combinations of fixed gates.
-You can try to optimise some parameters, i.e. circuit depth and minimize parameters.
+You can try to optimise some parameters, i.e. circuit depth and minimise parameters.
 
 To run this solver, type the command:
 ```
@@ -254,7 +254,7 @@ In order to solve this problem you will need to invert the circuit we are giving
 
 ![problem 5 circuit](https://i.ibb.co/DDLJcF8/Screen-Shot-2019-01-24-at-18-00-17.png)
 
-You need to optimise the rotation parameters. The angles are given above as 0, but it can be anything from 0 to 2pi.
+You need to optimise the rotation parameters. The angles are given above as 0, but can be anything from 0 to 2pi.
 You can try and use `continuous_solver.py` but it will not be very efficient. You should make your own function that exploits the structure shown above.
 
 To run this solver, type the command:
