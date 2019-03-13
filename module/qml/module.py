@@ -11,12 +11,12 @@ cfg={}  # Will be updated by CK (meta description of this module)
 work={} # Will be updated by CK (temporal data)
 ck=None # Will be updated by CK (initialized CK kernel)
 
-hackathon_date          = '20190127'
+hackathon_date          = '20190315'
 
 hackathon_tag           = 'hackathon-{}'.format(hackathon_date)
 hackathon_remote_repo   = 'ck-quantum-hackathon-{}'.format(hackathon_date)
-hackathon_local_repo    = hackathon_remote_repo     # to simplify hackathon.20190127.get_raw_data()
-competition_tag         = 'quantum-ml-hackathon-3'
+hackathon_local_repo    = hackathon_remote_repo     # to simplify hackathon.20190315.get_raw_data()
+competition_tag         = 'qck-hackathon-4'
 
 
 import getpass
