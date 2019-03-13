@@ -1,7 +1,7 @@
 # 4th Quantum Collective Knowledge Hackathon, Oxford, 15 March 2019
 
 * [Eventbrite](https://www.eventbrite.com/e/quantum-computing-hackathon-for-the-space-sector-tickets-53387460331)
-* [Presentation slides](https://docs.google.com/presentation/d/1DGyu1EGJn8d3xS2VcgQlvthQGF7ytx9VoGV5xUmGlyk/edit?usp=sharing)
+* [Presentation slides](https://docs.google.com/presentation/d/1B_3vh0rleKA9HNubEv2x0DfuqqkOqVulWO6N_82dLvY)
 
 
 1. Getting started
