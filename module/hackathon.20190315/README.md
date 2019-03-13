@@ -4,9 +4,9 @@
 * [Presentation slides](https://docs.google.com/presentation/d/1B_3vh0rleKA9HNubEv2x0DfuqqkOqVulWO6N_82dLvY)
 
 
-1. Getting started
-    1. [Option A : Dockerless installation](#getting_started)
-    1. [Option B : using a Docker container](#getting_started_docker)
+1. [Getting started](#getting_started)
+    1. [Option A: native installation](#getting_started_native)
+    1. [Option B: using a Docker container](#getting_started_docker) (**only use if Option A fails**)
 1. [Workflow overview](#workflow_overview)
 1. [Problems](#problems)
     1. [Problem 0](#problem0)
@@ -17,14 +17,21 @@
     1. [Problem 5](#problem5)
 1. [Sharing solutions](#sharing_solutions)
 
+
 <a name="getting_started"></a>
-## Getting started - option A (directly installing software on your computer)
+# Getting started
+
+<a name="getting_started_native"></a>
+## Option A - native installation
+With this option, you will install software directly on your computer.
 
 ### Installing Python 3.6
 
+Check your Python 3 version:
 ```
-$ python3 --version         # skip the following session if Python 3.6.x is already installed
+$ python3 --version
 ```
+If you already have Python 3.6.x installed, skip the following section.
 
 #### Ubuntu/Debian
 ```
@@ -37,11 +44,12 @@ First, install **[brew](https://brew.sh)** if missing. Then:
 $ brew update
 $ brew unlink python
 $ brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/f2a764ef944b1080be64bd88dca9a1d80130c558/Formula/python.rb
-$ export PATH=/usr/local/opt/python/bin:$PATH # we suggest to put this into your .bashrc config file to avoid repeating in every terminal window
+$ export PATH=/usr/local/opt/python/bin:$PATH
 ```
+**NB:** We advise you to add the last line into your `.bashrc` config file to avoid having to repeat it in every new terminal window.
 
 #### Windows
-Use [the official downloads and instructions](https://www.python.org/downloads/windows).
+Use the [official](https://www.python.org/downloads/windows) downloads and instructions.
 
 
 ### Installing Qiskit and other dependencies to userspace
@@ -51,7 +59,7 @@ $ python3 -m pip install marshmallow==2.15.0 qiskit==0.7 pandas==0.23.4 sklearn 
 
 ### Obtaining the hackathon repository
 
-Choose a directory where you would like to place [the hackathon repository](https://github.com/riverlane/HiddenStateHackathon),
+Choose a directory where you would like to place the [hackathon repository](https://github.com/riverlane/HiddenStateHackathon),
 change to that directory and run:
 ```
 $ git clone https://github.com/riverlane/HiddenStateHackathon
@@ -63,8 +71,7 @@ We suggest sticking to using `git`, however, as we may need to provide updates d
 
 ### Playing with quantum circuit design
 
-To help you learn how quantum circuits work, we have provided
-[a primer Qiskit program](https://github.com/riverlane/HiddenStateHackathon/blob/master/qiskit_primer.py):
+To help you learn how quantum circuits work, we have provided a [primer Qiskit program](https://github.com/riverlane/HiddenStateHackathon/blob/master/qiskit_primer.py):
 ```
 $ python3 qiskit_primer.py
 ```
@@ -79,26 +86,26 @@ $ ck pull repo:ck-quantum
 ```
 
 <a name="getting_started_docker"></a>
-## Getting started - option B (using a Docker container tailor-made for this hackathon)
+## Option B - using Docker
+
+With this option, you will obtain all the software in a Docker container tailor-made for this hackathon.
+
+**NB:** The container is over 1 GB, so even if you are comfortable with using Docker we suggest
+to stick to [Option A](#getting_started_native) and use [Option B](#getting_started_docker) only as a backup. 
 
 You can check how to install Docker on your system [here](https://docs.docker.com/install).
 
-### Run a Docker container from the cTuning Docker Hub:
-```
-$ docker run -it --publish 3355:3344 ctuning/qck-hackathon.20190315
-```
-
-### Build your own Docker image:
+### Build your Docker image
 ```
 $ docker build --tag hackathon.20190315 https://raw.githubusercontent.com/ctuning/ck-quantum/master/docker/hackathon.20190315/Dockerfile
 ```
 
-### Run a Docker container from this image:
+### Run a container from this Docker image
 ```
 $ docker run -it --publish 3355:3344 hackathon.20190315
 ```
 
-Please note that some functions will have to be run differently if you are using a Docker container.
+Please note that some commands will have to be run differently if you are using a Docker container.
 
 
 <a name="workflow_overview"></a>
