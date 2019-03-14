@@ -1,6 +1,7 @@
 # 4th Quantum Collective Knowledge Hackathon, Oxford, 15 March 2019
 
 * [Eventbrite](https://www.eventbrite.com/e/quantum-computing-hackathon-for-the-space-sector-tickets-53387460331)
+* [Collective Knowledge Slack](https://join.slack.com/t/collective-knowledge/shared_invite/enQtNTc3NDEyODAwODgzLTFkNGFmZjJlNDg4MmYwYTUxZWU3ZWFkZmE0ZGVlMThmNWVkNjdiNzMxYmQxZmUzMzQ4YjRiMGVlZjU4YWJkNWU) (#quantum)
 * [Presentation slides](https://docs.google.com/presentation/d/1B_3vh0rleKA9HNubEv2x0DfuqqkOqVulWO6N_82dLvY)
 
 
