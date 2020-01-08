@@ -11,12 +11,12 @@
 
 ## Competitions
 
-- [1st Open QCK Challenge](https://github.com/ctuning/ck-quantum/tree/master/module/challenge.vqe) (**get involved!**)
+- [1st Open QCK Challenge](https://github.com/ctuning/ck-quantum/tree/master/module/challenge.vqe)
 
 ## Hackathons
 
 - 5th QCK Hackathon, London (**TBC**)
-- [4th QCK Hackathon, Oxford, 2019-03-15](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20190315) (**TODAY!**)
+- [4th QCK Hackathon, Oxford, 2019-03-15](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20190315)
 - [3nd QCK Hackathon, Paris,  2019-01-27](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20190127)
 - [2nd QCK Hackathon, London, 2018-10-06](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20181006)
 - [1st QCK Hackathon, Cambridge, 2018-06-15](https://github.com/ctuning/ck-quantum/tree/master/module/hackathon.20180615)
