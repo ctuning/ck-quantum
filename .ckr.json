@@ -1,17 +1,14 @@
 {
-  "data_uoa": "ck-quantum",
-  "data_uid": "de640faafc01c0a0",
   "data_alias": "ck-quantum",
   "data_name": "ck-quantum",
+  "data_uid": "de640faafc01c0a0",
+  "data_uoa": "ck-quantum",
   "dict": {
+    "desc": "CK workflows and components for open and reproducible <a href=\"http://cKnowledge.org/quantum\">Quantum hackathons</a>.",
     "repo_deps": [
       {
         "repo_uoa": "ck-env",
         "repo_url": "https://github.com/ctuning/ck-env"
-      },
-      {
-        "repo_uoa": "ck-docker",
-        "repo_url": "https://github.com/ctuning/ck-docker"
       },
       {
         "repo_uoa": "ck-rigetti",
