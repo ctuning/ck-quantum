@@ -1,8 +1,21 @@
-# 3rd Quantum Collective Knowledge Hackathon, Paris, 27 January 2019
+## Quantum Collective Knowledge Hackathon at École 42 (Paris)
+
+### Sponsors
+
+* [cTuning foundation](https://cTuning.org), [cKnowledge.org](https://cKnowledge.org), 
+  [Quantonation](https://www.quantonation.com), [École 42](https://42.fr/en/homepage)
+
+![Alt text](https://cknowledge.org/images/photo-qck-ecole42-2019-small.jpg)
+![Alt text](https://cknowledge.org/images/photo-qck-ecole42-2019f-small.jpg)
+![Alt text](https://cknowledge.org/images/photo-qck-ecole42-2019b-small.jpg)
+![Alt text](https://cknowledge.org/images/photo-qck-ecole42-2019c-small.jpg)
+![Alt text](https://cknowledge.org/images/photo-qck-ecole42-2019d-small.jpg)
+![Alt text](https://cknowledge.org/images/photo-qck-ecole42-2019e-small.jpg)
+
+
+### Table of contents
 
 * [Meetup page](https://www.meetup.com/Paris-Quantum-Computing-Technologies/events/256367871)
-* [ Presentation slides](https://docs.google.com/presentation/d/1DGyu1EGJn8d3xS2VcgQlvthQGF7ytx9VoGV5xUmGlyk/edit?usp=sharing)
-
 
 1. Getting started
     1. [Option A : Dockerless installation](#getting_started)
@@ -316,6 +329,3 @@ machine.) So please upload as soon as you are ready.
 
 Visit the [common dashboard](http://cknowledge.org/dashboard/hackathon.20190127).
 
-## That's all folks!
-
-... but you are more than welcome to try our [1st open QCK challenge](https://www.linkedin.com/pulse/first-open-quantum-collective-knowledge-challenge-anton-lokhmotov/)!
