@@ -1,0 +1,16 @@
+{
+  "backup_data_uid": "71cf14149f1c4ca2",
+  "backup_module_uid": "032630d041b4fd8a",
+  "backup_module_uoa": "module",
+  "control": {
+    "engine": "CK",
+    "iso_datetime": "2018-12-21T12:11:33.612621",
+    "version": [
+      "1",
+      "9",
+      "6",
+      "1"
+    ]
+  },
+  "data_name": "hackathon.ecole-42"
+}

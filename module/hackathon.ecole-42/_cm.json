@@ -1,0 +1,136 @@
+{
+  "actions": {
+    "get_raw_config": {
+      "desc": "get raw config for repo widget",
+      "for_web": "yes"
+    },
+    "get_raw_data": {
+      "desc": "get raw data for repo-widget",
+      "for_web": "yes"
+    }
+  },
+  "alias": "hackathon.ecole-42",
+  "automation_alias": "module",
+  "automation_uid": "032630d041b4fd8a",
+  "control": {
+    "engine": "CK",
+    "iso_datetime": "2018-12-21T12:11:33.612621",
+    "version": [
+      "1",
+      "9",
+      "6",
+      "1"
+    ]
+  },
+  "data_config": {
+    "dimensions": [
+      {
+        "key": "problem_index",
+        "name": "Problem index",
+        "view_key": "problem_index"
+      },
+      {
+        "key": "hours_since_start",
+        "name": "Hours since start",
+        "view_key": "hours_since_start"
+      },
+      {
+        "key": "team",
+        "name": "Team name",
+        "view_key": "team"
+      },
+      {
+        "key": "training_vectors_limit",
+        "name": "Training vectors limit",
+        "view_key": "training_vectors_limit"
+      },
+      {
+        "key": "training_time",
+        "name": "Training time",
+        "view_key": "training_time"
+      },
+      {
+        "key": "training_accuracy",
+        "name": "Training accuracy",
+        "view_key": "training_accuracy"
+      },
+      {
+        "key": "test_accuracy",
+        "name": "Test accuracy",
+        "view_key": "test_accuracy"
+      },
+      {
+        "key": "rank",
+        "name": "Solution's rank",
+        "view_key": "rank"
+      },
+      {
+        "key": "solution_function_name",
+        "name": "Solution function name",
+        "view_key": "solution_function_name"
+      }
+    ],
+    "selector": [],
+    "selector2": [
+      {
+        "key": "problem_name",
+        "name": "Which problem"
+      },
+      {
+        "key": "team",
+        "name": "Which team"
+      },
+      {
+        "key": "solution_function_name",
+        "name": "Which method"
+      }
+    ],
+    "selector3": [],
+    "table_view": [
+      {
+        "key": "problem_index",
+        "name": "Problem index"
+      },
+      {
+        "key": "timestamp_utc_human",
+        "name": "Timestamp (UTC)"
+      },
+      {
+        "key": "team",
+        "name": "Team name"
+      },
+      {
+        "format": "%.2f",
+        "key": "training_time",
+        "name": "Training time (sec)"
+      },
+      {
+        "format": "%.1f",
+        "key": "training_accuracy",
+        "name": "Training accuracy"
+      },
+      {
+        "format": "%.1f",
+        "key": "test_accuracy",
+        "name": "Test accuracy"
+      },
+      {
+        "key": "rank",
+        "name": "Solution's rank"
+      },
+      {
+        "key": "source_code",
+        "name": "Source code"
+      },
+      {
+        "key": "circuit_str",
+        "name": "Quantum circuit"
+      }
+    ]
+  },
+  "data_name": "hackathon.ecole-42",
+  "desc": "Raw data access (json)",
+  "uid": "70fa4c547c1a1f1a",
+  "workflow": "yes",
+  "workflow_type": "quantum hackathon workflow"
+}
